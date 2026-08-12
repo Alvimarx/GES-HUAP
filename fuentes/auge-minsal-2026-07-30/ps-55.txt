@@ -1,0 +1,189 @@
+Estás en: Problemas de Salud
+Inicio 
+Problemas de Salud 
+55. Gran quemado 
+Definición
+Persona que sufre quemaduras que pueden comprometer su vida, o dejar secuelas funcionales graves permanentes.
+
+[9 enfermedades/sinónimos incluidos — omitidos aquí]
+Garantías de acceso
+
+Todo beneficiario:
+
+
+
+Tendrá acceso a tratamiento y seguimiento.
+
+En tratamiento tendrá acceso a rehabilitación.
+
+
+
+Lo anterior deberá ser complementado con lo dispuesto en la NTMA.
+
+
+
+
+Tratamiento
+
+Se realizará dentro de 72 horas desde la confirmación diagnóstica, en prestador con capacidad resolutiva.
+
+En mayores de 15 años el tratamiento inicial (estabilización) en el centro de origen se realizará dentro de 8 horas desde la confirmación diagnóstica.
+
+
+Seguimiento
+
+El primer control se realizará dentro de 15 días desde indicación médica.
+
+Rehabilitación
+
+La rehabilitación en tratamiento hospitalizado, se realizará dentro de las 48 horas desde la indicación médica.
+
+Se realizará la primera atención de Rehabilitación ambulatoria dentro de los 15 días desde el alta hospitalaria.
+
+La entrega de ayudas técnicas indicadas en el contexto de rehabilitación ambulatoria se entregarán dentro de 30 días desde la indicación.
+
+
+Tipo de intervención sanitaria 
+Prestación o Grupo de prestaciones 
+Periodicidad 
+Arancel 
+Copago% 
+Copago$ 
+Tratamiento 
+Tratamiento inicial paciente quemado de 15 años y más 
+Por tratamiento completo 
+1.332.900 
+20 % 
+266.580 
+Tratamiento paciente quemado grave menor de 15 años 
+Por tratamiento completo 
+9.992.290 
+20 % 
+1.998.460 
+Tratamiento paciente quemado crítico menor de 15 años 
+Por tratamiento completo 
+20.524.240 
+20 % 
+4.104.850 
+Tratamiento paciente quemado sobrevida excepcional menor de 15 años 
+Por tratamiento completo 
+63.343.990 
+20 % 
+12.668.800 
+Tratamiento paciente quemado grave de 15 años y más 
+Por tratamiento completo 
+15.769.130 
+20 % 
+3.153.830 
+Tratamiento paciente quemado crítico de 15 años y más 
+Por tratamiento completo 
+22.691.970 
+20 % 
+4.538.390 
+Tratamiento paciente quemado sobrevida excepcional de 15 años y más 
+Por tratamiento completo 
+25.332.360 
+20 % 
+5.066.470 
+Cirugía reparadora paciente quemado menor de 15 años 
+Cada vez 
+597.500 
+20 % 
+119.500 
+Cirugía reparadora paciente quemado de 15 años y más 
+Cada vez 
+654.510 
+20 % 
+130.900 
+Seguimiento 
+Seguimiento primer año paciente quemado menor de 15 años 
+Mensual 
+33.810 
+20 % 
+6.760 
+Seguimiento segundo año paciente quemado menor de 15 años 
+Mensual 
+28.960 
+20 % 
+5.790 
+Seguimiento primer año paciente quemado de 15 años y más 
+Mensual 
+34.460 
+20 % 
+6.890 
+Seguimiento segundo año paciente quemado de 15 años y más 
+Mensual 
+26.610 
+20 % 
+5.320 
+Rehabilitación 
+Rehabilitación hospitalaria paciente quemado crítico menor de 15 años 
+Por tratamiento completo 
+1.335.250 
+20 % 
+267.050 
+Rehabilitación hospitalaria paciente quemado sobrevida excepcional menor de 15 años 
+Por tratamiento completo 
+2.975.670 
+20 % 
+595.130 
+Rehabilitación ambulatoria primer año paciente quemado menor de 15 años 
+Mensual 
+58.390 
+20 % 
+11.680 
+Rehabilitación hospitalaria paciente quemado grave mayor de 15 años 
+Por tratamiento completo 
+733.850 
+20 % 
+146.770 
+Rehabilitación hospitalaria paciente quemado critico mayor de 15 años 
+Por tratamiento completo 
+1.461.040 
+20 % 
+292.210 
+Rehabilitación hospitalaria paciente quemado sobrevida excepcional mayor de 15 años 
+Por tratamiento completo 
+1.846.290 
+20 % 
+369.260 
+Rehabilitación ambulatoria primer año paciente quemado mayor de 15 años 
+Mensual 
+47.730 
+20 % 
+9.550 
+Rehabilitación ambulatoria segundo año paciente quemado mayor de 15 años 
+Mensual 
+26.280 
+20 % 
+5.260 
+Ayudas técnicas ambulatoria primer año paciente quemado menor de 15 años 
+Mensual 
+45.660 
+20 % 
+9.130 
+Ayudas técnicas ambulatoria segundo año paciente quemado menor de 15 años 
+Mensual 
+33.600 
+20 % 
+6.720 
+Ayudas técnicas ambulatoria primer año paciente quemado mayor de 15 años 
+Mensual 
+72.780 
+20 % 
+14.560 
+Ayudas técnicas ambulatoria segundo año paciente quemado mayor de 15 años 
+Mensual 
+49.810 
+20 % 
+9.960 
+Rehabilitación hospitalaria paciente quemado grave menor de 15 años 
+Por tratamiento completo 
+560.740 
+20 % 
+112.150 
+Rehabilitación ambulatoria segundo año paciente quemado menor de 15 años 
+Mensual 
+16.670 
+20 % 
+3.330

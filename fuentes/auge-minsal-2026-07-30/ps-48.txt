@@ -1,0 +1,81 @@
+Estás en: Problemas de Salud
+Inicio 
+Problemas de Salud 
+48. Politraumatizado grave 
+Definición
+Se entiende por politraumatizado grave a todo aquel paciente que presenta lesiones de origen traumático, que afectan a dos o más de los siguientes sistemas: nervioso, respiratorio, circulatorio, musculoesquelético, digestivo o urinario, de las cuales al menos una de ellas puede comprometer la vida.
+
+[10 enfermedades/sinónimos incluidos — omitidos aquí]
+Garantías de acceso
+
+Todo beneficiario:
+
+
+
+Con confirmación diagnóstica tendrá acceso a tratamiento.
+
+En tratamiento por el politraumatismo grave con lesión medular tendrá acceso a rehabilitación.
+
+
+
+Lo anterior deberá ser complementado con lo dispuesto en la NTMA.
+
+
+
+
+Tratamiento
+
+Se realizará en un centro con capacidad resolutiva, según la patología predominante, antes de 24 horas desde el rescate.
+
+Rehabilitación
+
+La rehabilitación en el politraumatizado grave con lesión medular se iniciará dentro de 24 horas desde la indicación médica.
+
+Tipo de intervención sanitaria 
+Prestación o Grupo de prestaciones 
+Periodicidad 
+Arancel 
+Copago% 
+Copago$ 
+Tratamiento 
+Tratamiento politraumatizado con lesión medular 
+Por tratamiento completo 
+18.378.780 
+20 % 
+3.675.760 
+Tratamiento politraumatizado sin lesión medular 
+Por tratamiento completo 
+12.273.850 
+20 % 
+2.454.770 
+Rehabilitación 
+Rehabilitación en politraumatizado grave con lesión medular paraplejía uti 
+Por tratamiento completo 
+128.860 
+20 % 
+25.770 
+Rehabilitación en politraumatizado grave con lesión medular paraplejía uci 
+Por tratamiento completo 
+103.090 
+20 % 
+20.620 
+Rehabilitación en politraumatizado grave con lesión medular tetraplejia uti 
+Por tratamiento completo 
+238.720 
+20 % 
+47.740 
+Rehabilitación en politraumatizado grave con lesión medular tetraplejia uci 
+Por tratamiento completo 
+265.180 
+20 % 
+53.040 
+Rehabilitación en politraumatizado grave con lesión medular paraplejía camas medias 
+Por tratamiento completo 
+128.860 
+20 % 
+25.770 
+Rehabilitación en politraumatizado grave con lesión medular tetraplejia camas medias 
+Por tratamiento completo 
+187.770 
+20 % 
+37.550

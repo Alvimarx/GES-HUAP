@@ -1,0 +1,81 @@
+Estás en: Problemas de Salud
+Inicio 
+Problemas de Salud 
+25. Trastornos de generación del impulso y conducción en personas de 15 años y más, que requieren marcapasos 
+Definición
+Corresponden a alteraciones en la generación del impulso eléctrico del corazón y/o a trastornos de la conducción, que determinan asincronía entre la contracción auricular y ventricular. Requiere de estimulación artificial para recuperar o mejorar funcionamiento fisiológico desde el punto de vista hemodinámico, evitando la muerte súbita por asistolía y mejorando la capacidad funcional y la calidad de vida.
+
+[13 enfermedades/sinónimos incluidos — omitidos aquí]
+Garantías de acceso
+Todo beneficiario de 15 años y más:
+
+
+Con sospecha, tendrá acceso a confirmación diagnóstica.
+
+Con confirmación diagnóstica, tendrá acceso a tratamiento y seguimiento.
+
+Con requerimiento de recambio de marcapaso o cambio de generador y/o electrodo, según corresponda, tendrá acceso a tratamiento y seguimiento.
+
+
+Diagnóstico
+
+Se realizará dentro de 30 días desde la sospecha.
+
+Tratamiento
+
+Se realizará dentro de 30 días desde la confirmación diagnóstica o desde la indicación médica de recambio de marcapaso o cambio de generador y/o electrodo.
+
+Seguimiento
+
+El primer control se realizará dentro de los 15 días posteriores al alta de instalación de marcapaso o cambio de generador.
+
+
+Tipo de intervención sanitaria 
+Prestación o Grupo de prestaciones 
+Periodicidad 
+Arancel 
+Copago% 
+Copago$ 
+Diagnóstico 
+Confirmación trastorno de conducción 
+Cada vez 
+174.520 
+20 % 
+34.900 
+Estudio electrofisiológico de arritmias 
+Cada vez 
+2.083.620 
+20 % 
+416.720 
+Tratamiento 
+Implantación marcapaso unicameral VVI 
+Cada vez 
+1.957.430 
+20 % 
+391.490 
+Recambio marcapaso unicameral VVI 
+Cada vez 
+1.056.740 
+20 % 
+211.350 
+Implantación marcapaso bicameral DDD 
+Cada vez 
+2.247.080 
+20 % 
+449.420 
+Recambio marcapaso bicameral DDD 
+Cada vez 
+1.570.990 
+20 % 
+314.200 
+Seguimiento 
+Seguimiento trastorno de conducción primer año 
+Mensual 
+8.560 
+20 % 
+1.710 
+Seguimiento trastorno de conducción a contar del segundo año 
+Mensual 
+3.840 
+20 % 
+770

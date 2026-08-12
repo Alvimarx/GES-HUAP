@@ -1,0 +1,55 @@
+Estás en: Problemas de Salud
+Inicio 
+Problemas de Salud 
+50. Trauma ocular grave 
+Definición
+El trauma ocular grave se define como una lesión aguda sobre el globo ocular y sus estructuras anexas que ocasiona un daño tisular grave con riesgo de compromiso de la función visual, originada por diversos mecanismos contusos, penetrantes u otros.
+
+[18 enfermedades/sinónimos incluidos — omitidos aquí]
+Garantías de acceso
+Todo beneficiario:
+
+
+
+Con sospecha tendrá acceso a confirmación diagnóstica.
+
+Con confirmación diagnóstica tendrá acceso a tratamiento y seguimiento.
+
+
+Diagnóstico
+
+Se realizará dentro de 12 horas desde la sospecha.
+
+Tratamiento
+
+La atención por médico especialista se realizará dentro de 60 horas desde la confirmación diagnóstica.
+
+Tipo de intervención sanitaria 
+Prestación o Grupo de prestaciones 
+Periodicidad 
+Arancel 
+Copago% 
+Copago$ 
+Diagnóstico 
+Confirmación trauma ocular grave 
+Cada vez 
+99.900 
+20 % 
+19.980 
+Tratamiento 
+Tratamiento médico trauma ocular grave 
+Cada vez 
+568.310 
+20 % 
+113.660 
+Tratamiento quirúrgico trauma ocular grave 
+Cada vez 
+1.837.990 
+20 % 
+367.600 
+Seguimiento 
+Seguimiento trauma ocular grave 
+Cada vez 
+20.100 
+20 % 
+4.020

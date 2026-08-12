@@ -1,0 +1,72 @@
+Estás en: Problemas de Salud
+Inicio 
+Problemas de Salud 
+5. Infarto agudo del miocardio 
+Definición
+El Infarto Agudo del Miocardio (IAM) forma parte del síndrome coronario agudo (SCA), término que agrupa un amplio espectro de cuadros de dolor torácico de origen isquémico, los que según variables electrocardiográficas y/o bioquímicas se han clasificado en condiciones que van desde la angina inestable y el IAM sin elevación del segmento ST, hasta el IAM con supradesnivel de este segmento (SDST) y la muerte súbita. La aparición de un SCA es secundaria a la erosión o ruptura de una placa ateroesclerótica, que determina la formación de un trombo intracoronario.
+
+[56 enfermedades/sinónimos incluidos — omitidos aquí]
+Garantías de acceso
+Todo beneficiario que desde el 1 de julio de 2005 se presente:
+
+
+Con dolor torácico no traumático y/o síntomas de IAM tendrá acceso a confirmación diagnóstica.
+
+Con confirmación diagnóstica de IAM tendrá acceso a tratamiento médico y prevención secundaria.
+
+Con revascularización cardíaca quirúrgica o percutánea de cualquier tipo de IAM tendrá acceso a prevención secundaria
+
+
+Lo anterior deberá ser complementado con lo dispuesto en la NTMA.
+Diagnóstico
+
+El electrocardiograma se realizará en la atención médica de urgencia en Servicio Médico de Urgencia, dentro de 30 minutos desde la sospecha.
+
+Tratamiento
+
+La trombólisis se realizará dentro de los 30 minutos desde la confirmación diagnóstica de supradesnivel ST en electrocardiograma según indicación médica.
+
+Seguimiento
+
+El primer control para prevención secundaria se realizará dentro de 30 días desde el alta hospitalaria por tratamiento médico de cualquier tipo de IAM.
+
+El primer control para prevención secundaria se realizará dentro de 30 días desde el alta hospitalaria por revascularización cardíaca quirúrgica o percutánea de causa coronaria.
+
+
+
+
+
+Tipo de intervención sanitaria 
+Prestación o Grupo de prestaciones 
+Periodicidad 
+Arancel 
+Copago% 
+Copago$ 
+Diagnóstico 
+Sospecha infarto agudo del miocardio 
+Cada vez 
+13.420 
+20 % 
+2.680 
+Diagnóstico y tratamiento 
+Confirmación y tratamiento infarto agudo del miocardio urgencia sin trombólisis 
+Cada vez 
+33.420 
+20 % 
+6.680 
+Confirmación y tratamiento infarto agudo del miocardio urgencia con trombólisis 
+Cada vez 
+757.920 
+20 % 
+151.580 
+Tratamiento médico del infarto agudo del miocardio 
+Cada vez 
+465.990 
+20 % 
+93.200 
+Seguimiento 
+Prevención secundaria del infarto agudo del miocardio 
+Mensual 
+8.820 
+20 % 
+1.760

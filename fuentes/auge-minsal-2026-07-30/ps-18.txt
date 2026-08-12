@@ -1,0 +1,140 @@
+Estás en: Problemas de Salud
+Inicio 
+Problemas de Salud 
+18. Síndrome de la inmunodeficiencia adquirida vih/sida 
+Definición
+La infección por Virus de Inmunodeficiencia Humana (VIH) se caracteriza clínicamente por una infección asintomática durante un período variable de tiempo debido al equilibrio que se produce entre la replicación viral y la respuesta inmunológica del paciente. En etapas avanzadas de la infección se rompe este equilibrio aumentando la carga viral y deteriorándose la función inmune, lo que permite la aparición de diversas infecciones, clásicas y oportunistas y tumores con lo que se llega a la etapa de SIDA (Síndrome de la Inmunodeficiencia Adquirida).
+
+[2 enfermedades/sinónimos incluidos — omitidos aquí]
+Garantías de acceso
+Todo beneficiario:
+
+
+Con sospecha o por solicitud del usuario, tendrá acceso a examen para el diagnóstico de la infección por VIH.
+
+Las personas embarazadas tendrán acceso al examen para el diagnóstico de la infección por VIH durante el control prenatal.
+
+Las personas embarazadas en pre parto que se desconozca su serología tendrán acceso al examen para el diagnóstico de la infección por VIH.
+
+Con confirmación diagnóstica o indicación médica, tendrá acceso a exámenes y a los esquemas de tratamiento antirretroviral.
+
+Persona embarazada VIH (+) o con serología reactiva y su recién nacido, tendrán acceso a protocolo para prevención de transmisión vertical.
+
+En tratamiento con esquemas antirretrovirales, tendrá acceso a continuarlo.
+
+En tratamiento tendrá acceso a seguimiento.
+
+
+Lo anterior deberá ser complementado con lo dispuesto en la NTMA.
+Diagnóstico
+
+El diagnóstico se realizará dentro de 45 días desde la sospecha o solicitud del usuario.
+
+Tratamiento
+
+La consulta por médico con las competencias necesarias para efectuar la prestación, se realizará dentro de 45 días desde la confirmación diagnóstica.
+
+El tratamiento se iniciará dentro de 7 días desde la indicación médica, según criterios establecidos en la NTMA.
+
+En personas embarazadas VIH (+) o con serología reactiva se iniciará tratamiento antirretroviral dentro de 7 días desde la indicación.
+
+En personas embarazadas VIH (+) o con serología reactiva se iniciará la profilaxis antirretroviral desde el inicio del trabajo de parto vaginal o 4 horas antes de la cesárea programada.
+
+En puérperas VIH (+) confirmadas se iniciará el suministro de medicamentos para la interrupción de la producción de leche materna dentro de las 6 horas siguientes al nacimiento.
+
+En el recién nacido hijo de gestante VIH (+) o con serología reactiva de la gestante se iniciará la profilaxis antirretroviral dentro de las 4 horas siguientes al nacimiento.
+
+En el recién nacido hijo de gestante VIH (+) o con serología reactiva de la gestante se iniciará el suministro de fórmula láctea de inicio inmediatamente después del nacimiento.
+
+
+
+Lo anterior deberá ser precisado con lo dispuesto en la NTMA.
+Tipo de intervención sanitaria 
+Prestación o Grupo de prestaciones 
+Periodicidad 
+Arancel 
+Copago% 
+Copago$ 
+Diagnóstico 
+Tamizaje de VIH en personas gestantes 
+Cada vez 
+2.120 
+20 % 
+420 
+Sospecha infección por VIH 
+Cada vez 
+7.630 
+20 % 
+1.530 
+Tratamiento 
+Exámenes de determinación carga viral 
+Cada vez 
+40.340 
+20 % 
+8.070 
+Exámenes linfocitos T y CD4 
+Cada vez 
+55.090 
+20 % 
+11.020 
+Exámenes resistencia genética en VIH/SIDA 
+Cada vez 
+509.660 
+20 % 
+101.930 
+Evaluación pretratamiento con antirretrovirales 
+Cada vez 
+229.030 
+20 % 
+45.810 
+Esquemas terapéuticos con antirretrovirales de inicio o sin fracasos previos en personas de 18 años y más 
+Mensual 
+109.150 
+20 % 
+21.830 
+Esquemas terapéuticos con antirretrovirales de rescate en personas de 18 años y más 
+Mensual 
+169.720 
+20 % 
+33.940 
+Antiretrovirales para rescate en personas de 18 años y más multiresistentes 
+Mensual 
+191.660 
+20 % 
+38.330 
+Terapia antirretroviral para prevención transmisión vertical: parto 
+Por tratamiento completo 
+143.770 
+20 % 
+28.750 
+Terapia para prevención transmisión vertical: recién nacido 
+Por tratamiento completo 
+218.070 
+20 % 
+43.610 
+Terapia para prevención transmisión vertical: puerperio 
+Por tratamiento completo 
+4.490 
+20 % 
+900 
+Terapia antirretroviral en personas menores de 18 años 
+Mensual 
+108.090 
+20 % 
+21.620 
+Seguimiento 
+Seguimiento recién nacidos y niños expuestos al VIH (hijos de persona gestante con VIH (+)) 
+Por seguimiento completo 
+87.490 
+20 % 
+17.500 
+Seguimiento personas VIH (+) de 18 años y más con tratamiento antirretroviral 
+Mensual 
+8.070 
+20 % 
+1.610 
+Seguimiento personas VIH (+) menores de 18 años con tratamiento antirretroviral 
+Mensual 
+15.840 
+20 % 
+3.170

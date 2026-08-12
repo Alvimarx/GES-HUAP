@@ -1,0 +1,49 @@
+Estás en: Problemas de Salud
+Inicio 
+Problemas de Salud 
+26. Colecistectomía preventiva del cáncer de vesícula en personas de 35 a 49 años 
+Definición
+La colecistectomía es la extirpación de la vesícula en personas con cálculos vesiculares y de vías biliares, principal factor de riesgo del cáncer vesicular en Chile, la cual realizada en forma preventiva disminuye la mortalidad por esta causa.
+
+[18 enfermedades/sinónimos incluidos — omitidos aquí]
+Garantías de acceso
+Todo beneficiario entre 35 y 49 años:
+
+
+Con sospecha tendrá acceso a confirmación diagnóstica.
+
+Con confirmación diagnóstica tendrá acceso a tratamiento. 
+
+
+Lo anterior deberá ser complementado con lo dispuesto en la NTMA.
+Diagnóstico
+
+La confirmación diagnóstica se realizará dentro de 30 días desde la sospecha.
+
+Tratamiento
+
+La intervención quirúrgica se realizará dentro de 90 días desde la confirmación diagnóstica.
+
+Tipo de intervención sanitaria 
+Prestación o Grupo de prestaciones 
+Periodicidad 
+Arancel 
+Copago% 
+Copago$ 
+Diagnóstico 
+Confirmación colelitiasis 
+Cada vez 
+49.310 
+20 % 
+9.860 
+Tratamiento 
+Colecistectomía vía laparoscópica 
+Cada vez 
+1.116.860 
+20 % 
+223.370 
+Colecistectomía abierta 
+Cada vez 
+1.279.470 
+20 % 
+255.890

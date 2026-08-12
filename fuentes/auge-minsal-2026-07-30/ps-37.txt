@@ -1,0 +1,121 @@
+Estás en: Problemas de Salud
+Inicio 
+Problemas de Salud 
+37. Ataque cerebrovascular isquémico en personas de 15 años y más 
+Definición
+Es la ocurrencia de un déficit neurológico focal, y en ocasiones global, de inicio brusco, causado por la obstrucción de un vaso sanguíneo de la circulación cerebral.
+
+[19 enfermedades/sinónimos incluidos — omitidos aquí]
+Garantías de acceso
+Todo beneficiario de 15 años o más:
+
+
+Con sospecha tendrá acceso a confirmación diagnóstica.
+
+Con confirmación diagnóstica tendrá acceso a tratamiento médico, estudio etiológico y prevención secundaria, incluyendo la hospitalización, en prestador con capacidad resolutiva.
+
+Con confirmación diagnóstica tendrá acceso a rehabilitación ambulatoria y seguimiento.
+
+Menor de 65 años tendrá acceso a ayudas técnicas y atención de rehabilitación para uso de ayudas técnicas, según indicación médica.
+
+
+Lo anterior deberá ser complementado con lo dispuesto en la NTMA.
+Diagnóstico
+
+La confirmación diagnóstica se realizará dentro de 24 horas desde la sospecha.
+
+Tratamiento
+
+El tratamiento se iniciará dentro de 24 horas desde la confirmación diagnóstica.
+
+La hospitalización en prestador con capacidad resolutiva se realizará dentro de 24 horas desde la indicación médica.
+
+Seguimiento
+
+La atención con médico especialista se realizará dentro de 10 días desde el alta hospitalaria.
+
+Rehabilitación
+
+La rehabilitación en tratamiento hospitalizado se iniciará dentro de 48 horas desde la indicación médica.
+
+La rehabilitación ambulatoria se iniciará dentro de 15 días desde la indicación médica.
+
+La entrega de bastón, cojín o colchón para menores de 65 años, se realizará dentro de 20 días desde la indicación médica.
+
+La entrega de sillas de ruedas para menores de 65 años se realizará dentro de 30 días desde la indicación médica.
+
+Tipo de intervención sanitaria 
+Prestación o Grupo de prestaciones 
+Periodicidad 
+Arancel 
+Copago% 
+Copago$ 
+Diagnóstico 
+Confirmación ataque cerebrovascular isquémico 
+Cada vez 
+138.300 
+20 % 
+27.660 
+Tratamiento 
+Tratamiento ataque cerebrovascular isquémico 
+Cada vez 
+1.183.940 
+20 % 
+236.790 
+Seguimiento 
+Seguimiento ataque cerebrovascular isquémico 
+Mensual 
+10.380 
+20 % 
+2.080 
+Tratamiento anticoagulante oral 
+Anual 
+218.990 
+20 % 
+43.800 
+Rehabilitación 
+Rehabilitación en tratamiento hospitalizado 
+Por tratamiento completo 
+253.300 
+20 % 
+50.660 
+Rehabilitación ambulatoria 
+Mensual 
+17.050 
+20 % 
+3.410 
+Atención de rehabilitación para uso de ayudas técnicas 
+Cada vez 
+42.210 
+20 % 
+8.440 
+Bastón codera móvil 
+Cada vez 
+17.520 
+20 % 
+3.500 
+Cojín antiescaras viscoelástico 
+Cada vez 
+57.770 
+20 % 
+11.550 
+Colchón antiescaras celdas de aire 
+Cada vez 
+310.050 
+20 % 
+62.010 
+Silla de ruedas estándar 
+Cada vez 
+411.050 
+20 % 
+82.210 
+Silla de ruedas neurológica basculante 
+Cada vez 
+1.041.120 
+20 % 
+208.220 
+Silla de ruedas neurológica inclina 
+Cada vez 
+661.050 
+20 % 
+132.210
