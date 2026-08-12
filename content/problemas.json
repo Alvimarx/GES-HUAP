@@ -1,0 +1,142 @@
+{
+  "_meta": {
+    "descripcion": "Los 14 problemas de salud GES en que HUAP es prestador (confirmación diagnóstica y tratamiento), con sus códigos CIE-10 de activación en SINA. 15 códigos mapean a 14 problemas: G45.9 e I64 apuntan ambos al problema 37.",
+    "cartera_huap": "HUAP otorga confirmación diagnóstica y tratamiento de estos 14 problemas según el Libro de Redes GES y no GES (confirmado por Unidad GES, 08-2026).",
+    "advertencia_exhaustividad": "El afiche de origen (CODIGOS SINA.jpg) no tiene fecha ni versión y está pendiente confirmar con la unidad si los 14 problemas son todos los que corresponden a HUAP o si falta alguno.",
+    "estado_validacion": "mapeo revalidado contra fichas auge.minsal.cl (DS 29/2025) el 30-07-2026; pendiente validación de la Unidad GES",
+    "fecha": "2026-08-12"
+  },
+  "problemas": [
+    {
+      "numero": 5,
+      "denominacion": "Infarto agudo del miocardio",
+      "cie10": ["I21"],
+      "fuente": "CODIGOS SINA.jpg + ficha auge.minsal.cl PS 5 (DS 29/2025)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "numero": 6,
+      "denominacion": "Diabetes mellitus tipo 1",
+      "cie10": ["E10"],
+      "aclaraciones": [
+        {
+          "texto": "El decreto no restringe el problema al debut: cubre debut y descompensación (confirmación, tratamiento, descompensación con tratamiento de urgencia y hospitalización, y continuidad del tratamiento). El «(debut)» del afiche es una convención local de activación en SINA.",
+          "fuente": "Ficha auge.minsal.cl PS 6 (DS 29/2025); confirmado por Unidad GES, 08-2026",
+          "fecha": "2026-08-01"
+        }
+      ],
+      "fuente": "CODIGOS SINA.jpg + ficha auge.minsal.cl PS 6 (DS 29/2025)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "numero": 18,
+      "denominacion": "Síndrome de la inmunodeficiencia adquirida VIH/SIDA",
+      "cie10": ["B24"],
+      "fuente": "CODIGOS SINA.jpg + ficha auge.minsal.cl PS 18 (DS 29/2025)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "numero": 25,
+      "denominacion": "Trastornos de generación del impulso y conducción en personas de 15 años y más, que requieren marcapasos",
+      "cie10": ["R00.1"],
+      "fuente": "CODIGOS SINA.jpg + ficha auge.minsal.cl PS 25 (DS 29/2025)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "numero": 26,
+      "denominacion": "Colecistectomía preventiva del cáncer de vesícula en personas de 35 a 49 años",
+      "cie10": ["K80.0"],
+      "fuente": "CODIGOS SINA.jpg + ficha auge.minsal.cl PS 26 (DS 29/2025)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "numero": 36,
+      "denominacion": "Ayudas técnicas para personas de 65 años y más",
+      "cie10": ["Z99.1"],
+      "aclaraciones": [
+        {
+          "texto": "Los menores de 65 años con ACV isquémico (PS 37) o HSA (PS 42) también tienen garantía de ayudas técnicas, por la vía de esos problemas y no del PS 36. Ver plazos-alta.json.",
+          "fuente": "Fichas auge.minsal.cl PS 37 y PS 42 (DS 29/2025), revalidadas 30-07-2026",
+          "fecha": "2026-07-30"
+        }
+      ],
+      "fuente": "CODIGOS SINA.jpg + ficha auge.minsal.cl PS 36 (DS 29/2025)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "numero": 37,
+      "denominacion": "Ataque cerebrovascular isquémico en personas de 15 años y más",
+      "cie10": ["G45.9", "I64"],
+      "aclaraciones": [
+        {
+          "texto": "El TIA (crisis isquémica transitoria, G45.9) forma parte de las patologías cubiertas por el problema 37.",
+          "fuente": "Confirmado por Unidad GES, 08-2026",
+          "fecha": "2026-08-01"
+        }
+      ],
+      "fuente": "CODIGOS SINA.jpg + ficha auge.minsal.cl PS 37 (DS 29/2025)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "numero": 42,
+      "denominacion": "Hemorragia subaracnoidea secundaria a ruptura de uno o más aneurismas cerebrales",
+      "cie10": ["I60"],
+      "fuente": "CODIGOS SINA.jpg + ficha auge.minsal.cl PS 42 (DS 29/2025)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "numero": 44,
+      "denominacion": "Tratamiento quirúrgico de hernia del núcleo pulposo lumbar",
+      "cie10": ["M51.1"],
+      "fuente": "CODIGOS SINA.jpg + ficha auge.minsal.cl PS 44 (DS 29/2025)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "numero": 48,
+      "denominacion": "Politraumatizado grave",
+      "cie10": ["T07.X"],
+      "fuente": "CODIGOS SINA.jpg + ficha auge.minsal.cl PS 48 (DS 29/2025)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "numero": 49,
+      "denominacion": "Traumatismo cráneo encefálico moderado o grave",
+      "cie10": ["S09.9"],
+      "fuente": "CODIGOS SINA.jpg + ficha auge.minsal.cl PS 49 (DS 29/2025)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "numero": 50,
+      "denominacion": "Trauma ocular grave",
+      "cie10": ["S05.1"],
+      "fuente": "CODIGOS SINA.jpg + ficha auge.minsal.cl PS 50 (DS 29/2025)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "numero": 55,
+      "denominacion": "Gran quemado",
+      "cie10": ["T29.0"],
+      "fuente": "CODIGOS SINA.jpg + ficha auge.minsal.cl PS 55 (DS 29/2025)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "numero": 86,
+      "denominacion": "Atención integral de salud en agresión sexual aguda",
+      "cie10": ["Y05"],
+      "aclaraciones": [
+        {
+          "texto": "Acceden quienes declaran haber sido agredidos o evidencian lesiones agudas atribuibles a una agresión sexual en un plazo que no exceda las 72 horas, sin necesidad de un peritaje previo, en una unidad de urgencia hospitalaria o unidad clínica forense hospitalaria. La confirmación diagnóstica se realiza con la atención médica.",
+          "fuente": "NTMA (D.E. 57/2025) numeral 86.1, guarismo sustituido por el D.E. 32/2026; transcripción docs/2026-08-09-ntma-especificaciones-14-problemas-huap.md, pendiente validación",
+          "fecha": "2026-08-09"
+        },
+        {
+          "texto": "Todo el equipo clínico que atiende al usuario/a tiene la obligación de realizar la denuncia, según la Norma General Técnica para la atención de Víctimas de Violencia Sexual (2016) o sus actualizaciones.",
+          "fuente": "NTMA (D.E. 57/2025), especificaciones PS 86; transcripción 09-08-2026, pendiente validación",
+          "fecha": "2026-08-09"
+        }
+      ],
+      "fuente": "CODIGOS SINA.jpg + ficha auge.minsal.cl PS 86 (DS 29/2025)",
+      "fecha": "2026-07-30"
+    }
+  ]
+}

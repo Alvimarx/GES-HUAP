@@ -1,0 +1,29 @@
+{
+  "_meta": {
+    "descripcion": "Datos de contacto publicables de la Unidad GES del HUAP. Solo buzón institucional; nunca correos personales de funcionarios (regla de publicación en internet abierto).",
+    "fecha": "2026-08-12"
+  },
+  "unidad_ges": {
+    "correo": "ges@huap.online",
+    "anexos_internos": ["285221", "285214", "285200"],
+    "telefonos_externos": ["225685221", "225685214", "226085200"],
+    "nota_telefonos": "Los anexos internos funcionan solo desde la red telefónica del hospital; desde fuera o desde celular usar los números externos.",
+    "horario": "Lunes a jueves 07:30–17:30 · viernes 07:30–16:30",
+    "ubicacion": "1.er piso torre antigua, contigua a UTI",
+    "fuente": "Confirmado por Unidad GES, 08-2026; Manual de Organización y Funciones GES v01 (06/2025)",
+    "fecha": "2026-08-01"
+  },
+  "ley_urgencia": {
+    "responsable_administrativo": "Unidad de Admisión (Oficina 6)",
+    "responsable_clinico": "Unidad de Gestión de Pacientes",
+    "cobertura": "24/7",
+    "funcion": "Registrar y notificar en la plataforma de la Superintendencia de Salud (SIS) el ingreso de usuarios acogidos a la Ley de Urgencia por urgencia vital o riesgo de secuela funcional grave. Corre por una vía distinta al proceso GES.",
+    "fuente": "Confirmado por Unidad GES, 08-2026",
+    "fecha": "2026-08-01"
+  },
+  "fuera_de_horario": {
+    "valor": "{{FALTA: a quién recurre un médico fuera del horario de la unidad con una duda GES no urgente — fuente pendiente}}",
+    "fuente": null,
+    "fecha": null
+  }
+}
