@@ -1,12 +1,16 @@
-# Publica la landing GES en GitHub Pages.
+# Mantiene la rama `gh-pages` con el sitio construido, para GitHub Pages.
 #
-# El sitio se construye desde content/ + src/ en cada push: no se versiona
-# dist/. Mientras el contenido normativo siga marcado como pendiente de
-# validación por la Unidad GES, el build emite `noindex, nofollow` — la página
-# es un borrador y no debe aparecer en buscadores.
+# El sitio se construye desde content/ + src/ en cada push a las ramas de
+# abajo; dist/ no se versiona en la rama de trabajo. La rama `gh-pages` es
+# generada: no editarla a mano, se sobrescribe.
+#
+# ⚠ REQUIERE UN PASO MANUAL, UNA SOLA VEZ:
+#    Settings → Pages → Source: «Deploy from a branch» → gh-pages / (root)
+#    El token de Actions no puede crear el sitio de Pages por sí solo.
 #
 # ⚠ El sitio publicado en Pages es de acceso PÚBLICO aunque el repositorio sea
-# privado. No poner aquí nada que no pueda leer un tercero.
+#   privado. Mientras el contenido normativo siga marcado como pendiente de
+#   validación por la Unidad GES, el build emite `noindex, nofollow`.
 name: Publicar en GitHub Pages
 
 on:
@@ -17,17 +21,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# Un despliegue a la vez; no se cancela el que ya está corriendo.
 concurrency:
-  group: pages
+  group: gh-pages
   cancel-in-progress: false
 
 jobs:
-  construir:
+  publicar:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -46,21 +47,19 @@ jobs:
             exit 1
           fi
 
-      - name: Configurar Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
+      - name: Actualizar la rama gh-pages
+        run: |
+          set -e
+          cd dist
+          git init -q -b gh-pages
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Sitio construido desde ${GITHUB_SHA}
 
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-  desplegar:
-    needs: construir
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.despliegue.outputs.page_url }}
-    steps:
-      - id: despliegue
-        uses: actions/deploy-pages@v4
+          Generado por src/build.js. No editar aquí: se regenera en cada push.
+          Borrador — pendiente de validación por la Unidad GES."
+          git push -q --force \
+            "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
