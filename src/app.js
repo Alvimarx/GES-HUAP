@@ -7,7 +7,7 @@
  * El marcado que se genera aquí reproduce el del diseño: los estilos van en
  * línea, con los mismos valores, porque la página no tiene reset global y
  * cualquier cambio de caja altera el resultado. Al tocar este archivo,
- * comparar contra las capturas de referencia (docs/ y npm run check).
+ * comparar contra el diseño con las herramientas de tools/ (ver tools/README.md).
  */
 (function () {
   'use strict';
@@ -87,8 +87,8 @@
   function accionesDe(sel) {
     var comunes = (D.acciones_comunes[S.etapa] || []).filter(function (a) { return !a.ctx || a.ctx === S.ctx; });
     var extras = (sel.extras && sel.extras[S.etapa]) || [];
-    return extras.concat(comunes).map(function (a, i) {
-      var k = sel.ps + '.' + S.etapa + '.' + i + '.' + a.t.slice(0, 18);
+    return extras.concat(comunes).map(function (a) {
+      var k = sel.ps + '.' + S.etapa + '.' + a.t;
       return { k: k, t: a.t, d: a.d, done: !!S.checks[k] };
     });
   }
@@ -193,7 +193,7 @@
     var items = lista.map(function (p) {
       return '<button type="button" class="card-int" data-k="ps-' + p.ps + '" data-a="pick-ps" data-v="' + p.ps + '" style="' + ST.psBtn + '">' +
         '<span style="' + ST.cie + '">' + esc(p.cie.join(' · ')) + '</span>' +
-        '<span style="' + ST.psName + '">' + esc(p.nombre) + '</span>' +
+        '<span class="flex-min" style="' + ST.psName + '">' + esc(p.nombre) + '</span>' +
         (p.tiempo ? '<span style="' + ST.tiempo + '">min / horas</span>' : '') +
         '<span style="' + ST.caret + '" aria-hidden="true">›</span>' +
         '</button>';
@@ -219,7 +219,7 @@
     var items = D.etapas.map(function (e, i) {
       return '<button type="button" class="card-int" data-k="et-' + e.id + '" data-a="pick-etapa" data-v="' + e.id + '" style="' + ST.etBtn + '">' +
         '<span style="' + ST.etNum + '" aria-hidden="true">' + (i + 1) + '</span>' +
-        '<span style="flex:1">' +
+        '<span class="flex-min" style="flex:1">' +
           '<span style="' + ST.etName + '">' + esc(e.nombre) +
             (e.badge ? '<span style="' + ST.etBadge + '">' + esc(e.badge) + '</span>' : '') +
           '</span>' +
@@ -232,7 +232,7 @@
     return '<div style="' + ST.pad + '">' +
       '<div style="' + ST.selBar + '">' +
         '<span style="' + ST.selCie + '">' + esc(sel.cie.join(' · ')) + '</span>' +
-        '<span style="' + ST.selName + '">' + esc(sel.nombre) + '</span>' +
+        '<span class="flex-min" style="' + ST.selName + '">' + esc(sel.nombre) + '</span>' +
         '<button type="button" data-k="cambiar" data-a="volver-problema" style="' + ST.cambiar + '">Cambiar</button>' +
       '</div>' +
       '<div style="' + ST.label + '" id="ctx-label">¿Dónde atiende al paciente?</div>' +
@@ -254,7 +254,7 @@
     var accHtml = accs.map(function (a) {
       return '<button type="button" data-k="acc-' + esc(a.k) + '" data-a="toggle" data-v="' + esc(a.k) + '" aria-pressed="' + a.done + '" style="' + accRow(a.done) + '">' +
         '<span style="' + accBox(a.done) + '" aria-hidden="true">' + (a.done ? TICK : '') + '</span>' +
-        '<span style="flex:1">' +
+        '<span class="flex-min" style="flex:1">' +
           '<span style="' + ST.accT + '">' + esc(a.t) + '</span>' +
           '<span style="' + ST.accD + '">' + esc(a.d) + '</span>' +
         '</span>' +
@@ -270,7 +270,7 @@
       return '<div style="' + ST.plazoCard + '">' +
         '<div style="' + ST.plazoRow + '">' +
           '<span style="' + chipPlazo(z.critico) + '">' + esc(fmtPlazo(z)) + '</span>' +
-          '<span style="flex:1">' +
+          '<span class="flex-min" style="flex:1">' +
             '<span style="' + ST.plazoHito + '">' + esc(z.hito) + '</span>' +
             '<span style="' + ST.plazoDesde + '">desde ' + esc(z.desde) + '</span>' +
           '</span>' +
@@ -392,7 +392,7 @@
     render();
     var h = document.getElementById('paso-titulo');
     if (h) h.focus({ preventScroll: true });
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    try { window.scrollTo({ top: 0, behavior: 'auto' }); } catch (e) { window.scrollTo(0, 0); }
   }
 
   // ---------------------------------------------------------------- eventos
@@ -405,7 +405,9 @@
     if (a === 'pick-ps') {
       var ps = +v;
       // Otro problema es, en la práctica, otro paciente: la lista parte limpia.
-      if (S.ps !== ps) { saveChecks({}); S.calc = {}; }
+      // En la primera selección no hay paciente anterior, así que se conserva
+      // lo que sobreviva en sessionStorage a una recarga.
+      if (S.ps !== null && S.ps !== ps) { saveChecks({}); S.calc = {}; }
       S.ps = ps;
       goto('etapa');
     } else if (a === 'volver-problema') {
@@ -463,7 +465,15 @@
 
   app.addEventListener('change', function (ev) {
     var el = ev.target;
-    if (el.getAttribute('data-a') === 'calc') { S.calc[el.getAttribute('data-v')] = el.value; render(); }
+    if (el.getAttribute('data-a') === 'calc') {
+      var id = el.getAttribute('data-v');
+      S.calc[id] = el.value;
+      render();
+      var chip = app.querySelector('#calc-' + id.replace(/[^\w-]/g, ''));
+      var out = chip && chip.parentNode ? chip.parentNode.textContent : '';
+      var lim = out.indexOf('límite:');
+      if (lim >= 0) anunciar(out.slice(lim).trim());
+    }
   });
 
   render();

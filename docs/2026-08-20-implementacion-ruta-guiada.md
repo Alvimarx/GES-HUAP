@@ -136,7 +136,40 @@ CLAUDE.md §5.7. Ambos quedaron actualizados, con nota de la corrección.
 en Seguimiento gana la tarjeta de ayudas técnicas, y el caso «no puede firmar» ocupa una línea más. Todo lo
 demás sigue verificándose idéntico.
 
-## 7. Hallazgos de contraste — decisión pendiente de la unidad
+## 7. Defectos de implementación corregidos
+
+Además del contenido, la revisión encontró defectos del código. Los relevantes:
+
+- **A 320 px la página se desplazaba en horizontal** (WCAG 1.4.10, nivel AA): el nombre del problema no
+  cabía entre las dos píldoras y empujaba la tarjeta fuera de la pantalla. Además la barra fija de contacto
+  ocupa tres líneas a ese ancho y tapaba el final del contenido, que reserva 96 px. Corregido **solo bajo
+  360 px**: por encima cambiaría el ajuste de línea y la página dejaría de ser idéntica al diseño.
+- **Un `ps` o una `etapa` mal escritos en `content/` borraban una garantía en silencio** — el filtro de la
+  vista simplemente no encontraba nada. Ahora el build valida problemas, etapas, unidades, ids repetidos y
+  campos obligatorios, y **se cae sin generar nada** si algo no cuadra. Es la protección que necesita un
+  archivo que edita la unidad a mano.
+- **Si `app.js` fallaba, la página quedaba en blanco**, porque el documento lineal se oculta al activarse
+  el JavaScript. Ahora un guardia al final del HTML comprueba que la ruta guiada se haya dibujado y, si no,
+  vuelve a mostrar el documento completo.
+- **La clave de la lista de verificación incluía el índice de la acción**, que cambia al filtrar por
+  contexto: la marca podía perderse al pasar de Urgencia a Piso. Ahora la clave usa el título completo.
+- **El resultado de la calculadora de plazos no se anunciaba** a lectores de pantalla, igual que el
+  contador. Ambos pasan por la región de anuncios persistente.
+- El buscador se emitía como `type="search"`, que en Safari dibuja un botón de limpiar que el diseño no
+  tiene. Vuelve a ser un campo de texto simple.
+- `padStart` y `closest` sustituidos o con respaldo: `app.js` es ES5 completo, para los equipos de box que
+  la spec advierte que no están actualizados.
+- El texto «Sin garantía de oportunidad después del alta» lo generaba el código; pasó a `content/`, porque
+  es una afirmación normativa y la unidad debe poder editarla.
+- Las fechas se muestran en un solo formato (dd-mm-aaaa) y el procedimiento común del documento impreso
+  lleva su línea de fuentes.
+
+**Anexos internos en un sitio abierto — decisión pendiente.** La ruta guiada muestra «anexos 285221 ·
+285214 · 285200», que no funcionan desde fuera del hospital, aunque el botón «Llamar» sí marca el número
+externo. Es exactamente el punto que CLAUDE.md §11 dejó por confirmar antes de publicar. No se cambió el
+texto del diseño; el documento lineal sí lista los tres números externos. **Requiere decisión de la unidad.**
+
+## 8. Hallazgos de contraste — decisión pendiente de la unidad
 
 La spec §8 exige verificación WCAG antes de publicar. Se midieron 32 pares de color del diseño:
 **26 cumplen AA, 6 no.** No se corrigió ninguno, porque cambiar un color sería cambiar el diseño.
@@ -150,11 +183,17 @@ La spec §8 exige verificación WCAG antes de publicar. Se midieron 32 pares de 
 | Píldora «UNIDAD GES · HUAP» | 3,91 | 4,5 | Ídem |
 | Chevron «›» de las tarjetas | 2,49 | 3,0 | Decorativo (`aria-hidden`), con la tarjeta ya rotulada: exento en la práctica |
 
+Se corrigieron además, por estar en la capa propia y no en el diseño, el color de las líneas «Fuente:» del
+documento lineal (de 2,49:1 a 5,36:1) y la impresión, que ahora sale toda en negro sobre blanco.
+
+**Verificación del contraste tras los cambios:** los seis pares de la tabla siguen siendo los únicos bajo AA;
+no se introdujo ninguno nuevo.
+
 **Recomendación:** subir la opacidad de la bajada y de la línea de vigencia al 100 % y oscurecer
 `#8FA6C6` a `#6B82A6` resolvería los cinco casos no decorativos con un cambio mínimo. **Requiere visto
 bueno**, porque toca el diseño.
 
-## 8. Arquitectura
+## 9. Arquitectura
 
 ```
 content/*.json     Datos normativos. Es lo único que edita la unidad.
@@ -171,7 +210,7 @@ Construir: `node src/build.js`. El build **falla** si algún marcador `{{FALTA: 
 **Para cambiar un plazo** se edita `content/plazos-intrahospitalarios.json` o `content/plazos-alta.json`
 y se reconstruye. No se toca código. Cada registro lleva su `fuente` y su `fecha`.
 
-## 9. Antes de publicar (spec §8)
+## 10. Antes de publicar (spec §8)
 
 - [ ] Validación de la Unidad GES: plazos revalidados, criterios NTMA transcritos y textos de la página.
 - [ ] Decisión sobre los seis pares de contraste del §6.

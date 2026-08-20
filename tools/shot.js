@@ -31,6 +31,13 @@ async function clickText(page, txt) {
     page.on('pageerror', (e) => errs.push('PAGEERROR ' + e.message));
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.waitForTimeout(1200);
+    // El distintivo «Notificar ahora» parpadea: sin congelar las animaciones,
+    // dos capturas del MISMO documento caen en fases distintas y el comparador
+    // marca diferencias que no existen.
+    await page.addStyleTag({
+      content: '*,*::before,*::after{animation:none !important;transition:none !important}'
+    });
+    await page.waitForTimeout(120);
     await page.evaluate(() => document.fonts && document.fonts.ready);
     await page.waitForTimeout(300);
 

@@ -20,6 +20,10 @@ const DIST = path.join(ROOT, 'dist');
 const read = (p) => fs.readFileSync(p, 'utf8');
 const json = (name) => JSON.parse(read(path.join(CONTENT, name)));
 
+// Las fechas se guardan en content/ como aaaa-mm-dd y se muestran dd-mm-aaaa,
+// que es el formato de los memos y afiches de la unidad.
+const fecha = (iso) => (/^\d{4}-\d{2}-\d{2}$/.test(iso || '') ? iso.split('-').reverse().join('-') : iso);
+
 const esc = (s) =>
   String(s == null ? '' : s)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -62,9 +66,58 @@ const problemas = problemasSrc.problemas.map((p) => {
   };
 });
 
-const faltantes = problemas.filter((p) => !intraMap.has(p.ps) && !altaMap.has(p.ps));
-if (faltantes.length) {
-  throw new Error('Problemas sin plazos en content/: ' + faltantes.map((p) => p.ps).join(', '));
+// --------------------------------------------------------------- validación
+// Un `ps` o una `etapa` mal escritos harían desaparecer una garantía sin ruido:
+// el filtro de la vista simplemente no encontraría nada. Aquí el build se cae.
+const ETAPAS_VALIDAS = flujo.etapas.map((e) => e.id);
+const UNIDADES = ['min', 'h', 'd', 'ya'];
+const errores = [];
+const psConocidos = new Set(problemasSrc.problemas.map((p) => p.ps));
+const idsVistos = new Set();
+
+const revisarGrupo = (grupo, archivo, etapasPermitidas) => {
+  if (!psConocidos.has(grupo.ps)) {
+    errores.push(`${archivo}: el problema ${grupo.ps} no existe en problemas.json`);
+    return;
+  }
+  for (const z of grupo.plazos || []) {
+    const d = `${archivo} · ps ${grupo.ps} · plazo ${z.id || '(sin id)'}`;
+    if (!z.id) errores.push(`${d}: falta el campo id`);
+    else if (idsVistos.has(z.id)) errores.push(`${d}: id repetido`);
+    else idsVistos.add(z.id);
+    if (!etapasPermitidas.includes(z.etapa)) {
+      errores.push(`${d}: etapa «${z.etapa}» no válida aquí (se espera ${etapasPermitidas.join(', ')})`);
+    }
+    if (!UNIDADES.includes(z.u)) errores.push(`${d}: unidad «${z.u}» no válida (${UNIDADES.join(', ')})`);
+    if (z.u !== 'ya' && typeof z.n !== 'number') errores.push(`${d}: el campo n debe ser un número`);
+    if (!z.hito) errores.push(`${d}: falta el hito`);
+    if (!z.desde) errores.push(`${d}: falta el campo «desde»`);
+  }
+};
+
+intra.plazos.forEach((g) => revisarGrupo(g, 'plazos-intrahospitalarios.json', ETAPAS_VALIDAS.filter((e) => e !== 'seguimiento')));
+alta.plazos.forEach((g) => revisarGrupo(g, 'plazos-alta.json', ['seguimiento']));
+
+for (const p of problemasSrc.problemas) {
+  for (const etapa of Object.keys(p.extras || {})) {
+    if (!ETAPAS_VALIDAS.includes(etapa)) {
+      errores.push(`problemas.json · ps ${p.ps}: la etapa «${etapa}» de extras no existe en flujo-notificacion.json`);
+    }
+  }
+  if (!p.denominacion_oficial) errores.push(`problemas.json · ps ${p.ps}: falta denominacion_oficial`);
+}
+for (const etapa of Object.keys(flujo.acciones_comunes)) {
+  if (!ETAPAS_VALIDAS.includes(etapa)) {
+    errores.push(`flujo-notificacion.json: la etapa «${etapa}» de acciones_comunes no existe`);
+  }
+}
+const sinPlazos = problemas.filter((p) => !p.plazos.length);
+if (sinPlazos.length) errores.push('Problemas sin ningún plazo: ' + sinPlazos.map((p) => p.ps).join(', '));
+
+if (errores.length) {
+  console.error('El contenido de content/ tiene errores; no se generó nada:\n');
+  for (const e of errores) console.error('  · ' + e);
+  process.exit(1);
 }
 
 // Datos que necesita la ruta guiada en el navegador. Se envía solo lo que la
@@ -89,7 +142,7 @@ const U = { min: 'min', h: 'h', d: 'días' };
 const fmtPlazo = (z) => (z.u === 'ya' ? 'Inmediata' : `${z.n} ${U[z.u]}`);
 
 const accsHtml = (accs) =>
-  `<ul class="doc-accs">${accs
+  `<ul class="doc-accs" role="list">${accs
     .map(
       (a) =>
         `<li><strong>${esc(a.t)}</strong>${a.ctx ? ` <em class="doc-ctx">(solo ${esc(a.ctx)})</em>` : ''}<br>${esc(a.d)}</li>`
@@ -106,7 +159,7 @@ function docEtapa(p, etapa) {
   const accHtml = accs.length ? accsHtml(accs) : '';
 
   const plazoHtml = plazos.length
-    ? `<ul class="doc-plazos">${plazos
+    ? `<ul class="doc-plazos" role="list">${plazos
         .map(
           (z) =>
             `<li><span class="doc-plazo-chip${z.critico ? ' doc-critico' : ''}">${esc(fmtPlazo(z))}</span> ` +
@@ -166,6 +219,7 @@ notificación son responsabilidad del médico tratante (Memo N°49).</p>
       return `<div class="doc-etapa"><h3>${i + 1}. ${esc(e.nombre)} — ${esc(e.desc)}${e.badge ? ` <em>(${esc(e.badge)})</em>` : ''}</h3>${comunes.length ? accsHtml(comunes) : ''}</div>`;
     })
     .join('')}
+  <p class="doc-fuente">Fuentes: ${esc(flujo.fuentes)}</p>
 </section>
 
 <section class="doc-sec">
@@ -196,16 +250,16 @@ notificación son responsabilidad del médico tratante (Memo N°49).</p>
   <h2>Vigencia y fuentes</h2>
   <ul>
     <li><strong>${esc(vigencia.decreto_ges.nombre)}.</strong> ${esc(vigencia.decreto_ges.problemas_garantizados)} problemas garantizados.
-      ${esc(vigencia.decreto_ges.publicacion_detalle)}, ${esc(vigencia.decreto_ges.publicacion_extracto)}.
-      Vigencia informada por MINSAL: ${esc(vigencia.decreto_ges.vigencia_informada)}. <em>${esc(vigencia.decreto_ges.nota_vigencia)}</em></li>
-    <li><strong>${esc(vigencia.ntma.nombre)}</strong>, de ${esc(vigencia.ntma.dictacion)}.
-      ${vigencia.ntma.modificaciones.map((m) => `Modificado por ${esc(m.nombre)} (${esc(m.dictacion)}): ${esc(m.alcance_huap)}`).join(' ')}</li>
-    <li><strong>${esc(vigencia.circular_notificacion.nombre)}</strong>, vigente desde ${esc(vigencia.circular_notificacion.vigencia)}. <em>${esc(vigencia.circular_notificacion.nota)}</em></li>
+      ${esc(vigencia.decreto_ges.publicacion_detalle)}, ${esc(fecha(vigencia.decreto_ges.publicacion_extracto))}.
+      Vigencia informada por MINSAL: ${esc(fecha(vigencia.decreto_ges.vigencia_informada))}. <em>${esc(vigencia.decreto_ges.nota_vigencia)}</em></li>
+    <li><strong>${esc(vigencia.ntma.nombre)}</strong>, de ${esc(fecha(vigencia.ntma.dictacion))}.
+      ${vigencia.ntma.modificaciones.map((m) => `Modificado por ${esc(m.nombre)} (${esc(fecha(m.dictacion))}): ${esc(m.alcance_huap)}`).join(' ')}</li>
+    <li><strong>${esc(vigencia.circular_notificacion.nombre)}</strong>, vigente desde ${esc(fecha(vigencia.circular_notificacion.vigencia))}. <em>${esc(vigencia.circular_notificacion.nota)}</em></li>
     <li><strong>${esc(vigencia.ley.nombre)}.</strong> ${esc(vigencia.ley.nota)} <a href="${esc(vigencia.ley.fuente)}">${esc(vigencia.ley.fuente)}</a></li>
     <li>Fichas oficiales por problema de salud: <a href="https://auge.minsal.cl/">https://auge.minsal.cl/</a></li>
   </ul>
   <p class="doc-warn">${esc(vigencia.validacion)}. ${esc(vigencia.revision)}.</p>
-  <p class="doc-fuente">Última revisión normativa: ${esc(vigencia.ultima_revision_normativa)}. ${esc(vigencia.linea_cabecera)}.</p>
+  <p class="doc-fuente">Última revisión normativa: ${esc(fecha(vigencia.ultima_revision_normativa))}. ${esc(vigencia.linea_cabecera)}.</p>
 </section>`;
 
 // ------------------------------------------------------------------ salida
@@ -235,15 +289,20 @@ if (sinResolver.length) {
   throw new Error('Marcadores sin valor en shell.html: ' + [...new Set(sinResolver)].join(', '));
 }
 
+// Un marcador visible en producción sería una garantía sin fuente publicada:
+// no se escribe nada.
+const publicadosPrevios = (out.match(/\{\{FALTA:[^}]*\}\}/g) || []).length;
+if (publicadosPrevios) {
+  console.error(`No se generó nada: ${publicadosPrevios} marcador(es) {{FALTA: …}} llegarían a la página.`);
+  process.exit(1);
+}
+
 fs.rmSync(DIST, { recursive: true, force: true });
 fs.mkdirSync(path.join(DIST, 'fonts'), { recursive: true });
 fs.writeFileSync(path.join(DIST, 'index.html'), out);
 for (const f of fs.readdirSync(path.join(SRC, 'assets', 'fonts'))) {
   fs.copyFileSync(path.join(SRC, 'assets', 'fonts', f), path.join(DIST, 'fonts', f));
 }
-
-// Un marcador visible en producción sería una garantía sin fuente publicada.
-const publicados = (out.match(/\{\{FALTA:[^}]*\}\}/g) || []).length;
 
 // Los marcadores que viven en content/ sin llegar a la página siguen siendo
 // datos pendientes: se listan para que no se den por resueltos (CLAUDE.md §1.2).
@@ -253,6 +312,13 @@ for (const f of fs.readdirSync(CONTENT).filter((n) => n.endsWith('.json'))) {
     enContent.push(`${f}: ${m}`);
   }
 }
+const sinRespaldo = [];
+for (const [etapa, accs] of Object.entries(flujo.acciones_comunes)) {
+  for (const a of accs) {
+    if (a._pendiente_validacion) sinRespaldo.push(`${etapa}: «${a.t}» — ${a._pendiente_validacion}`);
+  }
+}
+
 const noValidados = ['problemas.json', 'plazos-intrahospitalarios.json', 'plazos-alta.json']
   .filter((f) => /pendiente de validación/i.test(read(path.join(CONTENT, f))));
 
@@ -266,10 +332,10 @@ if (enContent.length) {
   console.log(`\ndatos pendientes en content/ (no se publican, siguen abiertos):`);
   for (const p of enContent) console.log(`  · ${p}`);
 }
+if (sinRespaldo.length) {
+  console.log(`\ncontenido publicado SIN respaldo documental — confirmar o retirar antes de publicar:`);
+  for (const x of sinRespaldo) console.log(`  · ${x}`);
+}
 if (noValidados.length) {
   console.log(`\ncontenido marcado como pendiente de validación por la Unidad GES: ${noValidados.join(', ')}`);
-}
-if (publicados) {
-  console.error(`\n⚠  ${publicados} marcador(es) {{FALTA: …}} en la salida — no publicar hasta resolverlos.`);
-  process.exitCode = 1;
 }

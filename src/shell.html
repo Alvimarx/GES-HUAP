@@ -40,20 +40,36 @@
 </div>
 </main>
 
-<div class="dock" style="position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;pointer-events:none">
+<footer class="dock" style="position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;pointer-events:none">
   <div style="width:100%;max-width:600px;background:#0C2B5E;color:#fff;padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px;pointer-events:auto">
     <a href="tel:{{TEL}}" style="flex:none;background:#C9F2E3;color:#0C2B5E;text-decoration:none;font-weight:900;font-size:13px;padding:9px 16px;border-radius:999px">Llamar</a>
     <a href="mailto:{{CORREO}}" style="flex:none;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;text-decoration:none;font-weight:800;font-size:13px;padding:8px 16px;border-radius:999px">{{CORREO}}</a>
     <span style="font-size:10.5px;font-weight:600;opacity:.75;line-height:1.3">Anexos {{ANEXOS}}<br>{{HORARIO}}</span>
   </div>
-</div>
+</footer>
 
 </div>
 </div>
+
+<!-- Pie de impresión: Chrome repite los elementos position:fixed en cada
+     página, así que la vigencia queda al pie de todas las hojas (spec §5). -->
+<div class="print-footer" aria-hidden="true">{{VIGENCIA}} · Unidad GES HUAP · {{CORREO}} · {{BADGE}}</div>
 
 <script type="application/json" id="ges-data">{{DATA}}</script>
 <script>
 {{APP}}
+</script>
+<script>
+// Si la ruta guiada no llegó a dibujarse — error de JavaScript, datos corruptos,
+// navegador que no la soporta — se muestra el documento completo en vez de
+// dejar la página en blanco.
+(function () {
+  var a = document.getElementById('app');
+  if (!a || !a.firstChild) {
+    var r = document.documentElement;
+    r.className = r.className.replace(/(^|\s)js(\s|$)/g, ' ');
+  }
+})();
 </script>
 </body>
 </html>

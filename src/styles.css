@@ -50,6 +50,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, [href]:focus-visible
 }
 #paso-titulo:focus { outline: none; }
 
+/* --- Reflujo en pantallas angostas (WCAG 1.4.10) ---------------------------
+   A 320 px, el nombre del problema no cabe entre las dos píldoras y la tarjeta
+   empujaba la página a desplazamiento horizontal. Un elemento flex no se
+   encoge por debajo de su contenido salvo que se lo permita. Esto no cambia
+   nada a partir de 360 px, donde el texto ya cabía: la regla va acotada a las
+   pantallas donde el desbordamiento existe, porque más arriba cambiaría el
+   ajuste de línea y la página dejaría de ser idéntica al diseño.
+
+   Bajo 360 px, además, la barra fija de contacto ocupa tres líneas y tapaba el
+   final del contenido, que reserva 96 px. */
+@media (max-width: 359px) {
+  .flex-min { min-width: 0; overflow-wrap: break-word; }
+  .p-col { padding-bottom: 160px !important; }
+}
+
 /* Texto solo para lectores de pantalla. */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
@@ -82,7 +97,7 @@ html:not(.js) #app { display: none; }
 .doc-corr, .doc-warn { color: #8A1E44; }
 .doc-warn { background: #FCE3EA; border-radius: 10px; padding: 8px 10px; font-size: 12px; font-weight: 700; }
 .doc-post { background: #EDF2F9; border: 1.5px solid #D9E5F3; border-radius: 12px; padding: 10px 12px; font-size: 12.5px; }
-.doc-fuente { font-size: 11px; font-weight: 600; color: #8FA6C6; }
+.doc-fuente { font-size: 11px; font-weight: 600; color: #5A6B8C; }
 .doc-casos dt { font-weight: 800; color: #0C2B5E; margin-top: 8px; }
 .doc-casos dd { margin: 2px 0 0; font-size: 12.5px; }
 
@@ -94,12 +109,23 @@ html:not(.js) #app { display: none; }
    La página imprime como documento de consulta completo: los 14 problemas con
    todos sus momentos, plazos y criterios. Los bloques plegables del documento
    van abiertos. */
+/* El pie de impresión solo existe en el papel. */
+.print-footer { display: none; }
+
 @media print {
-  @page { margin: 14mm 12mm; }
+  /* El margen inferior deja aire para el pie fijo. Chrome recorta los
+     elementos fijos al área de contenido, así que el pie no puede vivir en el
+     margen: se comprueba con tools/print-check.js que el cuerpo no lo alcance. */
+  @page { margin: 14mm 12mm 22mm; }
 
   html, body { background: #fff !important; color: #000; font-size: 10.5pt; }
   #app, .dock, .no-print { display: none !important; }
   #doc { display: block !important; }
+
+  .print-footer {
+    display: block; position: fixed; bottom: 0; left: 0; right: 0; background: #fff;
+    font-size: 8pt; color: #000; border-top: .5pt solid #000; padding-top: 2pt;
+  }
 
   .p-wrap { min-height: 0 !important; display: block !important; }
   .p-col { max-width: none !important; width: auto !important; padding: 0 !important; }
@@ -113,6 +139,9 @@ html:not(.js) #app { display: none; }
   h2, h3 { break-after: avoid; page-break-after: avoid; }
 
   .doc-plazo-chip { border: 1pt solid #000 !important; background: none !important; color: #000 !important; }
+  /* En papel todo va en negro: se imprime en blanco y negro con frecuencia. */
+  #doc, .doc-fuente, .doc-warn, .doc-corr, .doc-ctx, #doc h2, #doc h3, #doc h4 { color: #000 !important; }
+  .doc-warn { background: none !important; border: .5pt solid #000; }
   .doc-critico { font-weight: 900; text-decoration: underline; }
 
   details, details[open] > * { display: block !important; }
