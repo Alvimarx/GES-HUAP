@@ -1,0 +1,66 @@
+# Publica la landing GES en GitHub Pages.
+#
+# El sitio se construye desde content/ + src/ en cada push: no se versiona
+# dist/. Mientras el contenido normativo siga marcado como pendiente de
+# validación por la Unidad GES, el build emite `noindex, nofollow` — la página
+# es un borrador y no debe aparecer en buscadores.
+#
+# ⚠ El sitio publicado en Pages es de acceso PÚBLICO aunque el repositorio sea
+# privado. No poner aquí nada que no pueda leer un tercero.
+name: Publicar en GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - claude/ges-huap-specs-design-alignment-tdgd61
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un despliegue a la vez; no se cancela el que ya está corriendo.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  construir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Construir el sitio
+        run: node src/build.js
+
+      - name: Comprobar que no se publiquen marcadores pendientes
+        run: |
+          if grep -q '{{FALTA' dist/index.html; then
+            echo "Hay marcadores {{FALTA: …}} en la salida; no se publica."
+            exit 1
+          fi
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  desplegar:
+    needs: construir
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - id: despliegue
+        uses: actions/deploy-pages@v4

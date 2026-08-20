@@ -264,6 +264,9 @@ notificación son responsabilidad del médico tratante (Memo N°49).</p>
 </section>`;
 
 // ------------------------------------------------------------------ salida
+const noValidados = ['problemas.json', 'plazos-intrahospitalarios.json', 'plazos-alta.json']
+  .filter((f) => /pendiente de validación/i.test(read(path.join(CONTENT, f))));
+
 // Un comentario CSS mal cerrado se traga la regla siguiente sin avisar: el
 // navegador la descarta en silencio y el fallo solo se ve comparando píxeles.
 const css = read(path.join(SRC, 'styles.css'));
@@ -274,7 +277,13 @@ if (abre !== cierra) {
   process.exit(1);
 }
 
+// Mientras el contenido normativo siga marcado como pendiente de validación,
+// la página se publica con `noindex`: es un borrador y no debe aparecer en
+// buscadores ni ser citable por terceros (spec §1, CLAUDE.md §2).
+const ROBOTS = noValidados.length ? 'noindex, nofollow' : 'index, follow';
+
 const SUSTITUCIONES = {
+  ROBOTS: ROBOTS,
   TITLE: esc('¿Qué hago con mi paciente GES? · Unidad GES HUAP'),
   STYLES: css.trim(),
   BADGE: esc(vigencia.etiqueta_estado),
@@ -311,6 +320,7 @@ if (publicadosPrevios) {
 fs.rmSync(DIST, { recursive: true, force: true });
 fs.mkdirSync(path.join(DIST, 'fonts'), { recursive: true });
 fs.writeFileSync(path.join(DIST, 'index.html'), out);
+fs.writeFileSync(path.join(DIST, '.nojekyll'), '');
 for (const f of fs.readdirSync(path.join(SRC, 'assets', 'fonts'))) {
   fs.copyFileSync(path.join(SRC, 'assets', 'fonts', f), path.join(DIST, 'fonts', f));
 }
@@ -330,12 +340,11 @@ for (const [etapa, accs] of Object.entries(flujo.acciones_comunes)) {
   }
 }
 
-const noValidados = ['problemas.json', 'plazos-intrahospitalarios.json', 'plazos-alta.json']
-  .filter((f) => /pendiente de validación/i.test(read(path.join(CONTENT, f))));
 
 const kb = (n) => (n / 1024).toFixed(1) + ' KB';
 const fontLatin = fs.statSync(path.join(DIST, 'fonts', 'nunito-latin.woff2')).size;
 console.log(`dist/index.html  ${kb(Buffer.byteLength(out))}`);
+console.log(`robots: ${ROBOTS}`);
 console.log(`carga inicial en español (html + subconjunto latino)  ${kb(Buffer.byteLength(out) + fontLatin)}`);
 console.log(`problemas: ${problemas.length} · plazos: ${problemas.reduce((n, p) => n + p.plazos.length, 0)}`);
 
