@@ -1,12 +1,14 @@
 {
   "_meta": {
-    "descripcion": "Vigencia del marco normativo que sustenta el contenido publicado. El build debe estampar ultima_revision_normativa en la cabecera y el pie de impresión de toda pieza con contenido normativo.",
-    "estado_validacion": "pendiente — la Unidad GES no ha validado los plazos revalidados ni la transcripción NTMA; no publicar sin su visto bueno",
-    "fecha": "2026-08-12"
+    "descripcion": "Vigencia del marco normativo y estado de validación. El build estampa `linea_cabecera` en la cabecera y en el pie de impresión de toda pieza con contenido normativo.",
+    "fecha": "2026-08-20"
   },
+  "linea_cabecera": "DS N°29/2025 · NTMA D.E. 57/2025 mod. 32/2026 · revisado 30-07-2026",
+  "etiqueta_estado": "Borrador — pendiente validación Unidad GES",
   "ultima_revision_normativa": "2026-07-30",
   "decreto_ges": {
     "nombre": "Decreto Supremo N° 29, de 2025, Ministerio de Salud (Subsecretaría de Salud Pública)",
+    "resumen": "DS N°29/2025 · 90 problemas GES · vigencia 01-12-2025",
     "problemas_garantizados": 90,
     "dictacion": "2025-05-30",
     "toma_razon": "2025-11-25",
@@ -15,11 +17,12 @@
     "publicacion_detalle": "Diario Oficial N° 44.311, CVE 2734505 (publicación en extracto)",
     "vigencia_informada": "2025-12-01",
     "nota_vigencia": "Fecha informada por MINSAL; el extracto del Diario Oficial no la consigna. Confirmar en el texto íntegro del decreto antes de publicarla como fecha oficial.",
-    "fuente": "Extracto Diario Oficial N° 44.311 (28-11-2025); auge.minsal.cl; informe docs/2026-07-30-revalidacion-plazos-DS29-2025.md",
+    "fuente": "Extracto Diario Oficial N° 44.311 (28-11-2025); auge.minsal.cl; docs/2026-07-30-revalidacion-plazos-DS29-2025.md",
     "fecha": "2026-07-30"
   },
   "ntma": {
     "nombre": "Decreto Exento N° 57, de 2025, MINSAL — Normas de carácter técnico médico y administrativo para el cumplimiento de las Garantías Explícitas en Salud de la ley N° 19.966",
+    "resumen": "NTMA: D.E. N°57/2025, mod. D.E. N°32/2026",
     "dictacion": "2025-11-26",
     "modificaciones": [
       {
@@ -44,5 +47,7 @@
     "nota": "El Artículo 24° funda el Formulario de constancia de información al paciente GES.",
     "fuente": "https://bcn.cl/2fckl",
     "fecha": "2026-07-30"
-  }
+  },
+  "revision": "Plazos revalidados contra fichas auge.minsal.cl el 30-07-2026",
+  "validacion": "Contenido pendiente de validación por la Unidad GES — no publicar"
 }

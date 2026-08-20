@@ -1,155 +1,392 @@
 {
   "_meta": {
-    "descripcion": "Garantías de oportunidad que corren dentro del hospital (diagnóstico, tratamiento y rehabilitación hospitalizada), por problema de salud. Son los plazos que HUAP puede incumplir por sí mismo y no están difundidos en ningún material actual.",
-    "estado_validacion": "revalidado contra fichas oficiales auge.minsal.cl (DS 29/2025) el 30-07-2026; pendiente validación de la Unidad GES — no publicar sin su visto bueno",
-    "fuente_general": "Fichas auge.minsal.cl por problema de salud (DS 29/2025), descargadas 30-07-2026; informe docs/2026-07-30-revalidacion-plazos-DS29-2025.md",
-    "fecha": "2026-08-12"
+    "descripcion": "Garantías de oportunidad que corren dentro del hospital: sospecha, confirmación y hospitalización. Son los plazos que HUAP puede incumplir por sí mismo y que ningún material actual difunde.",
+    "campos": "`n` es la cantidad y `u` la unidad: 'min' minutos · 'h' horas · 'd' días · 'ya' inmediata. `critico` marca el plazo que se juega en minutos u horas. `etapa` debe ser sospecha, confirmacion u hospitalizacion.",
+    "estado_validacion": "Revalidado contra las fichas oficiales de auge.minsal.cl (DS 29/2025) el 30-07-2026. Pendiente de validación por la Unidad GES — no publicar.",
+    "fuente_general": "Fichas auge.minsal.cl por problema de salud (DS 29/2025); docs/2026-07-30-revalidacion-plazos-DS29-2025.md",
+    "fecha": "2026-08-20"
   },
   "plazos": [
     {
-      "numero": 5,
+      "ps": 5,
       "problema": "Infarto agudo del miocardio",
-      "garantias": [
-        { "hito": "ECG en urgencia", "plazo": "30 minutos", "desde": "la sospecha" },
-        { "hito": "Trombólisis", "plazo": "30 minutos", "desde": "la confirmación de supradesnivel ST" }
+      "plazos": [
+        {
+          "id": "p5-ecg",
+          "etapa": "sospecha",
+          "hito": "ECG en urgencia",
+          "n": 30,
+          "u": "min",
+          "desde": "la sospecha (primera atención clínica)",
+          "critico": true
+        },
+        {
+          "id": "p5-tro",
+          "etapa": "confirmacion",
+          "hito": "Trombólisis si hay SDST",
+          "n": 30,
+          "u": "min",
+          "desde": "la confirmación diagnóstica",
+          "critico": true,
+          "nota": "Inclusión: SDST con <24 h desde el inicio de síntomas (ideal <12 h)."
+        }
       ],
-      "fuente": "Ficha auge.minsal.cl PS 5 (DS 29/2025)",
+      "fuente": "Ficha PS 5 auge.minsal.cl (DS 29/2025) · NTMA pp. 34–35",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 6,
+      "ps": 6,
       "problema": "Diabetes mellitus tipo 1",
-      "garantias": [
-        { "hito": "Glicemia", "plazo": "30 minutos", "desde": "la atención en urgencia por sospecha de descompensación" },
-        { "hito": "Tratamiento", "plazo": "24 horas", "desde": "la confirmación" }
+      "plazos": [
+        {
+          "id": "p6-gli",
+          "etapa": "sospecha",
+          "hito": "Glicemia en urgencia",
+          "n": 30,
+          "u": "min",
+          "desde": "la atención de urgencia por sospecha de descompensación",
+          "critico": true
+        },
+        {
+          "id": "p6-tto",
+          "etapa": "confirmacion",
+          "hito": "Inicio de tratamiento",
+          "n": 24,
+          "u": "h",
+          "desde": "la confirmación diagnóstica"
+        }
       ],
-      "fuente": "Ficha auge.minsal.cl PS 6 (DS 29/2025)",
+      "fuente": "Ficha PS 6 · NTMA pp. 36–37",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 18,
+      "ps": 18,
       "problema": "VIH/SIDA",
-      "garantias": [
-        { "hito": "Diagnóstico", "plazo": "45 días", "desde": "la sospecha o solicitud" },
-        { "hito": "Consulta médica", "plazo": "45 días", "desde": "la confirmación" },
-        { "hito": "Inicio de tratamiento", "plazo": "7 días", "desde": "la indicación médica" }
+      "plazos": [
+        {
+          "id": "p18-dx",
+          "etapa": "sospecha",
+          "hito": "Diagnóstico (confirmación ISP)",
+          "n": 45,
+          "u": "d",
+          "desde": "la sospecha o solicitud del examen"
+        },
+        {
+          "id": "p18-cm",
+          "etapa": "confirmacion",
+          "hito": "Consulta médica",
+          "n": 45,
+          "u": "d",
+          "desde": "la confirmación (resultado ISP)"
+        },
+        {
+          "id": "p18-tar",
+          "etapa": "confirmacion",
+          "hito": "Inicio de TAR",
+          "n": 7,
+          "u": "d",
+          "desde": "la indicación médica"
+        }
       ],
-      "fuente": "Ficha auge.minsal.cl PS 18 (DS 29/2025)",
+      "fuente": "Ficha PS 18 · NTMA pp. 44–48",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 25,
-      "problema": "Trastornos de generación del impulso y conducción que requieren marcapasos",
-      "garantias": [
-        { "hito": "Diagnóstico", "plazo": "30 días", "desde": "la sospecha" },
-        { "hito": "Tratamiento", "plazo": "30 días", "desde": "la confirmación o desde la indicación de recambio" }
+      "ps": 25,
+      "problema": "Trastornos de conducción que requieren marcapaso (≥15 años)",
+      "plazos": [
+        {
+          "id": "p25-dx",
+          "etapa": "sospecha",
+          "hito": "Confirmación diagnóstica",
+          "n": 30,
+          "u": "d",
+          "desde": "la sospecha"
+        },
+        {
+          "id": "p25-tto",
+          "etapa": "confirmacion",
+          "hito": "Instalación de marcapaso",
+          "n": 30,
+          "u": "d",
+          "desde": "la confirmación o la indicación de recambio"
+        }
       ],
-      "fuente": "Ficha auge.minsal.cl PS 25 (DS 29/2025)",
+      "fuente": "Ficha PS 25 · NTMA p. 50",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 26,
+      "ps": 26,
       "problema": "Colecistectomía preventiva del cáncer de vesícula (35–49 años)",
-      "garantias": [
-        { "hito": "Confirmación", "plazo": "30 días", "desde": "la sospecha" },
-        { "hito": "Cirugía", "plazo": "90 días", "desde": "la confirmación" }
+      "plazos": [
+        {
+          "id": "p26-eco",
+          "etapa": "sospecha",
+          "hito": "Confirmación con ecotomografía",
+          "n": 30,
+          "u": "d",
+          "desde": "la sospecha"
+        },
+        {
+          "id": "p26-qx",
+          "etapa": "confirmacion",
+          "hito": "Colecistectomía",
+          "n": 90,
+          "u": "d",
+          "desde": "la confirmación diagnóstica"
+        }
       ],
-      "fuente": "Ficha auge.minsal.cl PS 26 (DS 29/2025)",
+      "fuente": "Ficha PS 26 · NTMA pp. 50–51",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 36,
+      "ps": 36,
       "problema": "Ayudas técnicas para personas de 65 años y más",
-      "garantias": [
-        { "hito": "Bastones, cojines y colchones", "plazo": "20 días", "desde": "la indicación" },
-        { "hito": "Sillas de ruedas o andadores", "plazo": "30 días", "desde": "la indicación" }
+      "plazos": [
+        {
+          "id": "p36-bas",
+          "etapa": "confirmacion",
+          "hito": "Entrega de bastón, cojín o colchón antiescaras",
+          "n": 20,
+          "u": "d",
+          "desde": "la indicación médica"
+        },
+        {
+          "id": "p36-sil",
+          "etapa": "confirmacion",
+          "hito": "Entrega de silla de ruedas o andador",
+          "n": 30,
+          "u": "d",
+          "desde": "la indicación médica"
+        }
       ],
-      "fuente": "Ficha auge.minsal.cl PS 36 (DS 29/2025)",
+      "fuente": "Ficha PS 36 · NTMA pp. 54–55",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 37,
-      "problema": "Ataque cerebrovascular isquémico",
-      "garantias": [
-        { "hito": "Confirmación diagnóstica", "plazo": "24 horas", "desde": "la sospecha" },
-        { "hito": "Tratamiento", "plazo": "24 horas", "desde": "la confirmación" },
-        { "hito": "Hospitalización en prestador con capacidad resolutiva", "plazo": "24 horas", "desde": "la indicación" },
-        { "hito": "Rehabilitación hospitalizada", "plazo": "48 horas", "desde": "la indicación" }
+      "ps": 37,
+      "problema": "Ataque cerebrovascular isquémico (≥15 años)",
+      "plazos": [
+        {
+          "id": "p37-dx",
+          "etapa": "sospecha",
+          "hito": "Confirmación diagnóstica",
+          "n": 24,
+          "u": "h",
+          "desde": "la sospecha",
+          "critico": true
+        },
+        {
+          "id": "p37-tto",
+          "etapa": "confirmacion",
+          "hito": "Inicio de tratamiento",
+          "n": 24,
+          "u": "h",
+          "desde": "la confirmación",
+          "critico": true
+        },
+        {
+          "id": "p37-hos",
+          "etapa": "confirmacion",
+          "hito": "Hospitalización en prestador resolutivo",
+          "n": 24,
+          "u": "h",
+          "desde": "la indicación"
+        },
+        {
+          "id": "p37-reh",
+          "etapa": "hospitalizacion",
+          "hito": "Rehabilitación hospitalizada",
+          "n": 48,
+          "u": "h",
+          "desde": "la indicación"
+        }
       ],
-      "fuente": "Ficha auge.minsal.cl PS 37 (DS 29/2025)",
+      "fuente": "Ficha PS 37 · NTMA pp. 55–56 · Memo N°05 (02-01-2026)",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 42,
-      "problema": "HSA secundaria a ruptura de aneurismas cerebrales",
-      "garantias": [
-        { "hito": "TAC", "plazo": "24 horas", "desde": "la sospecha" },
-        { "hito": "AngioTAC multicorte o angiografía digital", "plazo": "48 horas", "desde": "la confirmación de HSA" },
-        { "hito": "Tratamiento", "plazo": "24 horas", "desde": "la confirmación de aneurisma roto" },
-        { "hito": "Rehabilitación hospitalizada", "plazo": "48 horas", "desde": "la indicación" }
+      "ps": 42,
+      "problema": "Hemorragia subaracnoidea por ruptura de aneurismas cerebrales",
+      "plazos": [
+        {
+          "id": "p42-tac",
+          "etapa": "sospecha",
+          "hito": "TAC",
+          "n": 24,
+          "u": "h",
+          "desde": "la sospecha",
+          "critico": true
+        },
+        {
+          "id": "p42-ang",
+          "etapa": "confirmacion",
+          "hito": "AngioTAC multicorte o angiografía digital",
+          "n": 48,
+          "u": "h",
+          "desde": "la confirmación de HSA"
+        },
+        {
+          "id": "p42-tto",
+          "etapa": "confirmacion",
+          "hito": "Tratamiento del aneurisma roto",
+          "n": 24,
+          "u": "h",
+          "desde": "la confirmación de aneurisma roto",
+          "critico": true
+        },
+        {
+          "id": "p42-reh",
+          "etapa": "hospitalizacion",
+          "hito": "Rehabilitación hospitalizada",
+          "n": 48,
+          "u": "h",
+          "desde": "la indicación"
+        }
       ],
-      "fuente": "Ficha auge.minsal.cl PS 42 (DS 29/2025)",
+      "fuente": "Ficha PS 42 · NTMA p. 57",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 44,
+      "ps": 44,
       "problema": "Tratamiento quirúrgico de hernia del núcleo pulposo lumbar",
-      "garantias": [
-        { "hito": "Cirugía", "plazo": "45 días", "desde": "la indicación quirúrgica" }
+      "plazos": [
+        {
+          "id": "p44-qx",
+          "etapa": "confirmacion",
+          "hito": "Cirugía",
+          "n": 45,
+          "u": "d",
+          "desde": "la indicación quirúrgica"
+        }
       ],
-      "fuente": "Ficha auge.minsal.cl PS 44 (DS 29/2025)",
+      "fuente": "Ficha PS 44 · NTMA p. 58",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 48,
+      "ps": 48,
       "problema": "Politraumatizado grave",
-      "garantias": [
-        { "hito": "Tratamiento en centro con capacidad resolutiva", "plazo": "antes de 24 horas", "desde": "el rescate" },
-        { "hito": "Rehabilitación (solo con lesión medular)", "plazo": "24 horas", "desde": "la indicación" }
+      "plazos": [
+        {
+          "id": "p48-tto",
+          "etapa": "sospecha",
+          "hito": "Tratamiento en centro resolutivo",
+          "n": 24,
+          "u": "h",
+          "desde": "el rescate",
+          "critico": true,
+          "nota": "El plazo corre desde el rescate, no desde el ingreso."
+        },
+        {
+          "id": "p48-reh",
+          "etapa": "hospitalizacion",
+          "hito": "Rehabilitación (solo con lesión medular)",
+          "n": 24,
+          "u": "h",
+          "desde": "la indicación"
+        }
       ],
-      "notas": ["La rehabilitación solo está garantizada cuando existe lesión medular; el decreto lo acota explícitamente."],
-      "fuente": "Ficha auge.minsal.cl PS 48 (DS 29/2025)",
+      "fuente": "Ficha PS 48 · NTMA p. 59",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 49,
+      "ps": 49,
       "problema": "Traumatismo cráneo encefálico moderado o grave",
-      "garantias": [
-        { "hito": "Diagnóstico", "plazo": "12 horas", "desde": "la sospecha" },
-        { "hito": "Tratamiento", "plazo": "24 horas", "desde": "la confirmación" }
+      "plazos": [
+        {
+          "id": "p49-dx",
+          "etapa": "sospecha",
+          "hito": "Confirmación diagnóstica",
+          "n": 12,
+          "u": "h",
+          "desde": "la sospecha",
+          "critico": true
+        },
+        {
+          "id": "p49-tto",
+          "etapa": "confirmacion",
+          "hito": "Inicio de tratamiento",
+          "n": 24,
+          "u": "h",
+          "desde": "la confirmación"
+        }
       ],
-      "fuente": "Ficha auge.minsal.cl PS 49 (DS 29/2025)",
+      "fuente": "Ficha PS 49 · NTMA pp. 59–60",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 50,
+      "ps": 50,
       "problema": "Trauma ocular grave",
-      "garantias": [
-        { "hito": "Diagnóstico", "plazo": "12 horas", "desde": "la sospecha" },
-        { "hito": "Atención por médico especialista", "plazo": "60 horas", "desde": "la confirmación" }
+      "plazos": [
+        {
+          "id": "p50-dx",
+          "etapa": "sospecha",
+          "hito": "Confirmación diagnóstica",
+          "n": 12,
+          "u": "h",
+          "desde": "la sospecha",
+          "critico": true
+        },
+        {
+          "id": "p50-esp",
+          "etapa": "confirmacion",
+          "hito": "Atención por médico especialista",
+          "n": 60,
+          "u": "h",
+          "desde": "la confirmación"
+        }
       ],
-      "fuente": "Ficha auge.minsal.cl PS 50 (DS 29/2025)",
+      "fuente": "Ficha PS 50 · NTMA p. 60",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 55,
+      "ps": 55,
       "problema": "Gran quemado",
-      "garantias": [
-        { "hito": "Tratamiento en prestador con capacidad resolutiva", "plazo": "72 horas", "desde": "la confirmación" },
-        { "hito": "Estabilización inicial en el centro de origen (mayores de 15 años)", "plazo": "8 horas", "desde": "la confirmación" },
-        { "hito": "Rehabilitación hospitalizada", "plazo": "48 horas", "desde": "la indicación" }
+      "plazos": [
+        {
+          "id": "p55-est",
+          "etapa": "confirmacion",
+          "hito": "Estabilización inicial en centro de origen (>15 años)",
+          "n": 8,
+          "u": "h",
+          "desde": "la confirmación",
+          "critico": true
+        },
+        {
+          "id": "p55-tto",
+          "etapa": "confirmacion",
+          "hito": "Tratamiento en prestador resolutivo",
+          "n": 72,
+          "u": "h",
+          "desde": "la confirmación"
+        },
+        {
+          "id": "p55-reh",
+          "etapa": "hospitalizacion",
+          "hito": "Rehabilitación hospitalizada",
+          "n": 48,
+          "u": "h",
+          "desde": "la indicación"
+        }
       ],
-      "notas": ["Gran quemado no tiene garantía de diagnóstico: sus garantías parten en tratamiento. Es el único de los 14 con esa estructura."],
-      "fuente": "Ficha auge.minsal.cl PS 55 (DS 29/2025)",
+      "fuente": "Ficha PS 55 · NTMA p. 63",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 86,
+      "ps": 86,
       "problema": "Atención integral de salud en agresión sexual aguda",
-      "garantias": [
-        { "hito": "Primera respuesta", "plazo": "inmediata", "desde": "la solicitud de atención en unidad de emergencia hospitalaria" }
+      "plazos": [
+        {
+          "id": "p86-pr",
+          "etapa": "sospecha",
+          "hito": "Primera respuesta en unidad de emergencia",
+          "n": 0,
+          "u": "ya",
+          "desde": "la solicitud de atención",
+          "critico": true
+        }
       ],
-      "fuente": "Ficha auge.minsal.cl PS 86 (DS 29/2025)",
+      "fuente": "Ficha PS 86 · NTMA pp. 86–87 (mod. D.E. 32/2026)",
       "fecha": "2026-07-30"
     }
   ]

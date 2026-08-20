@@ -1,84 +1,234 @@
 {
   "_meta": {
-    "descripcion": "Garantías de oportunidad posteriores al alta (seguimiento y rehabilitación ambulatoria), con los puntos de partida corregidos respecto del afiche institucional. Los siete números del afiche son correctos; en Gran quemado los hitos de seguimiento y rehabilitación están intercambiados y en agresión sexual aguda el seguimiento se cuenta desde la primera respuesta, no desde el alta.",
-    "cobertura": "Incluye los problemas de la cartera HUAP con garantía post-alta verificada en la revalidación del 30-07-2026. Para los problemas no listados no hay garantía post-alta consignada en las fuentes de esta carpeta; verificar en las fichas del DS 29/2025 antes de afirmar que no existe.",
-    "estado_validacion": "revalidado contra fichas oficiales auge.minsal.cl (DS 29/2025) el 30-07-2026; pendiente validación de la Unidad GES — no publicar sin su visto bueno",
-    "fuente_general": "Fichas auge.minsal.cl por problema de salud (DS 29/2025); informe docs/2026-07-30-revalidacion-plazos-DS29-2025.md",
-    "fecha": "2026-08-12"
+    "descripcion": "Garantías de oportunidad posteriores al alta (seguimiento y rehabilitación ambulatoria), con los puntos de partida corregidos respecto del afiche institucional. Los siete números del afiche son correctos; en Gran quemado los hitos están intercambiados y en agresión sexual aguda el seguimiento se cuenta desde la primera respuesta.",
+    "campos": "`corregido` deja constancia visible de la diferencia con el afiche. `post_nota` es el texto que se muestra cuando el problema no tiene garantía post-alta o requiere una aclaración.",
+    "estado_validacion": "Revalidado contra las fichas oficiales de auge.minsal.cl (DS 29/2025) el 30-07-2026. Pendiente de validación por la Unidad GES — no publicar.",
+    "fuente_general": "Fichas auge.minsal.cl por problema de salud (DS 29/2025); docs/2026-07-30-revalidacion-plazos-DS29-2025.md",
+    "fecha": "2026-08-20"
   },
   "plazos": [
     {
-      "numero": 5,
+      "ps": 5,
       "problema": "Infarto agudo del miocardio",
-      "seguimiento": { "plazo": "30 días", "desde": "el alta hospitalaria", "detalle": "Primer control para prevención secundaria" },
-      "rehabilitacion_ambulatoria": null,
-      "fuente": "Ficha auge.minsal.cl PS 5 (DS 29/2025)",
+      "plazos": [
+        {
+          "id": "p5-seg",
+          "etapa": "seguimiento",
+          "hito": "Primer control de prevención secundaria",
+          "n": 30,
+          "u": "d",
+          "desde": "el alta hospitalaria",
+          "nota": "Prevención secundaria sin límite de tiempo, cualquiera sea el tratamiento recibido."
+        }
+      ],
+      "post_nota": "Rehabilitación: sin garantía.",
+      "fuente": "Ficha PS 5 auge.minsal.cl (DS 29/2025) · NTMA pp. 34–35",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 37,
-      "problema": "Ataque cerebrovascular isquémico",
-      "seguimiento": { "plazo": "10 días", "desde": "el alta hospitalaria", "detalle": "Atención con médico especialista de neurología adultos (NTMA 37.2)" },
-      "rehabilitacion_ambulatoria": { "plazo": "15 días", "desde": "la indicación médica" },
-      "fuente": "Ficha auge.minsal.cl PS 37 (DS 29/2025); NTMA (D.E. 57/2025) numeral 37.2, transcripción 09-08-2026 pendiente validación",
+      "ps": 6,
+      "problema": "Diabetes mellitus tipo 1",
+      "plazos": [],
+      "post_nota": "Sin garantía de oportunidad después del alta; continuidad por su vía habitual.",
+      "fuente": "Ficha PS 6 · NTMA pp. 36–37",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 42,
-      "problema": "HSA secundaria a ruptura de aneurismas cerebrales",
-      "seguimiento": { "plazo": "30 días", "desde": "el alta", "detalle": "Primer control con médico especialista, según indicación médica" },
-      "rehabilitacion_ambulatoria": { "plazo": "15 días", "desde": "la indicación médica" },
-      "fuente": "Ficha auge.minsal.cl PS 42 (DS 29/2025)",
+      "ps": 18,
+      "problema": "VIH/SIDA",
+      "plazos": [],
+      "post_nota": "Seguimiento según esquema clínico; sin plazo post-alta adicional garantizado.",
+      "fuente": "Ficha PS 18 · NTMA pp. 44–48",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 25,
-      "problema": "Trastornos de generación del impulso y conducción que requieren marcapasos",
-      "seguimiento": { "plazo": "15 días", "desde": "el alta de instalación de marcapaso o cambio de generador" },
-      "rehabilitacion_ambulatoria": null,
-      "fuente": "Ficha auge.minsal.cl PS 25 (DS 29/2025)",
+      "ps": 25,
+      "problema": "Trastornos de conducción que requieren marcapaso (≥15 años)",
+      "plazos": [
+        {
+          "id": "p25-seg",
+          "etapa": "seguimiento",
+          "hito": "Primer control",
+          "n": 15,
+          "u": "d",
+          "desde": "el alta de instalación o cambio de generador"
+        }
+      ],
+      "post_nota": null,
+      "fuente": "Ficha PS 25 · NTMA p. 50",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 44,
+      "ps": 26,
+      "problema": "Colecistectomía preventiva del cáncer de vesícula (35–49 años)",
+      "plazos": [],
+      "post_nota": "Sin garantía de oportunidad después del alta.",
+      "fuente": "Ficha PS 26 · NTMA pp. 50–51",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 36,
+      "problema": "Ayudas técnicas para personas de 65 años y más",
+      "plazos": [],
+      "post_nota": "La garantía es la entrega dentro de plazo desde la indicación.",
+      "fuente": "Ficha PS 36 · NTMA pp. 54–55",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 37,
+      "problema": "Ataque cerebrovascular isquémico (≥15 años)",
+      "plazos": [
+        {
+          "id": "p37-seg",
+          "etapa": "seguimiento",
+          "hito": "Control con neurología de adultos",
+          "n": 10,
+          "u": "d",
+          "desde": "el alta hospitalaria",
+          "nota": "La atención al alta debe ser por neurología de adultos (NTMA 37.2)."
+        },
+        {
+          "id": "p37-ram",
+          "etapa": "seguimiento",
+          "hito": "Rehabilitación ambulatoria",
+          "n": 15,
+          "u": "d",
+          "desde": "la indicación médica"
+        }
+      ],
+      "post_nota": null,
+      "fuente": "Ficha PS 37 · NTMA pp. 55–56 · Memo N°05 (02-01-2026)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 42,
+      "problema": "Hemorragia subaracnoidea por ruptura de aneurismas cerebrales",
+      "plazos": [
+        {
+          "id": "p42-seg",
+          "etapa": "seguimiento",
+          "hito": "Primer control con especialista",
+          "n": 30,
+          "u": "d",
+          "desde": "el alta"
+        },
+        {
+          "id": "p42-ram",
+          "etapa": "seguimiento",
+          "hito": "Rehabilitación ambulatoria",
+          "n": 15,
+          "u": "d",
+          "desde": "la indicación médica"
+        }
+      ],
+      "post_nota": null,
+      "fuente": "Ficha PS 42 · NTMA p. 57",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 44,
       "problema": "Tratamiento quirúrgico de hernia del núcleo pulposo lumbar",
-      "seguimiento": { "plazo": "30 días", "desde": "el alta hospitalaria", "detalle": "Control por médico especialista" },
-      "rehabilitacion_ambulatoria": null,
-      "fuente": "Ficha auge.minsal.cl PS 44 (DS 29/2025)",
+      "plazos": [
+        {
+          "id": "p44-seg",
+          "etapa": "seguimiento",
+          "hito": "Control con especialista",
+          "n": 30,
+          "u": "d",
+          "desde": "el alta hospitalaria"
+        }
+      ],
+      "post_nota": null,
+      "fuente": "Ficha PS 44 · NTMA p. 58",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 55,
-      "problema": "Gran quemado",
-      "seguimiento": { "plazo": "15 días", "desde": "la indicación médica", "correccion_afiche": "El afiche dice «desde el alta»; el decreto cuenta desde la indicación médica." },
-      "rehabilitacion_ambulatoria": { "plazo": "15 días", "desde": "el alta hospitalaria", "correccion_afiche": "El afiche dice «desde la indicación»; el decreto cuenta desde el alta hospitalaria. Los dos hitos están intercambiados en el afiche." },
-      "fuente": "Ficha auge.minsal.cl PS 55 (DS 29/2025)",
+      "ps": 48,
+      "problema": "Politraumatizado grave",
+      "plazos": [],
+      "post_nota": "Sin garantía de oportunidad después del alta.",
+      "fuente": "Ficha PS 48 · NTMA p. 59",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 86,
-      "problema": "Atención integral de salud en agresión sexual aguda",
-      "seguimiento": { "plazo": "35 días", "desde": "la primera respuesta", "correccion_afiche": "El afiche dice «desde el alta»; el decreto cuenta desde la primera respuesta. La primera respuesta ocurre en la unidad de emergencia y el alta puede ser el mismo día o varios días después." },
-      "rehabilitacion_ambulatoria": null,
-      "fuente": "Ficha auge.minsal.cl PS 86 (DS 29/2025)",
+      "ps": 49,
+      "problema": "Traumatismo cráneo encefálico moderado o grave",
+      "plazos": [],
+      "post_nota": "Sin garantía de oportunidad después del alta.",
+      "fuente": "Ficha PS 49 · NTMA pp. 59–60",
       "fecha": "2026-07-30"
     },
     {
-      "numero": 50,
+      "ps": 50,
       "problema": "Trauma ocular grave",
-      "seguimiento": null,
-      "rehabilitacion_ambulatoria": null,
-      "notas": ["No tiene plazo de seguimiento garantizado. Existe la prestación «Seguimiento trauma ocular grave» en el listado de prestaciones, pero las garantías de oportunidad solo cubren diagnóstico y tratamiento."],
-      "fuente": "Ficha auge.minsal.cl PS 50 (DS 29/2025); LEP hoja «LEP 29»",
+      "plazos": [],
+      "post_nota": "Existe la prestación de seguimiento, pero sin plazo de oportunidad garantizado.",
+      "fuente": "Ficha PS 50 · NTMA p. 60",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 55,
+      "problema": "Gran quemado",
+      "plazos": [
+        {
+          "id": "p55-seg",
+          "etapa": "seguimiento",
+          "hito": "Primer control",
+          "n": 15,
+          "u": "d",
+          "desde": "la indicación médica",
+          "corregido": "El afiche decía «desde el alta»; el decreto dice desde la indicación médica."
+        },
+        {
+          "id": "p55-ram",
+          "etapa": "seguimiento",
+          "hito": "Rehabilitación ambulatoria",
+          "n": 15,
+          "u": "d",
+          "desde": "el alta hospitalaria",
+          "corregido": "El afiche decía «desde la indicación»; el decreto dice desde el alta."
+        }
+      ],
+      "post_nota": null,
+      "fuente": "Ficha PS 55 · NTMA p. 63",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 86,
+      "problema": "Atención integral de salud en agresión sexual aguda",
+      "plazos": [
+        {
+          "id": "p86-seg",
+          "etapa": "seguimiento",
+          "hito": "Seguimiento",
+          "n": 35,
+          "u": "d",
+          "desde": "la primera respuesta",
+          "corregido": "El afiche decía «desde el alta»; el decreto dice desde la primera respuesta."
+        }
+      ],
+      "post_nota": null,
+      "fuente": "Ficha PS 86 · NTMA pp. 86–87 (mod. D.E. 32/2026)",
       "fecha": "2026-07-30"
     }
   ],
   "ayudas_tecnicas_menores_65": {
-    "descripcion": "Los problemas ACV isquémico (37) y HSA (42) garantizan ayudas técnicas a menores de 65 años, por la vía de esos problemas y no del PS 36 (que es para 65 años y más). El material actual invisibiliza este derecho.",
-    "aplica_a": [37, 42],
+    "descripcion": "ACV isquémico (37) y HSA (42) garantizan ayudas técnicas a menores de 65 años, por la vía de esos problemas y no del PS 36 (que es para 65 años y más). El material actual invisibiliza este derecho.",
+    "aplica_a": [
+      37,
+      42
+    ],
     "garantias": [
-      { "hito": "Bastón, cojín o colchón", "plazo": "20 días", "desde": "la indicación médica" },
-      { "hito": "Sillas de ruedas", "plazo": "30 días", "desde": "la indicación médica" }
+      {
+        "hito": "Bastón, cojín o colchón",
+        "plazo": "20 días",
+        "desde": "la indicación médica"
+      },
+      {
+        "hito": "Sillas de ruedas",
+        "plazo": "30 días",
+        "desde": "la indicación médica"
+      }
     ],
     "fuente": "Fichas auge.minsal.cl PS 37 y PS 42 (DS 29/2025), revalidadas 30-07-2026",
     "fecha": "2026-07-30"
