@@ -31,6 +31,14 @@
     return null;
   }
 
+  // Un médico apurado escribe «craneo», no «cráneo»: sin esto el buscador
+  // respondía «Sin coincidencias en los 14 problemas GES», que se lee como
+  // «no es GES». Se comparan ambos lados sin diacríticos.
+  function plano(s) {
+    s = String(s == null ? '' : s).toLowerCase();
+    return s.normalize ? s.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : s;
+  }
+
   function esc(s) {
     return String(s == null ? '' : s)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -182,14 +190,29 @@
 
   // ---------------------------------------------------------------- vistas
   function viewProblema() {
-    var q = S.q.trim().toLowerCase();
-    var lista = D.problemas.filter(function (p) {
-      // Se busca también en la denominación del decreto, que es más larga que
-      // la etiqueta: «generación del impulso» debe encontrar el PS 25.
-      return !q || p.nombre.toLowerCase().indexOf(q) >= 0 || p.corto.toLowerCase().indexOf(q) >= 0 ||
-        (p.denominacionOficial || '').toLowerCase().indexOf(q) >= 0 ||
-        p.cie.some(function (c) { return c.toLowerCase().indexOf(q) >= 0; });
-    });
+    var q = plano(S.q.trim());
+    // Se busca en la etiqueta, en la denominación del decreto —«generación del
+    // impulso» debe encontrar el PS 25—, en los códigos y en los sinónimos.
+    var lista;
+    if (!q) {
+      lista = D.problemas;
+    } else {
+      var idx = D.problemas.map(function (p) {
+        return {
+          p: p,
+          txt: plano([p.nombre, p.corto, p.denominacionOficial || '']
+            .concat(p.cie).concat(p.sinonimos || []).join(' · '))
+        };
+      });
+      // Primero lo que empieza una palabra: así «AVE» encuentra el ACV y no
+      // los tres problemas que contienen «grave». Si nada empieza por lo
+      // escrito, se cae a coincidencia en cualquier posición.
+      var alInicio = idx.filter(function (x) {
+        return x.txt.indexOf(q) === 0 || x.txt.indexOf(' ' + q) >= 0 || x.txt.indexOf('·' + q) >= 0;
+      });
+      var enCualquiera = idx.filter(function (x) { return x.txt.indexOf(q) >= 0; });
+      lista = (alInicio.length ? alInicio : enCualquiera).map(function (x) { return x.p; });
+    }
     var items = lista.map(function (p) {
       return '<button type="button" class="card-int" data-k="ps-' + p.ps + '" data-a="pick-ps" data-v="' + p.ps + '" style="' + ST.psBtn + '">' +
         '<span style="' + ST.cie + '">' + esc(p.cie.join(' · ')) + '</span>' +

@@ -111,22 +111,33 @@ html:not(.js) #app { display: none; }
    La página imprime como documento de consulta completo: los 14 problemas con
    todos sus momentos, plazos y criterios. Los bloques plegables del documento
    van abiertos. */
-/* El pie de impresión solo existe en el papel. */
+/* El pie de impresión solo existe en el papel. En pantalla, la tabla que lo
+   aloja no debe alterar el documento lineal: se neutraliza a bloques. */
 .print-footer { display: none; }
+.doc-table, .doc-table > tbody, .doc-table > tfoot,
+.doc-table > * > tr, .doc-table > * > tr > td {
+  display: block; margin: 0; padding: 0; border: 0; width: auto;
+}
 
 @media print {
-  /* El margen inferior deja aire para el pie fijo. Chrome recorta los
-     elementos fijos al área de contenido, así que el pie no puede vivir en el
-     margen: se comprueba con tools/print-check.js que el cuerpo no lo alcance. */
-  @page { margin: 14mm 12mm 22mm; }
+  @page { margin: 14mm 12mm; }
 
   html, body { background: #fff !important; color: #000; font-size: 10.5pt; }
   #app, .dock, .no-print { display: none !important; }
   #doc { display: block !important; }
 
+  /* `table-footer-group` se repite en cada página Y reserva su altura en el
+     flujo: el texto del cuerpo nunca puede quedar debajo. Un `position: fixed`
+     sí se repetía, pero flotaba sobre el contenido y lo borraba del papel. */
+  .doc-table { display: table; width: 100%; border-collapse: collapse; }
+  .doc-table > tbody { display: table-row-group; }
+  .doc-table > tfoot { display: table-footer-group; }
+  .doc-table > * > tr { display: table-row; }
+  .doc-table > * > tr > td { display: table-cell; padding: 0; border: 0; }
+
   .print-footer {
-    display: block; position: fixed; bottom: 0; left: 0; right: 0; background: #fff;
-    font-size: 8pt; color: #000; border-top: .5pt solid #000; padding-top: 2pt;
+    display: block; font-size: 8pt; color: #000;
+    border-top: .5pt solid #000; padding-top: 2pt; margin-top: 6pt;
   }
 
   .p-wrap { min-height: 0 !important; display: block !important; }

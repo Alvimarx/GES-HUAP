@@ -50,7 +50,7 @@ versiones comparando el texto renderizado, más la calculadora de plazos en hora
 | Framework | React 18 desde `unpkg.com` | JavaScript sin dependencias | Spec §4: sin frameworks de runtime ni CDN. Un box sin salida a internet no cargaría la página. |
 | Tipografías | Google Fonts | Nunito servida desde el propio sitio (`dist/fonts/`) | Spec §4: sin fuentes remotas. Se conservan los cinco subconjuntos y sus `unicode-range`, así que en español se descarga solo el latino (38 KB). |
 | Sin JavaScript | Página en blanco | Documento lineal completo | Spec §4: «HTML funcional sin JavaScript; el JS solo mejora». |
-| Impresión | Sin hoja de estilos | Documento completo, 12 páginas A4, sin fondos de color | Spec §5: hoja de impresión de primera clase, bloques plegables abiertos. |
+| Impresión | Sin hoja de estilos | Documento completo (14 páginas A4 · 15 en carta), sin fondos de color | Spec §5: hoja de impresión de primera clase, bloques plegables abiertos. |
 | Contenido | Incrustado en un módulo JS | `content/*.json` | Spec §4: la unidad edita datos, no código. |
 
 **Cómo conviven la ruta guiada y la página lineal.** La spec §11 pide una página lineal imprimible; el
@@ -169,10 +169,41 @@ Además del contenido, la revisión encontró defectos del código. Los relevant
 externo. Es exactamente el punto que CLAUDE.md §11 dejó por confirmar antes de publicar. No se cambió el
 texto del diseño; el documento lineal sí lista los tres números externos. **Requiere decisión de la unidad.**
 
+**El buscador no encontraba nada sin tildes.** `craneo`, `isquemico`, `agresion` y `vesicula` devolvían
+cero resultados, y la respuesta —«Sin coincidencias en los 14 problemas GES del HUAP»— se lee como
+«no es GES». `TIA` tampoco encontraba nada, pese a que el TIA activa el problema 37 por confirmación
+expresa de la unidad, y `AVE` devolvía los problemas 48, 49 y 50 porque coincidía dentro de «gra**ve**».
+Ahora la búsqueda ignora los diacríticos, incluye un índice de sinónimos editable
+(`content/problemas.json`, campo `sinonimos`: siglas y nombre corriente, sin valor normativo) y
+prefiere las coincidencias que empiezan una palabra, con la coincidencia libre como respaldo. `AVE`
+devuelve el ACV y nada más.
+
+### El pie de impresión borraba texto — corregido
+
+**Se reportó como correcto antes de estarlo.** La primera versión del pie repetido usaba
+`position: fixed; bottom: 0` con fondo blanco opaco. En Chrome eso se repite en todas las páginas,
+pero **no reserva espacio en el flujo**: la caja del pie se pinta encima de las últimas líneas y las
+borra del papel. En carta, la página 14 perdía entera la línea «La Ley de Urgencia corre en paralelo:
+la Oficina 6 de Admisión…», y su respuesta quedaba huérfana al comienzo de la página siguiente.
+
+Peor: **la herramienta que debía detectarlo daba un falso «impresión correcta»**. Buscaba el pie con
+una expresión que también casaba con texto del cuerpo, descartaba del cuerpo justamente las líneas
+solapadas, y medía contra la línea base del pie en vez de contra su caja.
+
+Corregido de raíz: el documento imprimible es ahora una tabla con `<tfoot>` en
+`display: table-footer-group`, que Chrome repite en cada página **y** cuya altura descuenta del área
+de flujo, de modo que el solapamiento es imposible por construcción. En pantalla la tabla se
+neutraliza a bloques y el documento lineal se ve igual que antes. `tools/print-check.js` se reescribió
+para leer el texto exacto del pie de la propia página, identificar el cuerpo por descarte y medir
+contra la caja, y ahora prueba **A4 y carta**. Resultado verificado de forma independiente: pie en
+las 14 páginas A4 y en las 15 de carta, con 27 pt de holgura mínima en ambos tamaños.
+
 ## 8. Hallazgos de contraste — decisión pendiente de la unidad
 
 La spec §8 exige verificación WCAG antes de publicar. Se midieron 32 pares de color del diseño:
-**26 cumplen AA, 6 no.** No se corrigió ninguno, porque cambiar un color sería cambiar el diseño.
+**26 cumplen AA, 6 no.** Una segunda pasada sobre los **estados compuestos por opacidad** —que la primera
+medición no cubrió, porque solo miró los colores en reposo— añadió un séptimo: **7 pares bajo AA en total.**
+No se corrigió ninguno, porque cambiar un color sería cambiar el diseño.
 
 | Elemento | Contraste | Mínimo AA | Nota |
 |---|---|---|---|
@@ -182,12 +213,17 @@ La spec §8 exige verificación WCAG antes de publicar. Se midieron 32 pares de 
 | Línea de vigencia (blanco 85 %) | 3,03 | 4,5 | Ídem: 4,76 en el extremo oscuro. **Es la fecha de vigencia, obligatoria y visible** |
 | Píldora «UNIDAD GES · HUAP» | 3,91 | 4,5 | Ídem |
 | Chevron «›» de las tarjetas | 2,49 | 3,0 | Decorativo (`aria-hidden`), con la tarjeta ya rotulada: exento en la práctica |
+| Descripción de una acción **ya marcada** (`#5A6B8C` sobre `#F2FBF7`, con el `opacity:.75` de la fila sobre `#EDF2F9`) | 3,13 | 4,5 | Es donde va la cita normativa (Art. 24° Ley 19.966, Circular IF/N°469). El título de la fila sí aprueba (6,24) |
 
 Se corrigieron además, por estar en la capa propia y no en el diseño, el color de las líneas «Fuente:» del
 documento lineal (de 2,49:1 a 5,36:1) y la impresión, que ahora sale toda en negro sobre blanco.
 
-**Verificación del contraste tras los cambios:** los seis pares de la tabla siguen siendo los únicos bajo AA;
-no se introdujo ninguno nuevo.
+**Alcance de la medición.** La primera pasada midió solo colores en reposo y por eso se le escapó el
+séptimo par, que aparece únicamente cuando una acción está marcada. Los siete son del diseño; la
+implementación no introdujo ninguno.
+
+**Remedio del séptimo, si la unidad lo aprueba:** con la composición al 75 %, `#33465F` alcanza 4,65:1.
+Bastaría usar ese color para la descripción **solo en estado marcado**; el estado en reposo no cambia.
 
 **Recomendación:** subir la opacidad de la bajada y de la línea de vigencia al 100 % y oscurecer
 `#8FA6C6` a `#6B82A6` resolvería los cinco casos no decorativos con un cambio mínimo. **Requiere visto
@@ -210,10 +246,30 @@ Construir: `node src/build.js`. El build **falla** si algún marcador `{{FALTA: 
 **Para cambiar un plazo** se edita `content/plazos-intrahospitalarios.json` o `content/plazos-alta.json`
 y se reconstruye. No se toca código. Cada registro lleva su `fuente` y su `fecha`.
 
-## 10. Antes de publicar (spec §8)
+## 10. Dos preguntas abiertas que la unidad debe cerrar
+
+**1. La etapa «Alta» no muestra ningún plazo, en ninguno de los 14 problemas.** El reparto actual es
+sospecha 12 · confirmación 18 · hospitalización 4 · seguimiento 11 · **alta 0**. Varias garantías
+arrancan «desde la indicación médica», que es justamente el acto del alta, pero están archivadas en
+`seguimiento`: el primer control del gran quemado a 15 días, sus ayudas técnicas a 30 días, la
+rehabilitación ambulatoria de ACV y HSA a 15 días y las ayudas técnicas de menores de 65. El médico
+que va a dar el alta no las ve a menos que avance un paso más. **No se movió ningún plazo por cuenta
+propia**: cambiar la etapa de una garantía es una decisión de la unidad y se hace editando el campo
+`etapa` en `content/plazos-alta.json`. **Recomendación: revisarlo, es la brecha de mayor impacto que
+queda.**
+
+**2. Los plazos en días, ¿son corridos o hábiles, y desde qué día se cuentan?** La calculadora suma
+días de calendario y devuelve una fecha concreta que el médico puede copiar al **campo 18 del IPD**,
+que es donde se materializa la garantía. Ninguna fuente de la carpeta documenta la convención de
+cómputo —una búsqueda de «corridos», «hábiles» o «cómputo» en CLAUDE.md, `docs/` y `content/` no
+devuelve nada— ni si el día de inicio cuenta como 0 o como 1. Un día de desfase en un plazo de 45 días
+es un incumplimiento que la propia página habría inducido. **Confirmar contra la NTMA antes de
+publicar.**
+
+## 11. Antes de publicar (spec §8)
 
 - [ ] Validación de la Unidad GES: plazos revalidados, criterios NTMA transcritos y textos de la página.
-- [ ] Decisión sobre los seis pares de contraste del §6.
+- [ ] Decisión sobre los siete pares de contraste del §8.
 - [ ] Visto bueno institucional de marca y publicación.
 - [ ] Definición del hosting y de si `huap.online` está bajo control del hospital.
 - [ ] Confirmar si los 14 problemas son todos los que corresponden a HUAP (`problemas.json`

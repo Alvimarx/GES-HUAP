@@ -28,12 +28,14 @@ En `tools/*.js`, `PW` apunta a la instalación de Playwright; ajustarla si hace 
 | `diff.js <dirA> <dirB> <dirSalida>` | Compara las capturas píxel a píxel y escribe las diferencias en rojo. |
 | `measure.js <urlA> <urlB>` | Compara posición y tamaño de todas las cajas con estilo del diseño, caja por caja. |
 | `behavior.js <urlA> <urlB>` | Recorre los 14 problemas × 5 momentos × 2 contextos y compara el texto renderizado, más la calculadora de plazos. Tarda unos 3 minutos. |
-| `print-check.js <url>` | Genera el PDF A4 y comprueba que la fecha de vigencia salga al pie de **todas** las páginas y que ningún texto la pise. Necesita además `pdfjs-dist` (`npm install --no-save pdfjs-dist`; ruta configurable con `PDFJS_PATH`). |
+| `print-check.js <url>` | Genera el PDF en **A4 y en carta** y comprueba que la fecha de vigencia salga al pie de **todas** las páginas y que ninguna línea del cuerpo quede debajo. Necesita además `pdfjs-dist` (`npm install --no-save pdfjs-dist`; ruta configurable con `PDFJS_PATH`). |
 
-**`print-check.js` hay que correrlo después de editar `content/`.** El pie es un elemento
-`position: fixed`, así que no reserva espacio en el flujo: la holgura con el cuerpo depende de dónde
-caigan los saltos de página y cambia al cambiar el contenido. Si avisa que el cuerpo se acerca
-demasiado, subir el margen inferior en `src/styles.css` (`@page`).
+**`print-check.js` hay que correrlo después de editar `content/` o la hoja de impresión.** El pie vive
+en un `<tfoot>` con `display: table-footer-group`, que se repite en cada página y **reserva su altura
+en el flujo**, así que el solapamiento no debería poder ocurrir. La comprobación existe porque una
+versión anterior usaba `position: fixed`, que se repetía igual pero flotaba sobre el texto y lo
+borraba del papel — y la primera versión de esta herramienta lo daba por bueno. Si vuelve a avisar,
+revisar el bloque `@media print` de `src/styles.css` antes que nada.
 
 ## Cómo leer los resultados
 

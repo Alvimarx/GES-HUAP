@@ -57,6 +57,7 @@ const problemas = problemasSrc.problemas.map((p) => {
     nombre: p.nombre,
     denominacionOficial: p.denominacion_oficial,
     corto: p.corto,
+    sinonimos: p.sinonimos || [],
     tiempo: p.tiempo,
     plazos: [...((i && i.plazos) || []), ...((a && a.plazos) || [])],
     extras: p.extras || {},

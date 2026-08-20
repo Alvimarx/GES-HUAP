@@ -36,7 +36,18 @@
 <div id="app"></div>
 
 <div id="doc">
+<table class="doc-table">
+  <tfoot>
+    <tr><td>
+      <div class="print-footer">{{VIGENCIA}} · Unidad GES HUAP · {{CORREO}} · {{BADGE}}</div>
+    </td></tr>
+  </tfoot>
+  <tbody>
+    <tr><td>
 {{DOC}}
+    </td></tr>
+  </tbody>
+</table>
 </div>
 </main>
 
@@ -50,10 +61,6 @@
 
 </div>
 </div>
-
-<!-- Pie de impresión: Chrome repite los elementos position:fixed en cada
-     página, así que la vigencia queda al pie de todas las hojas (spec §5). -->
-<div class="print-footer" aria-hidden="true">{{VIGENCIA}} · Unidad GES HUAP · {{CORREO}} · {{BADGE}}</div>
 
 <script type="application/json" id="ges-data">{{DATA}}</script>
 <script>
