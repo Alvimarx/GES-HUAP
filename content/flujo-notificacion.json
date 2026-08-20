@@ -36,7 +36,8 @@
     "sospecha": [
       {
         "t": "Active el caso GES en SINA con el código CIE-10",
-        "d": "Guía rápida CIE-10 institucional. Los plazos de diagnóstico corren desde la sospecha."
+        "d": "Guía rápida CIE-10 institucional. Los plazos de diagnóstico corren desde la sospecha.",
+        "_pendiente_validacion": "Procedimiento local no descrito en ninguna fuente de la carpeta. Confirmar con la Unidad GES antes de publicar (CLAUDE.md §1.1)."
       }
     ],
     "confirmacion": [
@@ -96,7 +97,7 @@
   "casos": [
     {
       "si": "El paciente no puede firmar",
-      "entonces": "Firma o huella digital de su representante; registre nombre, RUN y contacto de esa persona."
+      "entonces": "Firma o huella digital del propio paciente o de su representante; si firma un representante, registre su nombre, RUN y contacto."
     },
     {
       "si": "La notificación no se hizo en el momento",

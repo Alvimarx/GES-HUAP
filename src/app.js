@@ -19,6 +19,18 @@
   if (!app) return;
 
   // ---------------------------------------------------------------- utilidades
+  // Los equipos de box no siempre tienen navegador actualizado: el resto del
+  // archivo es ES5 y `closest` es lo único que faltaría en los más antiguos.
+  function closest(el, sel) {
+    if (el && el.closest) return el.closest(sel);
+    var m = Element.prototype.matches || Element.prototype.msMatchesSelector;
+    while (el && el.nodeType === 1) {
+      if (m && m.call(el, sel)) return el;
+      el = el.parentNode;
+    }
+    return null;
+  }
+
   function esc(s) {
     return String(s == null ? '' : s)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -58,7 +70,7 @@
       var tot = (+p[0]) * 60 + (+p[1]) + z.n * (z.u === 'h' ? 60 : 1);
       var dd = Math.floor(tot / 1440);
       tot %= 1440;
-      var pad = function (x) { return String(x).padStart(2, '0'); };
+      var pad = function (x) { return (x < 10 ? '0' : '') + x; };
       return pad(Math.floor(tot / 60)) + ':' + pad(tot % 60) + (dd ? ' (+' + dd + (dd > 1 ? ' días)' : ' día)') : '');
     }
     var d = new Date(val + 'T12:00:00');
@@ -172,7 +184,10 @@
   function viewProblema() {
     var q = S.q.trim().toLowerCase();
     var lista = D.problemas.filter(function (p) {
+      // Se busca también en la denominación del decreto, que es más larga que
+      // la etiqueta: «generación del impulso» debe encontrar el PS 25.
       return !q || p.nombre.toLowerCase().indexOf(q) >= 0 || p.corto.toLowerCase().indexOf(q) >= 0 ||
+        (p.denominacionOficial || '').toLowerCase().indexOf(q) >= 0 ||
         p.cie.some(function (c) { return c.toLowerCase().indexOf(q) >= 0; });
     });
     var items = lista.map(function (p) {
@@ -187,7 +202,7 @@
     return '<div style="' + ST.pad + '">' +
       '<h2 style="' + ST.h2 + '" id="paso-titulo" tabindex="-1">¿Sospecha una de estas patologías?</h2>' +
       '<label class="sr-only" for="buscador">Buscar problema de salud por nombre o código CIE-10</label>' +
-      '<input id="buscador" data-k="q" data-a="q" type="search" autocomplete="off" value="' + esc(S.q) + '" placeholder="Buscar por nombre o código CIE-10…" style="' + ST.input + '">' +
+      '<input id="buscador" data-k="q" data-a="q" autocomplete="off" value="' + esc(S.q) + '" placeholder="Buscar por nombre o código CIE-10…" style="' + ST.input + '">' +
       '<div style="' + ST.list + '">' + items + '</div>' +
       (lista.length === 0
         ? '<div style="' + ST.vacio + '">Sin coincidencias en los 14 problemas GES del HUAP.</div>' : '') +
@@ -276,7 +291,7 @@
     var postNota = '';
     if (S.etapa === 'seguimiento') {
       if (sel.postNota) postNota = sel.postNota;
-      else if (plazos.length === 0) postNota = 'Sin garantía de oportunidad después del alta para este problema.';
+      else if (plazos.length === 0) postNota = D.notaSinGarantiaPostAlta || '';
     }
 
     var casosHtml = D.casos.map(function (c) {
@@ -343,7 +358,7 @@
     var act = document.activeElement;
     var fk = act && act.getAttribute ? act.getAttribute('data-k') : null;
     var selStart = null, selEnd = null;
-    if (fk && act.tagName === 'INPUT' && act.type === 'search') {
+    if (fk && act.tagName === 'INPUT' && act.type === 'text') {
       try { selStart = act.selectionStart; selEnd = act.selectionEnd; } catch (e) { /* time/date no lo permiten */ }
     }
 
@@ -382,7 +397,7 @@
 
   // ---------------------------------------------------------------- eventos
   app.addEventListener('click', function (ev) {
-    var el = ev.target.closest('[data-a]');
+    var el = closest(ev.target, "[data-a]");
     if (!el) return;
     var a = el.getAttribute('data-a');
     var v = el.getAttribute('data-v');

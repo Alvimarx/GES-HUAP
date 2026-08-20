@@ -51,6 +51,7 @@ const problemas = problemasSrc.problemas.map((p) => {
     ps: p.ps,
     cie: p.cie,
     nombre: p.nombre,
+    denominacionOficial: p.denominacion_oficial,
     corto: p.corto,
     tiempo: p.tiempo,
     plazos: [...((i && i.plazos) || []), ...((a && a.plazos) || [])],
@@ -77,6 +78,7 @@ const runtime = {
   etapas: flujo.etapas,
   acciones_comunes: flujo.acciones_comunes,
   casos: flujo.casos,
+  notaSinGarantiaPostAlta: alta.nota_sin_garantia_post_alta,
   problemas
 };
 
@@ -126,8 +128,11 @@ function docProblema(p) {
     ? `<div class="doc-ntma"><h4>Criterios NTMA</h4><ul>${p.ntma.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>` +
       `<p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>`
     : '';
+  // El documento de consulta lleva la redacción del decreto, no la etiqueta
+  // abreviada de la interfaz.
   return `<section class="doc-ps">
-  <h3><span class="doc-cie">${esc(p.cie.join(' · '))}</span> ${esc(p.nombre)}</h3>
+  <h3><span class="doc-cie">${esc(p.cie.join(' · '))}</span> ${esc(p.denominacionOficial || p.nombre)}</h3>
+  ${p.denominacionOficial && p.denominacionOficial !== p.nombre ? `<p class="doc-fuente">En la ruta guiada aparece como «${esc(p.nombre)}».</p>` : ''}
   ${etapas}${post}${ntma}
   <p class="doc-fuente">Fuente: ${esc(p.fuente)}</p>
 </section>`;
@@ -238,14 +243,33 @@ for (const f of fs.readdirSync(path.join(SRC, 'assets', 'fonts'))) {
 }
 
 // Un marcador visible en producción sería una garantía sin fuente publicada.
-const pendientes = (out.match(/\{\{FALTA:[^}]*\}\}/g) || []).length;
+const publicados = (out.match(/\{\{FALTA:[^}]*\}\}/g) || []).length;
+
+// Los marcadores que viven en content/ sin llegar a la página siguen siendo
+// datos pendientes: se listan para que no se den por resueltos (CLAUDE.md §1.2).
+const enContent = [];
+for (const f of fs.readdirSync(CONTENT).filter((n) => n.endsWith('.json'))) {
+  for (const m of read(path.join(CONTENT, f)).match(/\{\{FALTA:[^}]*\}\}/g) || []) {
+    enContent.push(`${f}: ${m}`);
+  }
+}
+const noValidados = ['problemas.json', 'plazos-intrahospitalarios.json', 'plazos-alta.json']
+  .filter((f) => /pendiente de validación/i.test(read(path.join(CONTENT, f))));
 
 const kb = (n) => (n / 1024).toFixed(1) + ' KB';
 const fontLatin = fs.statSync(path.join(DIST, 'fonts', 'nunito-latin.woff2')).size;
 console.log(`dist/index.html  ${kb(Buffer.byteLength(out))}`);
 console.log(`carga inicial en español (html + subconjunto latino)  ${kb(Buffer.byteLength(out) + fontLatin)}`);
 console.log(`problemas: ${problemas.length} · plazos: ${problemas.reduce((n, p) => n + p.plazos.length, 0)}`);
-if (pendientes) {
-  console.error(`\n⚠  ${pendientes} marcador(es) {{FALTA: …}} en la salida — no publicar hasta resolverlos.`);
+
+if (enContent.length) {
+  console.log(`\ndatos pendientes en content/ (no se publican, siguen abiertos):`);
+  for (const p of enContent) console.log(`  · ${p}`);
+}
+if (noValidados.length) {
+  console.log(`\ncontenido marcado como pendiente de validación por la Unidad GES: ${noValidados.join(', ')}`);
+}
+if (publicados) {
+  console.error(`\n⚠  ${publicados} marcador(es) {{FALTA: …}} en la salida — no publicar hasta resolverlos.`);
   process.exitCode = 1;
 }

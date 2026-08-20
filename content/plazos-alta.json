@@ -187,6 +187,14 @@
           "u": "d",
           "desde": "el alta hospitalaria",
           "corregido": "El afiche decía «desde la indicación»; el decreto dice desde el alta."
+        },
+        {
+          "id": "p55-at",
+          "etapa": "seguimiento",
+          "hito": "Entrega de ayudas técnicas indicadas en rehabilitación ambulatoria",
+          "n": 30,
+          "u": "d",
+          "desde": "la indicación"
         }
       ],
       "post_nota": null,
@@ -232,5 +240,6 @@
     ],
     "fuente": "Fichas auge.minsal.cl PS 37 y PS 42 (DS 29/2025), revalidadas 30-07-2026",
     "fecha": "2026-07-30"
-  }
+  },
+  "nota_sin_garantia_post_alta": "Sin garantía de oportunidad después del alta para este problema."
 }

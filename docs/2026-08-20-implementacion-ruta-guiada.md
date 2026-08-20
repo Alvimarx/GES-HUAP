@@ -90,7 +90,53 @@ Es el único cambio de comportamiento respecto del diseño y no altera nada visu
 prefiere el comportamiento original, se revierte en `src/app.js` (`loadChecks`/`saveChecks` y la rama
 `pick-ps`).**
 
-## 6. Hallazgos de contraste — decisión pendiente de la unidad
+## 6. Correcciones al contenido normativo del diseño
+
+Una revisión adversarial contrastó cada dato publicable contra las fichas oficiales del MINSAL
+(`fuentes/auge-minsal-2026-07-30/ps-*.txt`) y la transcripción de la NTMA. Aparecieron once defectos, todos
+verificados uno por uno contra la fuente primaria antes de tocar nada. **Son las únicas diferencias de texto
+respecto del diseño**, y se hicieron porque CLAUDE.md §1.1 prohíbe alterar criterios clínicos y §1.5 obliga a
+corregir en vez de propagar.
+
+**Garantías que faltaban** (omitir una garantía es el peor error posible en esta página):
+
+| Problema | Garantía ausente | Fuente |
+|---|---|---|
+| PS 6 · DM tipo 1 | Consulta con médico especialista, **7 días desde la sospecha por exámenes alterados** | `ps-06.txt` |
+| PS 6 · DM tipo 1 | Glicemia **30 min** en quien **ya está en tratamiento** y se descompensa — el caso más frecuente en urgencia | `ps-06.txt` |
+| PS 55 · Gran quemado | Entrega de ayudas técnicas de rehabilitación ambulatoria, **30 días desde la indicación** | `ps-55.txt` |
+
+**Criterios clínicos alterados:**
+
+| Dónde | Decía | Dice ahora |
+|---|---|---|
+| PS 5, exclusiones de trombólisis | «ACV hemorrágico previo» | «antecedente de ataque cerebral hemorrágico **o de origen desconocido**» — se había estrechado la exclusión: un ACV previo no filiado aparecía como apto para trombolizar |
+| PS 5, exclusiones de trombólisis | «otra hemorragia activa» | «otra hemorragia activa **(no menstrual)**» — se había ampliado: una menstruación en curso se leía como contraindicación |
+| PS 26 | «Solo personas de 35 a 49 años» + una frase sin sujeto | «Personas de 35 a 49 años **con síntomas**» — la ecotomografía garantizada exige síntomas (NTMA 26.1) |
+| PS 18, NTMA | «IGRA para TB latente con CD4 ≤350» | «CD4 ≤350 **o sin PPD**» |
+| PS 18, plazo | «desde la sospecha o solicitud **del examen**» | «desde la sospecha o solicitud **del usuario**» — es un hito anterior a cualquier orden médica |
+| Caso «el paciente no puede firmar» | Solo la firma del representante | «**huella digital del propio paciente** o de su representante» — ante un paciente consciente que no puede firmar, buscar un representante inexistente deja la notificación pendiente |
+| PS 55 | «Único de los 14 sin garantía de diagnóstico» | Afirmación falsa, eliminada: tampoco la tienen los PS 36, 44, 48 y 86 |
+
+**Denominación oficial.** Las etiquetas del diseño abrevian la redacción del decreto; la más grave es el PS 25,
+donde «Trastornos de conducción que requieren marcapaso» pierde «**generación del impulso**» y con ello toda una
+clase de cuadros cubiertos (p. ej. enfermedad del nódulo sinusal). No se cambió la etiqueta de la interfaz:
+se agregó `denominacion_oficial` a `content/problemas.json`, que se usa como título en el documento impreso y
+**se incorporó al buscador**, de modo que buscar «generación del impulso» ahora encuentra el PS 25.
+
+**Sin respaldo documental.** La acción «Active el caso GES en SINA con el código CIE-10», primera instrucción de
+la etapa de sospecha, no está descrita en ninguna fuente de la carpeta. Se dejó marcada con
+`_pendiente_validacion` en `content/flujo-notificacion.json`: **la Unidad GES debe confirmarla o eliminarla.**
+
+**Se corrigieron también las fuentes de las que venía el error** (CLAUDE.md §1.5): las tres garantías ausentes y
+la afirmación falsa sobre Gran quemado estaban en `docs/2026-07-30-revalidacion-plazos-DS29-2025.md` y en
+CLAUDE.md §5.7. Ambos quedaron actualizados, con nota de la corrección.
+
+**Efecto visual.** Solo dos pantallas cambian de alto respecto del diseño, y por estas correcciones: Gran quemado
+en Seguimiento gana la tarjeta de ayudas técnicas, y el caso «no puede firmar» ocupa una línea más. Todo lo
+demás sigue verificándose idéntico.
+
+## 7. Hallazgos de contraste — decisión pendiente de la unidad
 
 La spec §8 exige verificación WCAG antes de publicar. Se midieron 32 pares de color del diseño:
 **26 cumplen AA, 6 no.** No se corrigió ninguno, porque cambiar un color sería cambiar el diseño.
@@ -108,7 +154,7 @@ La spec §8 exige verificación WCAG antes de publicar. Se midieron 32 pares de 
 `#8FA6C6` a `#6B82A6` resolvería los cinco casos no decorativos con un cambio mínimo. **Requiere visto
 bueno**, porque toca el diseño.
 
-## 7. Arquitectura
+## 8. Arquitectura
 
 ```
 content/*.json     Datos normativos. Es lo único que edita la unidad.
@@ -125,7 +171,7 @@ Construir: `node src/build.js`. El build **falla** si algún marcador `{{FALTA: 
 **Para cambiar un plazo** se edita `content/plazos-intrahospitalarios.json` o `content/plazos-alta.json`
 y se reconstruye. No se toca código. Cada registro lleva su `fuente` y su `fecha`.
 
-## 8. Antes de publicar (spec §8)
+## 9. Antes de publicar (spec §8)
 
 - [ ] Validación de la Unidad GES: plazos revalidados, criterios NTMA transcritos y textos de la página.
 - [ ] Decisión sobre los seis pares de contraste del §6.

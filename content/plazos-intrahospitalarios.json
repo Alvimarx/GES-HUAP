@@ -48,12 +48,29 @@
           "critico": true
         },
         {
+          "id": "p6-esp",
+          "etapa": "sospecha",
+          "hito": "Consulta con médico especialista",
+          "n": 7,
+          "u": "d",
+          "desde": "la sospecha por exámenes alterados"
+        },
+        {
           "id": "p6-tto",
           "etapa": "confirmacion",
           "hito": "Inicio de tratamiento",
           "n": 24,
           "u": "h",
           "desde": "la confirmación diagnóstica"
+        },
+        {
+          "id": "p6-des",
+          "etapa": "confirmacion",
+          "hito": "Glicemia en persona ya en tratamiento que se descompensa",
+          "n": 30,
+          "u": "min",
+          "desde": "la atención médica en Servicio de Urgencia",
+          "critico": true
         }
       ],
       "fuente": "Ficha PS 6 · NTMA pp. 36–37",
@@ -69,7 +86,7 @@
           "hito": "Diagnóstico (confirmación ISP)",
           "n": 45,
           "u": "d",
-          "desde": "la sospecha o solicitud del examen"
+          "desde": "la sospecha o solicitud del usuario"
         },
         {
           "id": "p18-cm",
