@@ -1,0 +1,125 @@
+{
+  "_meta": {
+    "descripcion": "Momentos del paciente (etapas de la ruta guiada), acciones que corresponden a cada momento y casos especiales «si… entonces…».",
+    "campo_ctx": "En `acciones_comunes`, el campo `ctx` restringe una acción al contexto de atención: 'urgencia' | 'piso'. Sin `ctx`, la acción aplica en ambos.",
+    "fecha": "2026-08-20"
+  },
+  "etapas": [
+    {
+      "id": "sospecha",
+      "nombre": "Sospecha",
+      "desc": "Aún sin confirmación diagnóstica"
+    },
+    {
+      "id": "confirmacion",
+      "nombre": "Confirmación",
+      "desc": "Acabo de confirmar el diagnóstico",
+      "badge": "Notificar ahora"
+    },
+    {
+      "id": "hospitalizacion",
+      "nombre": "Hospitalización",
+      "desc": "Hospitalizado, garantías en curso"
+    },
+    {
+      "id": "alta",
+      "nombre": "Alta",
+      "desc": "Voy a dar el alta"
+    },
+    {
+      "id": "seguimiento",
+      "nombre": "Seguimiento",
+      "desc": "Ya está de alta"
+    }
+  ],
+  "acciones_comunes": {
+    "sospecha": [
+      {
+        "t": "Active el caso GES en SINA con el código CIE-10",
+        "d": "Guía rápida CIE-10 institucional. Los plazos de diagnóstico corren desde la sospecha.",
+        "_pendiente_validacion": "Procedimiento local no descrito en ninguna fuente de la carpeta. Confirmar con la Unidad GES antes de publicar (CLAUDE.md §1.1)."
+      }
+    ],
+    "confirmacion": [
+      {
+        "t": "Emita el IPD en SINA — llene los campos 12–18 y firme",
+        "d": "Admisión completa el resto. El campo 18 fija la fecha máxima de inicio del tratamiento."
+      },
+      {
+        "t": "Emita el Formulario de Constancia GES y entregue la copia al paciente en el mismo acto",
+        "d": "Firma quien notifica + firma o huella del paciente o su representante (Art. 24°, Ley 19.966). Registre día y hora."
+      },
+      {
+        "t": "Use la misma fecha en que determinó la intervención sanitaria",
+        "d": "Circular IF/N°469. En papel solo ante falla de SINA."
+      },
+      {
+        "t": "El responsable final es el médico tratante",
+        "d": "Aunque el GES sea de urgencia y aunque participen interconsultores (Memo N°49)."
+      },
+      {
+        "t": "En HUAP no se usa el DAU para notificar",
+        "d": "IPD y Constancia se generan en SINA, igual que en hospitalización.",
+        "ctx": "urgencia"
+      }
+    ],
+    "hospitalizacion": [
+      {
+        "t": "Verifique que IPD y Constancia estén emitidos",
+        "d": "Deben ingresar a SIGGES en ≤5 días hábiles desde la emisión. Las gestoras GES fotografían los documentos en su unidad."
+      },
+      {
+        "t": "¿Notificación pendiente? Cúmplala en tiempo y forma",
+        "d": "La Enfermera Gestora GES puede requerirla (Memo N°49). Si se omitió, coordine la notificación diferida con la unidad."
+      }
+    ],
+    "alta": [
+      {
+        "t": "Emita la SIC a la especialidad de seguimiento",
+        "d": "Por SINA si el destino es HCSBA; interconsulta azul (formulario autocopiativo) para otros hospitales."
+      },
+      {
+        "t": "Verifique comuna y al menos un teléfono efectivo",
+        "d": "Sin contacto efectivo, el caso cae en «contacto no corresponde» y la garantía se cierra sin que el paciente sea atendido (NTMA §II.8–9)."
+      },
+      {
+        "t": "Envíe la interconsulta a ges@huap.online",
+        "d": "Adjunte la SIC. Con esto la unidad activa la garantía de seguimiento."
+      }
+    ],
+    "seguimiento": [
+      {
+        "t": "La Unidad GES gestiona la hora prioritaria",
+        "d": "La solicita a la red y macrored; el hospital receptor debe otorgar la consulta dentro del plazo garantizado."
+      }
+    ]
+  },
+  "casos": [
+    {
+      "si": "El paciente no puede firmar",
+      "entonces": "Firma o huella digital del propio paciente o de su representante; si firma un representante, registre su nombre, RUN y contacto."
+    },
+    {
+      "si": "La notificación no se hizo en el momento",
+      "entonces": "Notificación diferida: la coordina el equipo GES con el equipo tratante. Avise a la unidad."
+    },
+    {
+      "si": "Beneficiario ISAPRE",
+      "entonces": "Entregue la documentación GES + resumen clínico al representante, para activar garantías ante su Isapre y gestionar rescate o traslado."
+    },
+    {
+      "si": "Sin previsión, extranjero o NN",
+      "entonces": "Interconsulta a Servicio Social: RUT provisorio, inscripción FONASA o identificación vía Registro Civil."
+    },
+    {
+      "si": "¿Ya notificado en otro establecimiento?",
+      "entonces": "Consulte a la Oficina GES antes de duplicar — el historial SIGGES no siempre alcanza a revisarse."
+    },
+    {
+      "si": "Riesgo vital o secuela funcional grave",
+      "entonces": "La Ley de Urgencia corre en paralelo: la Oficina 6 de Admisión registra y notifica en la plataforma SIS, 24/7."
+    }
+  ],
+  "fuentes": "Circular IF/N°469 (20-05-2024) · Memo N°49 (21-07-2025) · Memo N°05 (02-01-2026) · NTMA D.E. 57/2025 §II.8–II.9 · formulario-paciente-ges.pdf · IPD. (1).pdf · confirmado por Unidad GES 08-2026",
+  "fecha": "2026-08-01"
+}

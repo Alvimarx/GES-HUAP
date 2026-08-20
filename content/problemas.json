@@ -1,0 +1,505 @@
+{
+  "_meta": {
+    "descripcion": "Los 14 problemas de salud GES en que HUAP es prestador (confirmación diagnóstica y tratamiento). 15 códigos CIE-10 mapean a 14 problemas: G45.9 e I64 apuntan ambos al problema 37.",
+    "campos": "`corto` es la etiqueta breve para chips y navegación · `tiempo` marca los problemas cuyo plazo se juega en minutos u horas · `extras` son acciones propias del problema, por momento · `ntma` son los criterios resumidos de la Norma Técnica. · `denominacion_oficial` es la redacción del decreto: se usa en el documento impreso y en el buscador; `nombre` es la etiqueta abreviada de la interfaz. · `sinonimos` es el índice del buscador: alias con los que un médico puede escribir el problema (siglas, nombre corriente, palabras clave). NO es contenido normativo y la unidad puede ampliarlo libremente.",
+    "estado_validacion": "Mapeo y plazos revalidados contra las fichas de auge.minsal.cl (DS 29/2025) el 30-07-2026; transcripción NTMA del 09-08-2026. Pendiente de validación por la Unidad GES — no publicar.",
+    "advertencia_exhaustividad": "El afiche de origen (CODIGOS SINA.jpg) no tiene fecha ni versión. Está pendiente confirmar con la unidad si estos 14 problemas son todos los que corresponden a HUAP.",
+    "fecha": "2026-08-20"
+  },
+  "problemas": [
+    {
+      "ps": 5,
+      "cie": [
+        "I21"
+      ],
+      "nombre": "Infarto agudo del miocardio",
+      "denominacion_oficial": "Infarto agudo del miocardio",
+      "corto": "IAM",
+      "sinonimos": [
+        "IAM",
+        "infarto",
+        "SDST",
+        "supradesnivel",
+        "troponinas",
+        "coronario",
+        "trombólisis",
+        "fibrinolítico",
+        "SCA",
+        "síndrome coronario agudo"
+      ],
+      "tiempo": true,
+      "extras": {
+        "sospecha": [
+          {
+            "t": "Tome ECG y biomarcadores ahora",
+            "d": "La confirmación incluye ECG dentro de 30 min desde la primera atención clínica y biomarcadores (NTMA 5.1)."
+          }
+        ],
+        "confirmacion": [
+          {
+            "t": "Evalúe trombólisis si hay supradesnivel ST",
+            "d": "Fibrinolítico + antiagregante + anticoagulante en conjunto. Revise las exclusiones NTMA antes de indicar."
+          }
+        ]
+      },
+      "ntma": [
+        "Confirmación = ECG ≤30 min desde la primera atención clínica + biomarcadores.",
+        "Exclusiones de trombólisis: antecedente de ataque cerebral hemorrágico o de origen desconocido, ACV isquémico <6 meses, malformación vascular o tumor cerebral, diátesis hemorrágica, hemorragia digestiva <6 semanas, otra hemorragia activa (no menstrual), neurocirugía <6 meses, cirugía o trauma mayor <3 semanas, sospecha de disección aórtica."
+      ],
+      "fuente": "Ficha PS 5 auge.minsal.cl (DS 29/2025) · NTMA pp. 34–35",
+      "fecha": "2026-08-09"
+    },
+    {
+      "ps": 6,
+      "cie": [
+        "E10"
+      ],
+      "nombre": "Diabetes mellitus tipo 1",
+      "denominacion_oficial": "Diabetes mellitus tipo 1",
+      "corto": "DM1",
+      "sinonimos": [
+        "DM1",
+        "DM tipo 1",
+        "diabetes",
+        "debut",
+        "descompensación",
+        "cetoacidosis",
+        "glicemia",
+        "insulina",
+        "pie diabético",
+        "DM tipo I"
+      ],
+      "tiempo": true,
+      "extras": {
+        "sospecha": [
+          {
+            "t": "Cubre debut Y descompensación",
+            "d": "El decreto no restringe al debut; el «(debut)» del afiche es convención local de SINA (confirmado por Unidad GES, 08-2026)."
+          }
+        ]
+      },
+      "ntma": [
+        "Insulina: jeringas suficientes sin reutilización; mantener la misma graduación.",
+        "Pie diabético: curaciones avanzadas ante úlcera de todo el espesor de la piel; incluye bota o botín de descarga.",
+        "Monitoreo continuo de glucosa garantizado en <18 años y gestantes (sensores sin interrupciones; en gestantes hasta el parto)."
+      ],
+      "fuente": "Ficha PS 6 · NTMA pp. 36–37",
+      "fecha": "2026-08-09"
+    },
+    {
+      "ps": 18,
+      "cie": [
+        "B24"
+      ],
+      "nombre": "VIH/SIDA",
+      "denominacion_oficial": "Síndrome de la inmunodeficiencia adquirida VIH/SIDA",
+      "corto": "VIH",
+      "sinonimos": [
+        "VIH",
+        "SIDA",
+        "TAR",
+        "antirretroviral",
+        "ISP"
+      ],
+      "tiempo": false,
+      "extras": {
+        "sospecha": [
+          {
+            "t": "Toda muestra reactiva va al ISP",
+            "d": "Test instrumental o visual reactivo → toma de muestra en el centro y envío a confirmación al ISP."
+          }
+        ],
+        "confirmacion": [
+          {
+            "t": "TAR también con sospecha clínica fundada",
+            "d": "Infección aguda sintomática, enfermedades definitorias de SIDA o embarazo con confirmación ISP en proceso — previa indicación médica."
+          }
+        ]
+      },
+      "ntma": [
+        "Pretratamiento: IGRA para TB latente con CD4 ≤350 o sin PPD; HLA-B*5701 antes de Abacavir; anti-HBs tras vacunas VHB; genotipificación de resistencia.",
+        "PAP anual en mujeres VIH+."
+      ],
+      "fuente": "Ficha PS 18 · NTMA pp. 44–48",
+      "fecha": "2026-08-09"
+    },
+    {
+      "ps": 25,
+      "cie": [
+        "R00.1"
+      ],
+      "nombre": "Trastornos de conducción que requieren marcapaso (≥15 años)",
+      "denominacion_oficial": "Trastornos de generación del impulso y conducción en personas de 15 años y más, que requieren marcapasos",
+      "corto": "Marcapaso",
+      "sinonimos": [
+        "marcapaso",
+        "marcapasos",
+        "bradicardia",
+        "síncope",
+        "conducción",
+        "impulso",
+        "nódulo",
+        "electrofisiológico"
+      ],
+      "tiempo": false,
+      "extras": {},
+      "ntma": [
+        "El estudio electrofisiológico incluye honorarios, insumos, medicamentos y pabellón (ablación de nódulo AV y vías accesorias)."
+      ],
+      "fuente": "Ficha PS 25 · NTMA p. 50",
+      "fecha": "2026-08-09"
+    },
+    {
+      "ps": 26,
+      "cie": [
+        "K80.0"
+      ],
+      "nombre": "Colecistectomía preventiva del cáncer de vesícula (35–49 años)",
+      "denominacion_oficial": "Colecistectomía preventiva del cáncer de vesícula en personas de 35 a 49 años",
+      "corto": "Colecistectomía",
+      "sinonimos": [
+        "colelitiasis",
+        "cólico biliar",
+        "colecistitis",
+        "vesícula",
+        "colecistectomía",
+        "ecotomografía"
+      ],
+      "tiempo": false,
+      "extras": {
+        "sospecha": [
+          {
+            "t": "Personas de 35 a 49 años con síntomas",
+            "d": "La ecotomografía garantizada se realiza a todo paciente con síntomas. Equivalen a síntomas actuales: cólico biliar previo, colecistitis crónica no operada o eco previa con colelitiasis (NTMA 26.1)."
+          }
+        ],
+        "confirmacion": [
+          {
+            "t": "Derive a cirujano/a",
+            "d": "Todo paciente con colelitiasis en la eco, para evaluación y cirugía según condición clínica."
+          }
+        ]
+      },
+      "ntma": [
+        "La eco «Confirmación Colelitiasis» se realiza a todo sintomático de 35–49 años; con colelitiasis, derivación a cirujano/a."
+      ],
+      "fuente": "Ficha PS 26 · NTMA pp. 50–51",
+      "fecha": "2026-08-09"
+    },
+    {
+      "ps": 36,
+      "cie": [
+        "Z99.1"
+      ],
+      "nombre": "Ayudas técnicas para personas de 65 años y más",
+      "denominacion_oficial": "Ayudas técnicas para personas de 65 años y más",
+      "corto": "Ayudas técnicas ≥65",
+      "sinonimos": [
+        "ayudas técnicas",
+        "bastón",
+        "andador",
+        "silla de ruedas",
+        "cojín",
+        "colchón",
+        "antiescaras"
+      ],
+      "tiempo": false,
+      "extras": {
+        "sospecha": [
+          {
+            "t": "¿Menor de 65 años con ACV o HSA?",
+            "d": "Sus ayudas técnicas van por el PS 37 o 42, no por este problema."
+          }
+        ]
+      },
+      "ntma": [
+        "Inclusión: ≥65 años con limitación funcional para desplazarse o para actividades de la vida diaria (dolor, claudicación, inestabilidad articular, riesgo de caída, alteración de la marcha o inmovilidad).",
+        "12 tipos: andadores (3), bastones (2), cojines y colchones antiescaras (4), sillas de ruedas (3). No se entregan necesariamente en conjunto."
+      ],
+      "fuente": "Ficha PS 36 · NTMA pp. 54–55",
+      "fecha": "2026-08-09"
+    },
+    {
+      "ps": 37,
+      "cie": [
+        "G45.9",
+        "I64"
+      ],
+      "nombre": "Ataque cerebrovascular isquémico (≥15 años)",
+      "denominacion_oficial": "Ataque cerebrovascular isquémico en personas de 15 años y más",
+      "corto": "ACV isquémico",
+      "sinonimos": [
+        "ACV",
+        "AVE",
+        "TIA",
+        "ataque cerebral",
+        "cerebrovascular",
+        "isquémico",
+        "déficit focal",
+        "neurología",
+        "kinesiología",
+        "ayudas técnicas",
+        "bastón",
+        "silla de ruedas",
+        "cojín",
+        "colchón",
+        "antiescaras"
+      ],
+      "tiempo": true,
+      "extras": {
+        "sospecha": [
+          {
+            "t": "El TIA también activa este GES",
+            "d": "G45.9 e I64 apuntan ambos al PS 37 (confirmado por Unidad GES)."
+          }
+        ],
+        "alta": [
+          {
+            "t": "Rehabilitación ambulatoria → SIC a Unidad de Kinesiología",
+            "d": "HCSBA por SINA · HEC por interconsulta azul. Si requiere Fonoaudiología o Terapia Ocupacional, consígnelo en la misma SIC: la derivación sigue dirigida a Kinesiología (Memo N°05)."
+          }
+        ],
+        "seguimiento": [
+          {
+            "t": "Ayudas técnicas para menores de 65 años",
+            "d": "Bastón, cojín o colchón en 20 días; silla de ruedas en 30 días desde la indicación — por este mismo problema, no por el PS 36."
+          }
+        ]
+      },
+      "ntma": [
+        "Seguimiento al alta por especialista de neurología adultos (37.2).",
+        "Estudio etiológico cardiovascular durante la hospitalización, para prevenir recurrencia.",
+        "Ayudas técnicas garantizadas hasta los 64 años por este problema; desde 65, por el PS 36."
+      ],
+      "fuente": "Ficha PS 37 · NTMA pp. 55–56 · Memo N°05 (02-01-2026)",
+      "fecha": "2026-08-09"
+    },
+    {
+      "ps": 42,
+      "cie": [
+        "I60"
+      ],
+      "nombre": "Hemorragia subaracnoidea por ruptura de aneurismas cerebrales",
+      "denominacion_oficial": "Hemorragia subaracnoidea secundaria a ruptura de uno o más aneurismas cerebrales",
+      "corto": "HSA",
+      "sinonimos": [
+        "HSA",
+        "hemorragia subaracnoidea",
+        "aneurisma",
+        "cefalea",
+        "angioTAC",
+        "angiografía",
+        "ayudas técnicas",
+        "bastón",
+        "silla de ruedas",
+        "cojín",
+        "colchón",
+        "antiescaras"
+      ],
+      "tiempo": true,
+      "extras": {
+        "seguimiento": [
+          {
+            "t": "Ayudas técnicas para menores de 65 años",
+            "d": "Bastón, cojín o colchón en 20 días; silla de ruedas en 30 días desde la indicación — por este mismo problema, no por el PS 36."
+          }
+        ]
+      },
+      "ntma": [
+        "Ayudas técnicas garantizadas hasta los 64 años por este problema; desde 65, por el PS 36."
+      ],
+      "fuente": "Ficha PS 42 · NTMA p. 57",
+      "fecha": "2026-08-09"
+    },
+    {
+      "ps": 44,
+      "cie": [
+        "M51.1"
+      ],
+      "nombre": "Tratamiento quirúrgico de hernia del núcleo pulposo lumbar",
+      "denominacion_oficial": "Tratamiento quirúrgico de hernia del núcleo pulposo lumbar",
+      "corto": "HNP lumbar",
+      "sinonimos": [
+        "HNP",
+        "hernia",
+        "núcleo pulposo",
+        "lumbar",
+        "ciática",
+        "radicular"
+      ],
+      "tiempo": false,
+      "extras": {
+        "confirmacion": [
+          {
+            "t": "Indicación quirúrgica según NTMA",
+            "d": "Ciática radicular compresiva sin respuesta a tratamiento conservador tras 6 semanas, o compromiso progresivo."
+          }
+        ]
+      },
+      "ntma": [
+        "Cirugía indicada en ciática radicular compresiva refractaria a 6 semanas de tratamiento conservador o con compromiso progresivo."
+      ],
+      "fuente": "Ficha PS 44 · NTMA p. 58",
+      "fecha": "2026-08-09"
+    },
+    {
+      "ps": 48,
+      "cie": [
+        "T07.X"
+      ],
+      "nombre": "Politraumatizado grave",
+      "denominacion_oficial": "Politraumatizado grave",
+      "corto": "Politrauma",
+      "sinonimos": [
+        "trauma",
+        "politrauma",
+        "politraumatizado",
+        "rescate",
+        "lesión medular"
+      ],
+      "tiempo": true,
+      "extras": {
+        "hospitalizacion": [
+          {
+            "t": "Rehabilitación garantizada solo con lesión medular",
+            "d": "El decreto la acota explícitamente; guía «Rehabilitación en personas con lesión medular en UPC»."
+          }
+        ]
+      },
+      "ntma": [
+        "La glosa inmunoglobulina incluye inmunoglobulina antitetánica para la protección financiera."
+      ],
+      "fuente": "Ficha PS 48 · NTMA p. 59",
+      "fecha": "2026-08-09"
+    },
+    {
+      "ps": 49,
+      "cie": [
+        "S09.9"
+      ],
+      "nombre": "Traumatismo cráneo encefálico moderado o grave",
+      "denominacion_oficial": "Traumatismo cráneo encefálico moderado o grave",
+      "corto": "TEC",
+      "sinonimos": [
+        "TEC",
+        "traumatismo",
+        "cráneo",
+        "encefálico",
+        "Glasgow"
+      ],
+      "tiempo": true,
+      "extras": {
+        "sospecha": [
+          {
+            "t": "Clasifique con Glasgow",
+            "d": "Moderado: GCS 13–14, o GCS 15 con ≥1 factor de riesgo. Grave: GCS <13. Con GCS 15 sin factores, mantenga en observación: el TEC es evolutivo (NTMA 49.1)."
+          }
+        ]
+      },
+      "ntma": [
+        "TEC moderado: GCS 13–14, o GCS 15 con al menos un factor de riesgo. TEC grave: GCS <13. Observación aunque GCS 15 sin factores."
+      ],
+      "fuente": "Ficha PS 49 · NTMA pp. 59–60",
+      "fecha": "2026-08-09"
+    },
+    {
+      "ps": 50,
+      "cie": [
+        "S05.1"
+      ],
+      "nombre": "Trauma ocular grave",
+      "denominacion_oficial": "Trauma ocular grave",
+      "corto": "Trauma ocular",
+      "sinonimos": [
+        "trauma ocular",
+        "ojo",
+        "ocular"
+      ],
+      "tiempo": true,
+      "extras": {},
+      "ntma": [
+        "Sin especificaciones adicionales a las definiciones generales de la norma."
+      ],
+      "fuente": "Ficha PS 50 · NTMA p. 60",
+      "fecha": "2026-08-09"
+    },
+    {
+      "ps": 55,
+      "cie": [
+        "T29.0"
+      ],
+      "nombre": "Gran quemado",
+      "denominacion_oficial": "Gran quemado",
+      "corto": "Gran quemado",
+      "sinonimos": [
+        "quemado",
+        "quemadura",
+        "Garcés",
+        "Artigas",
+        "gran quemado",
+        "grave"
+      ],
+      "tiempo": true,
+      "extras": {
+        "sospecha": [
+          {
+            "t": "Sin garantía de diagnóstico: las garantías parten en el tratamiento",
+            "d": "Clasifique con Garcés/Artigas (grave, crítico, sobrevida excepcional)."
+          }
+        ],
+        "hospitalizacion": [
+          {
+            "t": "Tome medidas antropométricas durante la hospitalización",
+            "d": "Permite entregar las ayudas técnicas antes del alta y asegurar continuidad (NTMA 55.3)."
+          }
+        ]
+      },
+      "ntma": [
+        "Inclusión a tratamiento: índice de gravedad >70; o quemadura de vía aérea, eléctrica de alto voltaje, asociada a politrauma/TEC/shock; o profundas/extensas o complejas de cara, manos, pies o periné con riesgo de secuela invalidante; o ≥65 años con quemadura AB/B ≥10% de superficie corporal."
+      ],
+      "fuente": "Ficha PS 55 · NTMA p. 63",
+      "fecha": "2026-08-09"
+    },
+    {
+      "ps": 86,
+      "cie": [
+        "Y05"
+      ],
+      "nombre": "Atención integral de salud en agresión sexual aguda",
+      "denominacion_oficial": "Atención integral de salud en agresión sexual aguda",
+      "corto": "Agresión sexual",
+      "sinonimos": [
+        "agresión sexual",
+        "violencia sexual",
+        "violación",
+        "abuso sexual",
+        "peritaje",
+        "profilaxis"
+      ],
+      "tiempo": true,
+      "extras": {
+        "sospecha": [
+          {
+            "t": "Ventana de acceso: hasta 72 horas desde el episodio",
+            "d": "Sin necesidad de peritaje previo (D.E. N°32/2026). La confirmación diagnóstica se realiza con la atención médica."
+          },
+          {
+            "t": "La denuncia es obligatoria para todo el equipo clínico",
+            "d": "Norma General Técnica de atención a víctimas de violencia sexual (2016)."
+          }
+        ],
+        "confirmacion": [
+          {
+            "t": "Primera respuesta integral",
+            "d": "Atención de lesiones y toma de muestras · anticoncepción de emergencia · profilaxis VIH e ITS · evaluación hepatitis B · primera ayuda psicológica · contacto con sistema policial/judicial."
+          }
+        ]
+      },
+      "ntma": [
+        "Seguimiento según necesidad: pediatría, ginecología, urología, infectología, dermatología, medicina interna/familiar, inmunología; salud mental por psiquiatra y psicólogo/a clínico."
+      ],
+      "fuente": "Ficha PS 86 · NTMA pp. 86–87 (mod. D.E. 32/2026)",
+      "fecha": "2026-08-09"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "descripcion": "Datos de contacto publicables de la Unidad GES del HUAP. Solo buzón institucional; nunca correos personales de funcionarios (el sitio es de acceso abierto).",
+    "fecha": "2026-08-20"
+  },
+  "unidad_ges": {
+    "correo": "ges@huap.online",
+    "anexos": "285221 · 285214 · 285200",
+    "externos": "225685221 · 225685214 · 226085200",
+    "telHref": "tel:225685221",
+    "horario": "L–J 07:30–17:30 · V 07:30–16:30",
+    "ubicacion": "1.er piso torre antigua, contigua a UTI",
+    "nota_telefonos": "Los anexos funcionan solo desde la red telefónica del hospital; desde fuera o desde celular usar los números externos.",
+    "fuente": "Confirmado por Unidad GES, 08-2026; Manual de Organización y Funciones GES v01 (06/2025)",
+    "fecha": "2026-08-01"
+  },
+  "fuera_horario": {
+    "texto": "Riesgo vital (Ley de Urgencia): Oficina 6 de Admisión, 24/7",
+    "pendiente": "{{FALTA: a quién recurre un médico fuera del horario de la unidad con una duda GES NO urgente — fuente pendiente}}",
+    "fuente": "Confirmado por Unidad GES, 08-2026 (solo para el caso de riesgo vital)",
+    "fecha": "2026-08-01"
+  }
+}

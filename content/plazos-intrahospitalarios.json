@@ -1,0 +1,459 @@
+{
+  "_meta": {
+    "descripcion": "Garantías de oportunidad que corren dentro del hospital: sospecha, confirmación y hospitalización. Son los plazos que HUAP puede incumplir por sí mismo y que ningún material actual difunde.",
+    "campos": "`n` es la cantidad y `u` la unidad: 'min' minutos · 'h' horas · 'd' días · 'ya' inmediata. `critico` marca el plazo que se juega en minutos u horas. `etapa` debe ser sospecha, confirmacion u hospitalizacion.",
+    "estado_validacion": "Revalidado contra las fichas oficiales de auge.minsal.cl (DS 29/2025) el 30-07-2026. Pendiente de validación por la Unidad GES — no publicar.",
+    "fuente_general": "Fichas auge.minsal.cl por problema de salud (DS 29/2025); docs/2026-07-30-revalidacion-plazos-DS29-2025.md",
+    "fecha": "2026-08-20"
+  },
+  "plazos": [
+    {
+      "ps": 5,
+      "problema": "Infarto agudo del miocardio",
+      "plazos": [
+        {
+          "id": "p5-ecg",
+          "etapa": "sospecha",
+          "hito": "ECG en urgencia",
+          "n": 30,
+          "u": "min",
+          "desde": "la sospecha (primera atención clínica)",
+          "critico": true
+        },
+        {
+          "id": "p5-tro",
+          "etapa": "confirmacion",
+          "hito": "Trombólisis si hay SDST",
+          "n": 30,
+          "u": "min",
+          "desde": "la confirmación diagnóstica",
+          "critico": true,
+          "nota": "Inclusión: SDST con <24 h desde el inicio de síntomas (ideal <12 h)."
+        }
+      ],
+      "fuente": "Ficha PS 5 auge.minsal.cl (DS 29/2025) · NTMA pp. 34–35",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 6,
+      "problema": "Diabetes mellitus tipo 1",
+      "plazos": [
+        {
+          "id": "p6-gli",
+          "etapa": "sospecha",
+          "hito": "Glicemia en urgencia",
+          "n": 30,
+          "u": "min",
+          "desde": "la atención de urgencia por sospecha de descompensación",
+          "critico": true
+        },
+        {
+          "id": "p6-esp",
+          "etapa": "sospecha",
+          "hito": "Consulta con médico especialista",
+          "n": 7,
+          "u": "d",
+          "desde": "la sospecha por exámenes alterados"
+        },
+        {
+          "id": "p6-tto",
+          "etapa": "confirmacion",
+          "hito": "Inicio de tratamiento",
+          "n": 24,
+          "u": "h",
+          "desde": "la confirmación diagnóstica"
+        },
+        {
+          "id": "p6-des",
+          "etapa": "confirmacion",
+          "hito": "Glicemia en persona ya en tratamiento que se descompensa",
+          "n": 30,
+          "u": "min",
+          "desde": "la atención médica en Servicio de Urgencia",
+          "critico": true
+        }
+      ],
+      "fuente": "Ficha PS 6 · NTMA pp. 36–37",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 18,
+      "problema": "VIH/SIDA",
+      "plazos": [
+        {
+          "id": "p18-dx",
+          "etapa": "sospecha",
+          "hito": "Diagnóstico (confirmación ISP)",
+          "n": 45,
+          "u": "d",
+          "desde": "la sospecha o solicitud del usuario"
+        },
+        {
+          "id": "p18-cm",
+          "etapa": "confirmacion",
+          "hito": "Consulta médica",
+          "n": 45,
+          "u": "d",
+          "desde": "la confirmación (resultado ISP)"
+        },
+        {
+          "id": "p18-tar",
+          "etapa": "confirmacion",
+          "hito": "Inicio de TAR",
+          "n": 7,
+          "u": "d",
+          "desde": "la indicación médica"
+        },
+        {
+          "id": "p18-emb",
+          "etapa": "confirmacion",
+          "hito": "Inicio de TAR en persona embarazada VIH (+) o con serología reactiva",
+          "n": 7,
+          "u": "d",
+          "desde": "la indicación",
+          "nota": "Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."
+        },
+        {
+          "id": "p18-par",
+          "etapa": "confirmacion",
+          "hito": "Profilaxis antirretroviral en el parto",
+          "n": 0,
+          "u": "ya",
+          "desde": "el inicio del trabajo de parto vaginal, o 4 horas antes de la cesárea programada",
+          "critico": true,
+          "nota": "Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."
+        },
+        {
+          "id": "p18-pue",
+          "etapa": "confirmacion",
+          "hito": "Medicamentos para interrumpir la producción de leche materna en puérpera VIH (+)",
+          "n": 6,
+          "u": "h",
+          "desde": "el nacimiento",
+          "critico": true,
+          "nota": "Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."
+        },
+        {
+          "id": "p18-rnp",
+          "etapa": "confirmacion",
+          "hito": "Profilaxis antirretroviral al recién nacido de gestante VIH (+) o con serología reactiva",
+          "n": 4,
+          "u": "h",
+          "desde": "el nacimiento",
+          "critico": true,
+          "nota": "Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."
+        },
+        {
+          "id": "p18-rnf",
+          "etapa": "confirmacion",
+          "hito": "Fórmula láctea de inicio al recién nacido",
+          "n": 0,
+          "u": "ya",
+          "desde": "el nacimiento",
+          "critico": true,
+          "nota": "Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."
+        }
+      ],
+      "fuente": "Ficha PS 18 · NTMA pp. 44–48",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 25,
+      "problema": "Trastornos de conducción que requieren marcapaso (≥15 años)",
+      "plazos": [
+        {
+          "id": "p25-dx",
+          "etapa": "sospecha",
+          "hito": "Confirmación diagnóstica",
+          "n": 30,
+          "u": "d",
+          "desde": "la sospecha"
+        },
+        {
+          "id": "p25-tto",
+          "etapa": "confirmacion",
+          "hito": "Instalación de marcapaso",
+          "n": 30,
+          "u": "d",
+          "desde": "la confirmación o la indicación de recambio"
+        }
+      ],
+      "fuente": "Ficha PS 25 · NTMA p. 50",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 26,
+      "problema": "Colecistectomía preventiva del cáncer de vesícula (35–49 años)",
+      "plazos": [
+        {
+          "id": "p26-eco",
+          "etapa": "sospecha",
+          "hito": "Confirmación con ecotomografía",
+          "n": 30,
+          "u": "d",
+          "desde": "la sospecha"
+        },
+        {
+          "id": "p26-qx",
+          "etapa": "confirmacion",
+          "hito": "Colecistectomía",
+          "n": 90,
+          "u": "d",
+          "desde": "la confirmación diagnóstica"
+        }
+      ],
+      "fuente": "Ficha PS 26 · NTMA pp. 50–51",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 36,
+      "problema": "Ayudas técnicas para personas de 65 años y más",
+      "plazos": [
+        {
+          "id": "p36-bas",
+          "etapa": "confirmacion",
+          "hito": "Entrega de bastón, cojín o colchón antiescaras",
+          "n": 20,
+          "u": "d",
+          "desde": "la indicación médica"
+        },
+        {
+          "id": "p36-sil",
+          "etapa": "confirmacion",
+          "hito": "Entrega de silla de ruedas o andador",
+          "n": 30,
+          "u": "d",
+          "desde": "la indicación médica"
+        }
+      ],
+      "fuente": "Ficha PS 36 · NTMA pp. 54–55",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 37,
+      "problema": "Ataque cerebrovascular isquémico (≥15 años)",
+      "plazos": [
+        {
+          "id": "p37-dx",
+          "etapa": "sospecha",
+          "hito": "Confirmación diagnóstica",
+          "n": 24,
+          "u": "h",
+          "desde": "la sospecha",
+          "critico": true
+        },
+        {
+          "id": "p37-tto",
+          "etapa": "confirmacion",
+          "hito": "Inicio de tratamiento",
+          "n": 24,
+          "u": "h",
+          "desde": "la confirmación",
+          "critico": true
+        },
+        {
+          "id": "p37-hos",
+          "etapa": "confirmacion",
+          "hito": "Hospitalización en prestador resolutivo",
+          "n": 24,
+          "u": "h",
+          "desde": "la indicación"
+        },
+        {
+          "id": "p37-reh",
+          "etapa": "hospitalizacion",
+          "hito": "Rehabilitación hospitalizada",
+          "n": 48,
+          "u": "h",
+          "desde": "la indicación"
+        }
+      ],
+      "fuente": "Ficha PS 37 · NTMA pp. 55–56 · Memo N°05 (02-01-2026)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 42,
+      "problema": "Hemorragia subaracnoidea por ruptura de aneurismas cerebrales",
+      "plazos": [
+        {
+          "id": "p42-tac",
+          "etapa": "sospecha",
+          "hito": "TAC",
+          "n": 24,
+          "u": "h",
+          "desde": "la sospecha",
+          "critico": true
+        },
+        {
+          "id": "p42-ang",
+          "etapa": "confirmacion",
+          "hito": "AngioTAC multicorte o angiografía digital",
+          "n": 48,
+          "u": "h",
+          "desde": "la confirmación de HSA"
+        },
+        {
+          "id": "p42-tto",
+          "etapa": "confirmacion",
+          "hito": "Tratamiento del aneurisma roto",
+          "n": 24,
+          "u": "h",
+          "desde": "la confirmación de aneurisma roto",
+          "critico": true
+        },
+        {
+          "id": "p42-reh",
+          "etapa": "hospitalizacion",
+          "hito": "Rehabilitación hospitalizada",
+          "n": 48,
+          "u": "h",
+          "desde": "la indicación"
+        }
+      ],
+      "fuente": "Ficha PS 42 · NTMA p. 57",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 44,
+      "problema": "Tratamiento quirúrgico de hernia del núcleo pulposo lumbar",
+      "plazos": [
+        {
+          "id": "p44-qx",
+          "etapa": "confirmacion",
+          "hito": "Cirugía",
+          "n": 45,
+          "u": "d",
+          "desde": "la indicación quirúrgica"
+        }
+      ],
+      "fuente": "Ficha PS 44 · NTMA p. 58",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 48,
+      "problema": "Politraumatizado grave",
+      "plazos": [
+        {
+          "id": "p48-tto",
+          "etapa": "sospecha",
+          "hito": "Tratamiento en centro resolutivo",
+          "n": 24,
+          "u": "h",
+          "desde": "el rescate",
+          "critico": true,
+          "nota": "El plazo corre desde el rescate, no desde el ingreso."
+        },
+        {
+          "id": "p48-reh",
+          "etapa": "hospitalizacion",
+          "hito": "Rehabilitación (solo con lesión medular)",
+          "n": 24,
+          "u": "h",
+          "desde": "la indicación"
+        }
+      ],
+      "fuente": "Ficha PS 48 · NTMA p. 59",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 49,
+      "problema": "Traumatismo cráneo encefálico moderado o grave",
+      "plazos": [
+        {
+          "id": "p49-dx",
+          "etapa": "sospecha",
+          "hito": "Confirmación diagnóstica",
+          "n": 12,
+          "u": "h",
+          "desde": "la sospecha",
+          "critico": true
+        },
+        {
+          "id": "p49-tto",
+          "etapa": "confirmacion",
+          "hito": "Inicio de tratamiento",
+          "n": 24,
+          "u": "h",
+          "desde": "la confirmación"
+        }
+      ],
+      "fuente": "Ficha PS 49 · NTMA pp. 59–60",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 50,
+      "problema": "Trauma ocular grave",
+      "plazos": [
+        {
+          "id": "p50-dx",
+          "etapa": "sospecha",
+          "hito": "Confirmación diagnóstica",
+          "n": 12,
+          "u": "h",
+          "desde": "la sospecha",
+          "critico": true
+        },
+        {
+          "id": "p50-esp",
+          "etapa": "confirmacion",
+          "hito": "Atención por médico especialista",
+          "n": 60,
+          "u": "h",
+          "desde": "la confirmación"
+        }
+      ],
+      "fuente": "Ficha PS 50 · NTMA p. 60",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 55,
+      "problema": "Gran quemado",
+      "plazos": [
+        {
+          "id": "p55-est",
+          "etapa": "confirmacion",
+          "hito": "Estabilización inicial en centro de origen (>15 años)",
+          "n": 8,
+          "u": "h",
+          "desde": "la confirmación",
+          "critico": true
+        },
+        {
+          "id": "p55-tto",
+          "etapa": "confirmacion",
+          "hito": "Tratamiento en prestador resolutivo",
+          "n": 72,
+          "u": "h",
+          "desde": "la confirmación"
+        },
+        {
+          "id": "p55-reh",
+          "etapa": "hospitalizacion",
+          "hito": "Rehabilitación hospitalizada",
+          "n": 48,
+          "u": "h",
+          "desde": "la indicación"
+        }
+      ],
+      "fuente": "Ficha PS 55 · NTMA p. 63",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 86,
+      "problema": "Atención integral de salud en agresión sexual aguda",
+      "plazos": [
+        {
+          "id": "p86-pr",
+          "etapa": "sospecha",
+          "hito": "Primera respuesta en unidad de emergencia",
+          "n": 0,
+          "u": "ya",
+          "desde": "la solicitud de atención",
+          "critico": true
+        }
+      ],
+      "fuente": "Ficha PS 86 · NTMA pp. 86–87 (mod. D.E. 32/2026)",
+      "fecha": "2026-07-30"
+    }
+  ]
+}
