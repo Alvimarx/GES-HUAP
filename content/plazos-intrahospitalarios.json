@@ -103,6 +103,55 @@
           "n": 7,
           "u": "d",
           "desde": "la indicación médica"
+        },
+        {
+          "id": "p18-emb",
+          "etapa": "confirmacion",
+          "hito": "Inicio de TAR en persona embarazada VIH (+) o con serología reactiva",
+          "n": 7,
+          "u": "d",
+          "desde": "la indicación",
+          "nota": "Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."
+        },
+        {
+          "id": "p18-par",
+          "etapa": "confirmacion",
+          "hito": "Profilaxis antirretroviral en el parto",
+          "n": 0,
+          "u": "ya",
+          "desde": "el inicio del trabajo de parto vaginal, o 4 horas antes de la cesárea programada",
+          "critico": true,
+          "nota": "Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."
+        },
+        {
+          "id": "p18-pue",
+          "etapa": "confirmacion",
+          "hito": "Medicamentos para interrumpir la producción de leche materna en puérpera VIH (+)",
+          "n": 6,
+          "u": "h",
+          "desde": "el nacimiento",
+          "critico": true,
+          "nota": "Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."
+        },
+        {
+          "id": "p18-rnp",
+          "etapa": "confirmacion",
+          "hito": "Profilaxis antirretroviral al recién nacido de gestante VIH (+) o con serología reactiva",
+          "n": 4,
+          "u": "h",
+          "desde": "el nacimiento",
+          "critico": true,
+          "nota": "Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."
+        },
+        {
+          "id": "p18-rnf",
+          "etapa": "confirmacion",
+          "hito": "Fórmula láctea de inicio al recién nacido",
+          "n": 0,
+          "u": "ya",
+          "desde": "el nacimiento",
+          "critico": true,
+          "nota": "Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."
         }
       ],
       "fuente": "Ficha PS 18 · NTMA pp. 44–48",

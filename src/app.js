@@ -39,6 +39,23 @@
     return s.normalize ? s.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : s;
   }
 
+  // Separa en palabras y quita la puntuación pegada: sin esto «TEC,» o «¿ACV?»
+  // —cómo se escribe de verdad al copiar de una ficha— daban cero resultados.
+  // Se conservan el punto y el guion interiores, que forman parte de los
+  // códigos CIE-10 (G45.9, T07.X, R00.1).
+  function partir(s) {
+    var bruto = plano(s).split(/[^0-9a-z.\-]+/);
+    var out = [];
+    for (var i = 0; i < bruto.length; i++) {
+      var w = bruto[i].replace(/^[.\-]+/, '').replace(/[.\-]+$/, '');
+      if (w) out.push(w);
+    }
+    return out;
+  }
+
+  // Palabras vacías: «trauma de ojo» debe encontrar el trauma ocular.
+  var VACIAS = ['de', 'del', 'la', 'el', 'los', 'las', 'y', 'o', 'en', 'con', 'por', 'un', 'una', 'al'];
+
   function esc(s) {
     return String(s == null ? '' : s)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -198,20 +215,79 @@
       lista = D.problemas;
     } else {
       var idx = D.problemas.map(function (p) {
-        return {
-          p: p,
-          txt: plano([p.nombre, p.corto, p.denominacionOficial || '']
-            .concat(p.cie).concat(p.sinonimos || []).join(' · '))
-        };
+        var txt = plano([p.nombre, p.corto, p.denominacionOficial || '']
+          .concat(p.cie).concat(p.sinonimos || []).join(' · '));
+        return { p: p, txt: txt, palabras: partir(txt) };
       });
-      // Primero lo que empieza una palabra: así «AVE» encuentra el ACV y no
-      // los tres problemas que contienen «grave». Si nada empieza por lo
-      // escrito, se cae a coincidencia en cualquier posición.
-      var alInicio = idx.filter(function (x) {
-        return x.txt.indexOf(q) === 0 || x.txt.indexOf(' ' + q) >= 0 || x.txt.indexOf('·' + q) >= 0;
+      // La consulta se parte en palabras y deben estar TODAS. Sin esto,
+      // «tec grave», «diabetes tipo 1» o «hernia lumbar» no encontraban nada:
+      // el índice es una sola cadena y se exigía coincidencia contigua.
+      var crudos = partir(q);
+      var toks = [];
+      var i;
+      for (i = 0; i < crudos.length; i++) {
+        if (VACIAS.indexOf(crudos[i]) < 0) toks.push(crudos[i]);
+      }
+      if (!toks.length) toks = crudos;
+
+      // Una palabra del índice coincide con lo escrito si empieza por ello
+      // —«cere» encuentra «cerebrovascular»— o si lo escrito empieza por ella,
+      // que es lo que rescata los plurales: «quemaduras» contra «quemadura».
+      // Calidad de la coincidencia de una palabra del índice con lo escrito:
+      // 3 palabra idéntica · 2 la palabra empieza por lo escrito · 1 lo escrito
+      // empieza por la palabra (plurales) · 0 no coincide. Se usa para ordenar,
+      // nunca para descartar: buscar «tec» debe poner el TEC primero, no
+      // esconder las ayudas técnicas.
+      var calidad = function (w, t) {
+        if (w === t) return 3;
+        if (w.indexOf(t) === 0) return 2;
+        if (w.length >= 4 && t.indexOf(w) === 0) return 1;
+        return 0;
+      };
+      var mejor = function (x, t) {
+        var top = 0, largo = 0;
+        for (var k = 0; k < x.palabras.length; k++) {
+          var c = calidad(x.palabras[k], t);
+          if (c > top || (c === top && c > 0 && x.palabras[k].length > largo)) {
+            if (c >= top) { top = c; largo = x.palabras[k].length; }
+          }
+        }
+        return top ? top * 100 + Math.min(largo, 99) : 0;
+      };
+      var empieza = function (x, t) { return mejor(x, t) > 0; };
+      var todos = function (x, fn) {
+        for (var k = 0; k < toks.length; k++) { if (!fn(x, toks[k])) return false; }
+        return true;
+      };
+
+      var alInicio = idx.filter(function (x) { return todos(x, empieza); });
+
+      // El respaldo de coincidencia libre solo aplica a palabras de 4 letras o
+      // más. «SIC», «ITU», «IRA» y «SCA» coincidían dentro de ve-sic-ula,
+      // melli-tu-s, antirretrov-ira-l y re-sca-te, y devolvían el problema
+      // equivocado: con «SCA» ni siquiera aparecía el infarto, que es el que
+      // corresponde. Vale más «Sin coincidencias» —que va acompañado del aviso
+      // «¿No está en la lista?» con el teléfono de la unidad— que una tarjeta
+      // que no corresponde y que abre los plazos de otro problema.
+      var hayCortos = false;
+      for (i = 0; i < toks.length; i++) { if (toks[i].length < 4) hayCortos = true; }
+      var enCualquiera = hayCortos ? [] : idx.filter(function (x) {
+        return todos(x, function (y, t) { return y.txt.indexOf(t) >= 0; });
       });
-      var enCualquiera = idx.filter(function (x) { return x.txt.indexOf(q) >= 0; });
-      lista = (alInicio.length ? alInicio : enCualquiera).map(function (x) { return x.p; });
+
+      var elegidos = alInicio.length ? alInicio : enCualquiera;
+      if (alInicio.length && toks.length) {
+        // Orden estable: mejor coincidencia primero, y a igual puntaje se
+        // conserva el orden del decreto.
+        var conPuntaje = elegidos.map(function (x, n) {
+          var pts = 0;
+          for (var k = 0; k < toks.length; k++) { pts += mejor(x, toks[k]); }
+          return { x: x, pts: pts, n: n };
+        });
+        conPuntaje.sort(function (a, b) { return b.pts - a.pts || a.n - b.n; });
+        elegidos = conPuntaje.map(function (c) { return c.x; });
+      }
+      lista = elegidos.map(function (x) { return x.p; });
     }
     var items = lista.map(function (p) {
       return '<button type="button" class="card-int" data-k="ps-' + p.ps + '" data-a="pick-ps" data-v="' + p.ps + '" style="' + ST.psBtn + '">' +

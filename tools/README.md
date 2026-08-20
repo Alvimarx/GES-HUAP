@@ -28,6 +28,7 @@ En `tools/*.js`, `PW` apunta a la instalación de Playwright; ajustarla si hace 
 | `diff.js <dirA> <dirB> <dirSalida>` | Compara las capturas píxel a píxel y escribe las diferencias en rojo. |
 | `measure.js <urlA> <urlB>` | Compara posición y tamaño de todas las cajas con estilo del diseño, caja por caja. |
 | `behavior.js <urlA> <urlB>` | Recorre los 14 problemas × 5 momentos × 2 contextos y compara el texto renderizado, más la calculadora de plazos. Tarda unos 3 minutos. |
+| `search-check.js [url]` | Ejercita el buscador en el navegador con 48 consultas y comprueba el resultado de cada una. Correrlo tras tocar el buscador o el campo `sinonimos`. |
 | `print-check.js <url>` | Genera el PDF en **A4 y en carta** y comprueba que la fecha de vigencia salga al pie de **todas** las páginas y que ninguna línea del cuerpo quede debajo. Necesita además `pdfjs-dist` (`npm install --no-save pdfjs-dist`; ruta configurable con `PDFJS_PATH`). |
 
 **`print-check.js` hay que correrlo después de editar `content/` o la hoja de impresión.** El pie vive

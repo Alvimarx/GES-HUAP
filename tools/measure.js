@@ -27,7 +27,7 @@ const COLLECT = `(() => {
       // en ambos árboles. El runtime del editor envuelve además cada texto
       // interpolado en un <span> propio, que aquí no interesa.
       if (c.hasAttribute('style') && r.width && r.height) {
-        const label = (c.textContent || '').split(/[ \\t\\n\\r]+/).join(' ').trim().slice(0, 40);
+        const label = (c.textContent || '').replace(/\\s+/g, '').slice(0, 48);
         out.push({ t: label, x: +r.x.toFixed(2), y: +r.y.toFixed(2), w: +r.width.toFixed(2), h: +r.height.toFixed(2) });
       }
       walk(c);
@@ -63,9 +63,14 @@ const COLLECT = `(() => {
     for (let i = 0; i < n; i++) {
       const x = a[i], y = b[i];
       if (!x || !y) { console.log(`  [${name}] falta #${i}`, x || y); bad++; continue; }
-      if (x.t !== y.t) { console.log(`  [${name}] texto #${i}: ${JSON.stringify(x.t)} vs ${JSON.stringify(y.t)}`); bad++; continue; }
+      if (x.t !== y.t) {
+        console.log(`  [${name}] texto #${i}: ${JSON.stringify(x.t)} vs ${JSON.stringify(y.t)}`);
+        bad++;
+      }
+      // La geometría se compara siempre, coincida o no el texto: si se salta,
+      // la herramienta deja de servir justo donde hay diferencias.
       for (const k of ['x', 'y', 'w', 'h']) {
-        if (Math.abs(x[k] - y[k]) > 0.01) { console.log(`  [${name}] ${k} de ${JSON.stringify(x.t)}: ${x[k]} vs ${y[k]}`); bad++; }
+        if (Math.abs(x[k] - y[k]) > 0.01) { console.log(`  [${name}] ${k} de ${JSON.stringify(x.t.slice(0, 32))}: ${x[k]} vs ${y[k]}`); bad++; }
       }
     }
     console.log(`${name}: ${a.length} nodos con texto · ${bad ? bad + ' DIFERENCIAS' : 'geometría idéntica'}`);

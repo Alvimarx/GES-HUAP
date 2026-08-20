@@ -105,6 +105,7 @@ corregir en vez de propagar.
 | PS 6 · DM tipo 1 | Consulta con médico especialista, **7 días desde la sospecha por exámenes alterados** | `ps-06.txt` |
 | PS 6 · DM tipo 1 | Glicemia **30 min** en quien **ya está en tratamiento** y se descompensa — el caso más frecuente en urgencia | `ps-06.txt` |
 | PS 55 · Gran quemado | Entrega de ayudas técnicas de rehabilitación ambulatoria, **30 días desde la indicación** | `ps-55.txt` |
+| PS 18 · VIH/SIDA | **Cinco garantías obstétricas y neonatales completas**: TAR en embarazada (7 días desde la indicación) · profilaxis antirretroviral desde el inicio del trabajo de parto o 4 h antes de la cesárea · interrupción de la lactancia en puérpera (6 h desde el nacimiento) · profilaxis al recién nacido (**4 h desde el nacimiento**) · fórmula láctea inmediata | `ps-18.txt` |
 
 **Criterios clínicos alterados:**
 
@@ -169,14 +170,36 @@ Además del contenido, la revisión encontró defectos del código. Los relevant
 externo. Es exactamente el punto que CLAUDE.md §11 dejó por confirmar antes de publicar. No se cambió el
 texto del diseño; el documento lineal sí lista los tres números externos. **Requiere decisión de la unidad.**
 
-**El buscador no encontraba nada sin tildes.** `craneo`, `isquemico`, `agresion` y `vesicula` devolvían
+**El buscador acumulaba cuatro defectos, y es el único camino al contenido.** Todos se reprodujeron en
+el navegador real antes de tocar nada, y hay una prueba de regresión permanente con 48 consultas
+(`tools/search-check.js`).
+
+1. *Sin tildes no encontraba nada.* `craneo`, `isquemico`, `agresion` y `vesicula` devolvían
 cero resultados, y la respuesta —«Sin coincidencias en los 14 problemas GES del HUAP»— se lee como
 «no es GES». `TIA` tampoco encontraba nada, pese a que el TIA activa el problema 37 por confirmación
 expresa de la unidad, y `AVE` devolvía los problemas 48, 49 y 50 porque coincidía dentro de «gra**ve**».
-Ahora la búsqueda ignora los diacríticos, incluye un índice de sinónimos editable
-(`content/problemas.json`, campo `sinonimos`: siglas y nombre corriente, sin valor normativo) y
-prefiere las coincidencias que empiezan una palabra, con la coincidencia libre como respaldo. `AVE`
-devuelve el ACV y nada más.
+2. *Cualquier consulta de dos o más palabras fallaba.* `tec grave`, `diabetes tipo 1`, `hernia lumbar`
+o `infarto miocardio` daban cero resultados, porque el índice era una sola cadena y se exigía
+coincidencia contigua. Incluso un espacio doble por tipeo apurado rompía la búsqueda.
+3. *Las siglas clínicas devolvían el problema equivocado.* `SCA` (síndrome coronario agudo) devolvía
+Ayudas técnicas y Politraumatizado —por anti**esca**ras y re**sca**te— y **no** el infarto, que es el
+que corresponde. `ITU` devolvía Diabetes (melli**tu**s), `IRA` devolvía VIH (antirretrov**ira**l),
+`SIC` devolvía Colecistectomía (ve**sic**ula). El siguiente clic abría los plazos del problema
+equivocado.
+4. *La puntuación pegada y los plurales rompían la búsqueda:* `TEC,`, `¿ACV?`, `quemaduras`,
+`traumatismos`.
+
+Ahora la búsqueda ignora diacríticos y puntuación, parte la consulta en palabras y las exige todas,
+descarta palabras vacías (`de`, `del`, `la`…), acepta plurales, ordena por calidad de coincidencia
+—palabra idéntica primero, sin ocultar el resto— y **solo cae a coincidencia libre con palabras de
+cuatro letras o más**, que es lo que impide que una sigla de tres letras aterrice dentro de otra
+palabra. Se apoya en un índice de sinónimos editable por la unidad (`content/problemas.json`, campo
+`sinonimos`: siglas y nombre corriente, sin valor normativo).
+
+**El índice reproducía la brecha 6 de CLAUDE.md.** «ayudas técnicas», «bastón» o «silla de ruedas»
+apuntaban solo al problema 36, que es para 65 años y más — exactamente la invisibilización que
+CLAUDE.md §7 documenta. Ahora también devuelven el ACV isquémico y la HSA, que las garantizan para
+menores de 65 por su propia vía.
 
 ### El pie de impresión borraba texto — corregido
 
@@ -258,7 +281,13 @@ propia**: cambiar la etapa de una garantía es una decisión de la unidad y se h
 `etapa` en `content/plazos-alta.json`. **Recomendación: revisarlo, es la brecha de mayor impacto que
 queda.**
 
-**2. Los plazos en días, ¿son corridos o hábiles, y desde qué día se cuentan?** La calculadora suma
+**2. ¿Corresponde que la guía de HUAP lleve las cinco garantías obstétricas y neonatales del VIH?**
+Están en el decreto y por eso se agregaron —faltaban por completo—, pero HUAP no tiene maternidad. Van
+marcadas con una nota en `content/plazos-intrahospitalarios.json`. Si una gestante VIH (+) llega a
+urgencias, la profilaxis del recién nacido tiene una ventana de **4 horas**: por eso se optó por
+incluirlas y que la unidad decida, y no al revés.
+
+**3. Los plazos en días, ¿son corridos o hábiles, y desde qué día se cuentan?** La calculadora suma
 días de calendario y devuelve una fecha concreta que el médico puede copiar al **campo 18 del IPD**,
 que es donde se materializa la garantía. Ninguna fuente de la carpeta documenta la convención de
 cómputo —una búsqueda de «corridos», «hábiles» o «cómputo» en CLAUDE.md, `docs/` y `content/` no

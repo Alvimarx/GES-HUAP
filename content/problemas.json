@@ -23,7 +23,9 @@
         "troponinas",
         "coronario",
         "trombólisis",
-        "fibrinolítico"
+        "fibrinolítico",
+        "SCA",
+        "síndrome coronario agudo"
       ],
       "tiempo": true,
       "extras": {
@@ -64,7 +66,8 @@
         "cetoacidosis",
         "glicemia",
         "insulina",
-        "pie diabético"
+        "pie diabético",
+        "DM tipo I"
       ],
       "tiempo": true,
       "extras": {
@@ -234,7 +237,13 @@
         "isquémico",
         "déficit focal",
         "neurología",
-        "kinesiología"
+        "kinesiología",
+        "ayudas técnicas",
+        "bastón",
+        "silla de ruedas",
+        "cojín",
+        "colchón",
+        "antiescaras"
       ],
       "tiempo": true,
       "extras": {
@@ -279,7 +288,13 @@
         "aneurisma",
         "cefalea",
         "angioTAC",
-        "angiografía"
+        "angiografía",
+        "ayudas técnicas",
+        "bastón",
+        "silla de ruedas",
+        "cojín",
+        "colchón",
+        "antiescaras"
       ],
       "tiempo": true,
       "extras": {
@@ -336,6 +351,7 @@
       "denominacion_oficial": "Politraumatizado grave",
       "corto": "Politrauma",
       "sinonimos": [
+        "trauma",
         "politrauma",
         "politraumatizado",
         "rescate",
@@ -420,7 +436,8 @@
         "quemadura",
         "Garcés",
         "Artigas",
-        "gran quemado"
+        "gran quemado",
+        "grave"
       ],
       "tiempo": true,
       "extras": {
