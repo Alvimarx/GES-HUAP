@@ -308,3 +308,39 @@ publicar.**
       vital, que es la que está confirmada).
 - [ ] **Analítica: no implementada.** La spec §6 la contempla y la unidad la quiere, pero depende del
       hosting, que aún no está definido. Sale sin analítica y se declara.
+
+## 12. Despliegue en GitHub Pages
+
+**Estado: listo, a falta de activar el origen una vez.**
+
+La rama `gh-pages` ya contiene el sitio construido, y
+`.github/workflows/pages.yml` la regenera en cada push a `main` o a la rama de
+trabajo. `dist/` sigue sin versionarse en la rama de código.
+
+**Paso manual, una sola vez** (el token de Actions no puede crear el sitio de
+Pages por sí solo — falla con «Resource not accessible by integration»):
+
+> **Settings → Pages → Source: «Deploy from a branch» → Branch: `gh-pages` / `(root)` → Save**
+
+El sitio queda en `https://alvimarx.github.io/GES-HUAP/` uno o dos minutos
+después. Desde ahí, cada push reconstruye y actualiza solo.
+
+### Lo que hay que tener presente
+
+- **El sitio de Pages es público aunque el repositorio sea privado.** No existe
+  control de acceso en Pages fuera de Enterprise Cloud. Cualquiera con la URL
+  puede leer la página.
+- **Mientras el contenido siga marcado como pendiente de validación**, el build
+  emite `noindex, nofollow`: no aparece en buscadores. Cuando la Unidad GES
+  valide y se quite esa marca de `content/`, pasa sola a `index, follow`.
+  Es decir: **la página no queda indexable por accidente**, hace falta un cambio
+  deliberado en el contenido.
+- **Pages sobre repositorio privado requiere GitHub Pro.** Si Settings dice que
+  no está disponible, la alternativa recomendada es un repositorio público
+  aparte que contenga **solo** el HTML construido — nunca hacer público este,
+  que guarda los memos, el manual, los formularios y `CLAUDE.md` con los anexos
+  internos.
+- El sitio publicado sigue siendo un **borrador**: lo declara la píldora
+  «Borrador — pendiente validación Unidad GES» en la cabecera y el pie de cada
+  página impresa. Los gates del §11 siguen abiertos.
+
