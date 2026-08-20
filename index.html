@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Qué hago con mi paciente GES? · Unidad GES HUAP</title>
+<meta name="description" content="Guía de procedimiento GES para clínicos del Hospital de Urgencia Asistencia Pública. Qué hacer ante la sospecha o confirmación de una patología GES, plazos que corren y cómo notificar.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light">
+<script>document.documentElement.className += ' js';</script>
+<style>
+/* Landing GES para médicos del HUAP.
+   Las reglas de esta hoja reproducen el diseño aprobado en Claude Design
+   («GES HUAP — Ruta guiada»). El diseño no declara un reset global: las cajas
+   conservan el `box-sizing` por defecto del navegador, así que NO agregar
+   `* { box-sizing: border-box }` — cambiaría el ancho de varias tarjetas. */
+
+/* --- Nunito, servida desde el propio sitio (sin Google Fonts ni CDN) --------
+   Un solo archivo variable por subconjunto cubre los pesos 400–900. El
+   `unicode-range` hace que un lector en español descargue solo el subconjunto
+   latino. */
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 400 900; font-display: swap;
+  src: url("fonts/nunito-cyrillic-ext.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 400 900; font-display: swap;
+  src: url("fonts/nunito-cyrillic.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 400 900; font-display: swap;
+  src: url("fonts/nunito-vietnamese.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 400 900; font-display: swap;
+  src: url("fonts/nunito-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 400 900; font-display: swap;
+  src: url("fonts/nunito-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+/* --- Base (idéntica al diseño) -------------------------------------------- */
+body { margin: 0; background: #EDF2F9; font-family: 'Nunito', system-ui, sans-serif; color: #0C2B5E; -webkit-font-smoothing: antialiased; }
+a { color: #0D5BD8; }
+a:hover { color: #0A46A8; }
+input { font-family: 'Nunito', system-ui, sans-serif; }
+@keyframes pulseA { 0%, 100% { opacity: 1 } 50% { opacity: .5 } }
+
+/* Los títulos usan estilos en línea, igual que en el diseño; se anulan los
+   márgenes y tamaños que el navegador aplica por defecto a h1–h4. */
+h1, h2, h3, h4 { margin: 0; font-size: inherit; font-weight: inherit; }
+
+/* --- Estados de interacción declarados en el diseño ------------------------
+   El diseño declara estos realces con el atributo `style-hover`, que el
+   visor de Claude Design no llega a aplicar. Se implementan aquí como CSS
+   real: no alteran el estado en reposo. */
+.card-int:hover { border-color: #0D5BD8; box-shadow: 0 2px 10px rgba(13, 91, 216, .12); }
+.btn-primary:hover { background: #0A46A8; }
+
+/* Foco visible y consistente para navegación por teclado (WCAG 2.4.7).
+   Solo en controles: `#paso-titulo` recibe el foco por programa al cambiar de
+   paso, para reubicar al lector de pantalla, y no debe dibujar anillo.
+   El buscador también queda fuera: el diseño ya declara su propio
+   `outline-color`, y sobrescribirlo cambiaría su aspecto al recibir el foco. */
+a:focus-visible, button:focus-visible, input:not(#buscador):focus-visible, [href]:focus-visible {
+  outline: 3px solid #0D5BD8; outline-offset: 2px; border-radius: 4px;
+}
+#paso-titulo:focus { outline: none; }
+
+/* --- Reflujo en pantallas angostas (WCAG 1.4.10) ---------------------------
+   A 320 px, el nombre del problema no cabe entre las dos píldoras y la tarjeta
+   empujaba la página a desplazamiento horizontal. Un elemento flex no se
+   encoge por debajo de su contenido salvo que se lo permita. Esto no cambia
+   nada a partir de 360 px, donde el texto ya cabía: la regla va acotada a las
+   pantallas donde el desbordamiento existe, porque más arriba cambiaría el
+   ajuste de línea y la página dejaría de ser idéntica al diseño.
+
+   Bajo 360 px, además, la barra fija de contacto ocupa tres líneas y tapaba el
+   final del contenido, que reserva 96 px. */
+@media (max-width: 359px) {
+  .flex-min { min-width: 0; overflow-wrap: break-word; }
+  .p-col { padding-bottom: 160px !important; }
+}
+
+/* Texto solo para lectores de pantalla. */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* --- Ruta guiada vs. documento completo ------------------------------------
+   `#doc` es el documento lineal completo: es lo que ve quien no tiene
+   JavaScript y lo que sale al imprimir. `#app` es la ruta guiada de 3 pasos.
+   Uno u otro, nunca los dos. */
+html.js #doc { display: none; }
+html:not(.js) #app { display: none; }
+
+/* --- Documento lineal completo --------------------------------------------
+   Misma paleta y tipografía que la ruta guiada, en formato de lectura
+   continua. En pantalla solo lo ve quien no tiene JavaScript. */
+#doc { padding: 18px 16px 0; font-size: 14px; line-height: 1.5; font-weight: 600; color: #3D5378; }
+#doc h2 { font-size: 19px; font-weight: 900; color: #0C2B5E; margin: 26px 0 10px; }
+#doc h3 { font-size: 15.5px; font-weight: 900; color: #0C2B5E; margin: 0 0 8px; }
+#doc h4 { font-size: 13px; font-weight: 900; color: #5A6B8C; text-transform: uppercase; letter-spacing: .06em; margin: 12px 0 4px; }
+#doc p { margin: 0 0 8px; }
+#doc ul, #doc ol { margin: 0 0 8px; padding-left: 20px; }
+#doc li { margin: 0 0 5px; }
+.doc-intro { background: #fff; border: 1.5px solid #D9E5F3; border-radius: 16px; padding: 14px; }
+.doc-ps { background: #fff; border: 1.5px solid #D9E5F3; border-radius: 16px; padding: 14px; margin: 0 0 10px; }
+.doc-cie { display: inline-block; background: #C9F2E3; color: #0C2B5E; font-weight: 900; font-size: 13px; padding: 3px 9px; border-radius: 999px; }
+.doc-accs, .doc-plazos { list-style: none; padding-left: 0; }
+.doc-accs > li, .doc-plazos > li { border-left: 3px solid #D9E5F3; padding-left: 10px; margin-bottom: 7px; font-size: 12.5px; }
+.doc-plazos > li { border-left-color: #C9F2E3; }
+.doc-plazo-chip { display: inline-block; background: #0C2B5E; color: #fff; font-weight: 900; font-size: 12px; padding: 2px 9px; border-radius: 999px; }
+.doc-plazo-chip.doc-critico { background: #D02E63; }
+.doc-ctx { color: #B31D52; font-style: normal; font-weight: 800; }
+.doc-corr, .doc-warn { color: #8A1E44; }
+.doc-warn { background: #FCE3EA; border-radius: 10px; padding: 8px 10px; font-size: 12px; font-weight: 700; }
+.doc-post { background: #EDF2F9; border: 1.5px solid #D9E5F3; border-radius: 12px; padding: 10px 12px; font-size: 12.5px; }
+.doc-fuente { font-size: 11px; font-weight: 600; color: #5A6B8C; }
+.doc-casos dt { font-weight: 800; color: #0C2B5E; margin-top: 8px; }
+.doc-casos dd { margin: 2px 0 0; font-size: 12.5px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+
+/* --- Impresión -------------------------------------------------------------
+   La página imprime como documento de consulta completo: los 14 problemas con
+   todos sus momentos, plazos y criterios. Los bloques plegables del documento
+   van abiertos. */
+/* El pie de impresión solo existe en el papel. En pantalla, la tabla que lo
+   aloja no debe alterar el documento lineal: se neutraliza a bloques. */
+.print-footer { display: none; }
+.doc-table, .doc-table > tbody, .doc-table > tfoot,
+.doc-table > * > tr, .doc-table > * > tr > td {
+  display: block; margin: 0; padding: 0; border: 0; width: auto;
+}
+
+@media print {
+  @page { margin: 14mm 12mm; }
+
+  html, body { background: #fff !important; color: #000; font-size: 10.5pt; }
+  #app, .dock, .no-print { display: none !important; }
+  #doc { display: block !important; }
+
+  /* `table-footer-group` se repite en cada página Y reserva su altura en el
+     flujo: el texto del cuerpo nunca puede quedar debajo. Un `position: fixed`
+     sí se repetía, pero flotaba sobre el contenido y lo borraba del papel. */
+  .doc-table { display: table; width: 100%; border-collapse: collapse; }
+  .doc-table > tbody { display: table-row-group; }
+  .doc-table > tfoot { display: table-footer-group; }
+  .doc-table > * > tr { display: table-row; }
+  .doc-table > * > tr > td { display: table-cell; padding: 0; border: 0; }
+
+  .print-footer {
+    display: block; font-size: 8pt; color: #000;
+    border-top: .5pt solid #000; padding-top: 2pt; margin-top: 6pt;
+  }
+
+  .p-wrap { min-height: 0 !important; display: block !important; }
+  .p-col { max-width: none !important; width: auto !important; padding: 0 !important; }
+
+  /* Sin degradados ni fondos de color: se imprime mucho de esto en blanco y negro. */
+  .doc-head { background: none !important; color: #000 !important; border-bottom: 2pt solid #000; border-radius: 0 !important; padding: 0 0 6pt !important; }
+  .doc-head a { color: #000 !important; }
+
+  .doc-ps { break-inside: avoid; page-break-inside: avoid; border: 1pt solid #000; border-radius: 0; padding: 6pt 8pt; margin: 0 0 8pt; background: none; }
+  .doc-etapa { break-inside: avoid; page-break-inside: avoid; }
+  h2, h3 { break-after: avoid; page-break-after: avoid; }
+
+  .doc-plazo-chip { border: 1pt solid #000 !important; background: none !important; color: #000 !important; }
+  /* En papel todo va en negro: se imprime en blanco y negro con frecuencia. */
+  #doc, .doc-fuente, .doc-warn, .doc-corr, .doc-ctx, #doc h2, #doc h3, #doc h4 { color: #000 !important; }
+  .doc-warn { background: none !important; border: .5pt solid #000; }
+  .doc-critico { font-weight: 900; text-decoration: underline; }
+
+  details, details[open] > * { display: block !important; }
+  details > summary { list-style: none; font-weight: 800; }
+
+  /* Las URL de las fuentes quedan visibles en el papel. */
+  .doc-fuentes a::after { content: " (" attr(href) ")"; font-size: 9pt; word-break: break-all; }
+}
+</style>
+</head>
+<body>
+
+<div class="p-wrap" style="min-height:100vh;display:flex;justify-content:center">
+<div class="p-col" style="width:100%;max-width:600px;padding:0 0 96px;position:relative">
+
+<header class="doc-head" style="background:linear-gradient(135deg,#2E86F5,#0D5BD8);border-radius:0 0 26px 26px;padding:22px 20px 18px;color:#fff">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+    <div style="font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);padding:4px 12px;border-radius:999px">Unidad GES · HUAP</div>
+    <div style="font-size:11px;font-weight:700;background:#FCE3EA;color:#8A1E44;padding:4px 10px;border-radius:999px">Borrador — pendiente validación Unidad GES</div>
+  </div>
+  <h1 style="margin:14px 0 6px;font-size:26px;line-height:1.15;font-weight:900;letter-spacing:-.01em">¿Qué hago con mi paciente GES?</h1>
+  <p style="margin:0;font-size:13px;font-weight:600;opacity:.92">Guía de procedimiento para clínicos del HUAP. No sustituye el juicio médico ni las Guías Clínicas MINSAL.</p>
+  <div style="margin-top:10px;font-size:11.5px;font-weight:700;opacity:.85">DS N°29/2025 · NTMA D.E. 57/2025 mod. 32/2026 · revisado 30-07-2026</div>
+</header>
+
+<main>
+<!-- Región de anuncios para lectores de pantalla (WCAG 4.1.3). Es persistente
+     a propósito: la vista se vuelve a dibujar entera en cada cambio y una
+     región viva recién insertada no se anuncia de forma fiable. -->
+<div id="anuncio" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<div id="app"></div>
+
+<div id="doc">
+<table class="doc-table" role="presentation">
+  <tfoot>
+    <tr><td>
+      <div class="print-footer">DS N°29/2025 · NTMA D.E. 57/2025 mod. 32/2026 · revisado 30-07-2026 · Unidad GES HUAP · ges@huap.online · Borrador — pendiente validación Unidad GES</div>
+    </td></tr>
+  </tfoot>
+  <tbody>
+    <tr><td>
+
+<p class="doc-intro">Esta página reúne, por problema de salud, qué le corresponde hacer al médico tratante en
+cada momento del paciente y qué plazos empiezan a correr. Es apoyo administrativo al proceso GES:
+<strong>no decide si un caso es GES</strong> ni sustituye el juicio clínico. La confirmación diagnóstica y la
+notificación son responsabilidad del médico tratante (Memo N°49).</p>
+
+<section class="doc-sec">
+  <h2>Unidad GES · contacto</h2>
+  <ul class="doc-contacto">
+    <li><strong>Correo:</strong> <a href="mailto:ges@huap.online">ges@huap.online</a></li>
+    <li><strong>Anexos internos:</strong> 285221 · 285214 · 285200</li>
+    <li><strong>Desde fuera del hospital o celular:</strong> 225685221 · 225685214 · 226085200</li>
+    <li><strong>Horario:</strong> L–J 07:30–17:30 · V 07:30–16:30</li>
+    <li><strong>Ubicación:</strong> 1.er piso torre antigua, contigua a UTI</li>
+    <li>Riesgo vital (Ley de Urgencia): Oficina 6 de Admisión, 24/7</li>
+  </ul>
+</section>
+
+<section class="doc-sec" id="momentos">
+  <h2>El proceso, momento a momento</h2>
+  <p class="doc-nota">Estas acciones corren para cualquiera de los 14 problemas. Lo propio de cada problema
+  —sus plazos y sus indicaciones específicas— va en su ficha, más abajo.</p>
+  <div class="doc-etapa"><h3>1. Sospecha — Aún sin confirmación diagnóstica</h3><ul class="doc-accs" role="list"><li><strong>Active el caso GES en SINA con el código CIE-10</strong><br>Guía rápida CIE-10 institucional. Los plazos de diagnóstico corren desde la sospecha.</li></ul></div><div class="doc-etapa"><h3>2. Confirmación — Acabo de confirmar el diagnóstico <em>(Notificar ahora)</em></h3><ul class="doc-accs" role="list"><li><strong>Emita el IPD en SINA — llene los campos 12–18 y firme</strong><br>Admisión completa el resto. El campo 18 fija la fecha máxima de inicio del tratamiento.</li><li><strong>Emita el Formulario de Constancia GES y entregue la copia al paciente en el mismo acto</strong><br>Firma quien notifica + firma o huella del paciente o su representante (Art. 24°, Ley 19.966). Registre día y hora.</li><li><strong>Use la misma fecha en que determinó la intervención sanitaria</strong><br>Circular IF/N°469. En papel solo ante falla de SINA.</li><li><strong>El responsable final es el médico tratante</strong><br>Aunque el GES sea de urgencia y aunque participen interconsultores (Memo N°49).</li><li><strong>En HUAP no se usa el DAU para notificar</strong> <em class="doc-ctx">(solo urgencia)</em><br>IPD y Constancia se generan en SINA, igual que en hospitalización.</li></ul></div><div class="doc-etapa"><h3>3. Hospitalización — Hospitalizado, garantías en curso</h3><ul class="doc-accs" role="list"><li><strong>Verifique que IPD y Constancia estén emitidos</strong><br>Deben ingresar a SIGGES en ≤5 días hábiles desde la emisión. Las gestoras GES fotografían los documentos en su unidad.</li><li><strong>¿Notificación pendiente? Cúmplala en tiempo y forma</strong><br>La Enfermera Gestora GES puede requerirla (Memo N°49). Si se omitió, coordine la notificación diferida con la unidad.</li></ul></div><div class="doc-etapa"><h3>4. Alta — Voy a dar el alta</h3><ul class="doc-accs" role="list"><li><strong>Emita la SIC a la especialidad de seguimiento</strong><br>Por SINA si el destino es HCSBA; interconsulta azul (formulario autocopiativo) para otros hospitales.</li><li><strong>Verifique comuna y al menos un teléfono efectivo</strong><br>Sin contacto efectivo, el caso cae en «contacto no corresponde» y la garantía se cierra sin que el paciente sea atendido (NTMA §II.8–9).</li><li><strong>Envíe la interconsulta a ges@huap.online</strong><br>Adjunte la SIC. Con esto la unidad activa la garantía de seguimiento.</li></ul></div><div class="doc-etapa"><h3>5. Seguimiento — Ya está de alta</h3><ul class="doc-accs" role="list"><li><strong>La Unidad GES gestiona la hora prioritaria</strong><br>La solicita a la red y macrored; el hospital receptor debe otorgar la consulta dentro del plazo garantizado.</li></ul></div>
+  <p class="doc-fuente">Fuentes: Circular IF/N°469 (20-05-2024) · Memo N°49 (21-07-2025) · Memo N°05 (02-01-2026) · NTMA D.E. 57/2025 §II.8–II.9 · formulario-paciente-ges.pdf · IPD. (1).pdf · confirmado por Unidad GES 08-2026</p>
+</section>
+
+<section class="doc-sec">
+  <h2>Los 14 problemas GES del HUAP</h2>
+  <p class="doc-nota">HUAP es prestador de estos 14 problemas: otorga confirmación diagnóstica y tratamiento.
+  Ante un caso que no aparezca aquí, consulte a la Unidad GES antes de descartar que sea GES.
+  Cada ficha suma sus plazos e indicaciones propias a las acciones del momento (ver «El proceso, momento a momento»).</p>
+  <section class="doc-ps">
+  <h3><span class="doc-cie">I21</span> Infarto agudo del miocardio</h3>
+  
+  <div class="doc-etapa"><h4>Sospecha</h4><ul class="doc-accs" role="list"><li><strong>Tome ECG y biomarcadores ahora</strong><br>La confirmación incluye ECG dentro de 30 min desde la primera atención clínica y biomarcadores (NTMA 5.1).</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip doc-critico">30 min</span> <strong>ECG en urgencia</strong> — desde la sospecha (primera atención clínica)</li></ul></div><div class="doc-etapa"><h4>Confirmación — Notificar ahora</h4><ul class="doc-accs" role="list"><li><strong>Evalúe trombólisis si hay supradesnivel ST</strong><br>Fibrinolítico + antiagregante + anticoagulante en conjunto. Revise las exclusiones NTMA antes de indicar.</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip doc-critico">30 min</span> <strong>Trombólisis si hay SDST</strong> — desde la confirmación diagnóstica<br><em>Inclusión: SDST con &lt;24 h desde el inicio de síntomas (ideal &lt;12 h).</em></li></ul></div><div class="doc-etapa"><h4>Seguimiento</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">30 días</span> <strong>Primer control de prevención secundaria</strong> — desde el alta hospitalaria<br><em>Prevención secundaria sin límite de tiempo, cualquiera sea el tratamiento recibido.</em></li></ul></div><p class="doc-post">Rehabilitación: sin garantía.</p><div class="doc-ntma"><h4>Criterios NTMA</h4><ul><li>Confirmación = ECG ≤30 min desde la primera atención clínica + biomarcadores.</li><li>Exclusiones de trombólisis: antecedente de ataque cerebral hemorrágico o de origen desconocido, ACV isquémico &lt;6 meses, malformación vascular o tumor cerebral, diátesis hemorrágica, hemorragia digestiva &lt;6 semanas, otra hemorragia activa (no menstrual), neurocirugía &lt;6 meses, cirugía o trauma mayor &lt;3 semanas, sospecha de disección aórtica.</li></ul><p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>
+  <p class="doc-fuente">Fuente: Ficha PS 5 auge.minsal.cl (DS 29/2025) · NTMA pp. 34–35</p>
+</section>
+<section class="doc-ps">
+  <h3><span class="doc-cie">E10</span> Diabetes mellitus tipo 1</h3>
+  
+  <div class="doc-etapa"><h4>Sospecha</h4><ul class="doc-accs" role="list"><li><strong>Cubre debut Y descompensación</strong><br>El decreto no restringe al debut; el «(debut)» del afiche es convención local de SINA (confirmado por Unidad GES, 08-2026).</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip doc-critico">30 min</span> <strong>Glicemia en urgencia</strong> — desde la atención de urgencia por sospecha de descompensación</li><li><span class="doc-plazo-chip">7 días</span> <strong>Consulta con médico especialista</strong> — desde la sospecha por exámenes alterados</li></ul></div><div class="doc-etapa"><h4>Confirmación — Notificar ahora</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">24 h</span> <strong>Inicio de tratamiento</strong> — desde la confirmación diagnóstica</li><li><span class="doc-plazo-chip doc-critico">30 min</span> <strong>Glicemia en persona ya en tratamiento que se descompensa</strong> — desde la atención médica en Servicio de Urgencia</li></ul></div><p class="doc-post">Sin garantía de oportunidad después del alta; continuidad por su vía habitual.</p><div class="doc-ntma"><h4>Criterios NTMA</h4><ul><li>Insulina: jeringas suficientes sin reutilización; mantener la misma graduación.</li><li>Pie diabético: curaciones avanzadas ante úlcera de todo el espesor de la piel; incluye bota o botín de descarga.</li><li>Monitoreo continuo de glucosa garantizado en &lt;18 años y gestantes (sensores sin interrupciones; en gestantes hasta el parto).</li></ul><p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>
+  <p class="doc-fuente">Fuente: Ficha PS 6 · NTMA pp. 36–37</p>
+</section>
+<section class="doc-ps">
+  <h3><span class="doc-cie">B24</span> Síndrome de la inmunodeficiencia adquirida VIH/SIDA</h3>
+  <p class="doc-fuente">En la ruta guiada aparece como «VIH/SIDA».</p>
+  <div class="doc-etapa"><h4>Sospecha</h4><ul class="doc-accs" role="list"><li><strong>Toda muestra reactiva va al ISP</strong><br>Test instrumental o visual reactivo → toma de muestra en el centro y envío a confirmación al ISP.</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">45 días</span> <strong>Diagnóstico (confirmación ISP)</strong> — desde la sospecha o solicitud del usuario</li></ul></div><div class="doc-etapa"><h4>Confirmación — Notificar ahora</h4><ul class="doc-accs" role="list"><li><strong>TAR también con sospecha clínica fundada</strong><br>Infección aguda sintomática, enfermedades definitorias de SIDA o embarazo con confirmación ISP en proceso — previa indicación médica.</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">45 días</span> <strong>Consulta médica</strong> — desde la confirmación (resultado ISP)</li><li><span class="doc-plazo-chip">7 días</span> <strong>Inicio de TAR</strong> — desde la indicación médica</li><li><span class="doc-plazo-chip">7 días</span> <strong>Inicio de TAR en persona embarazada VIH (+) o con serología reactiva</strong> — desde la indicación<br><em>Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía.</em></li><li><span class="doc-plazo-chip doc-critico">Inmediata</span> <strong>Profilaxis antirretroviral en el parto</strong> — desde el inicio del trabajo de parto vaginal, o 4 horas antes de la cesárea programada<br><em>Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía.</em></li><li><span class="doc-plazo-chip doc-critico">6 h</span> <strong>Medicamentos para interrumpir la producción de leche materna en puérpera VIH (+)</strong> — desde el nacimiento<br><em>Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía.</em></li><li><span class="doc-plazo-chip doc-critico">4 h</span> <strong>Profilaxis antirretroviral al recién nacido de gestante VIH (+) o con serología reactiva</strong> — desde el nacimiento<br><em>Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía.</em></li><li><span class="doc-plazo-chip doc-critico">Inmediata</span> <strong>Fórmula láctea de inicio al recién nacido</strong> — desde el nacimiento<br><em>Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía.</em></li></ul></div><p class="doc-post">Seguimiento según esquema clínico; sin plazo post-alta adicional garantizado.</p><div class="doc-ntma"><h4>Criterios NTMA</h4><ul><li>Pretratamiento: IGRA para TB latente con CD4 ≤350 o sin PPD; HLA-B*5701 antes de Abacavir; anti-HBs tras vacunas VHB; genotipificación de resistencia.</li><li>PAP anual en mujeres VIH+.</li></ul><p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>
+  <p class="doc-fuente">Fuente: Ficha PS 18 · NTMA pp. 44–48</p>
+</section>
+<section class="doc-ps">
+  <h3><span class="doc-cie">R00.1</span> Trastornos de generación del impulso y conducción en personas de 15 años y más, que requieren marcapasos</h3>
+  <p class="doc-fuente">En la ruta guiada aparece como «Trastornos de conducción que requieren marcapaso (≥15 años)».</p>
+  <div class="doc-etapa"><h4>Sospecha</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">30 días</span> <strong>Confirmación diagnóstica</strong> — desde la sospecha</li></ul></div><div class="doc-etapa"><h4>Confirmación — Notificar ahora</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">30 días</span> <strong>Instalación de marcapaso</strong> — desde la confirmación o la indicación de recambio</li></ul></div><div class="doc-etapa"><h4>Seguimiento</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">15 días</span> <strong>Primer control</strong> — desde el alta de instalación o cambio de generador</li></ul></div><div class="doc-ntma"><h4>Criterios NTMA</h4><ul><li>El estudio electrofisiológico incluye honorarios, insumos, medicamentos y pabellón (ablación de nódulo AV y vías accesorias).</li></ul><p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>
+  <p class="doc-fuente">Fuente: Ficha PS 25 · NTMA p. 50</p>
+</section>
+<section class="doc-ps">
+  <h3><span class="doc-cie">K80.0</span> Colecistectomía preventiva del cáncer de vesícula en personas de 35 a 49 años</h3>
+  <p class="doc-fuente">En la ruta guiada aparece como «Colecistectomía preventiva del cáncer de vesícula (35–49 años)».</p>
+  <div class="doc-etapa"><h4>Sospecha</h4><ul class="doc-accs" role="list"><li><strong>Personas de 35 a 49 años con síntomas</strong><br>La ecotomografía garantizada se realiza a todo paciente con síntomas. Equivalen a síntomas actuales: cólico biliar previo, colecistitis crónica no operada o eco previa con colelitiasis (NTMA 26.1).</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">30 días</span> <strong>Confirmación con ecotomografía</strong> — desde la sospecha</li></ul></div><div class="doc-etapa"><h4>Confirmación — Notificar ahora</h4><ul class="doc-accs" role="list"><li><strong>Derive a cirujano/a</strong><br>Todo paciente con colelitiasis en la eco, para evaluación y cirugía según condición clínica.</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">90 días</span> <strong>Colecistectomía</strong> — desde la confirmación diagnóstica</li></ul></div><p class="doc-post">Sin garantía de oportunidad después del alta.</p><div class="doc-ntma"><h4>Criterios NTMA</h4><ul><li>La eco «Confirmación Colelitiasis» se realiza a todo sintomático de 35–49 años; con colelitiasis, derivación a cirujano/a.</li></ul><p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>
+  <p class="doc-fuente">Fuente: Ficha PS 26 · NTMA pp. 50–51</p>
+</section>
+<section class="doc-ps">
+  <h3><span class="doc-cie">Z99.1</span> Ayudas técnicas para personas de 65 años y más</h3>
+  
+  <div class="doc-etapa"><h4>Sospecha</h4><ul class="doc-accs" role="list"><li><strong>¿Menor de 65 años con ACV o HSA?</strong><br>Sus ayudas técnicas van por el PS 37 o 42, no por este problema.</li></ul></div><div class="doc-etapa"><h4>Confirmación — Notificar ahora</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">20 días</span> <strong>Entrega de bastón, cojín o colchón antiescaras</strong> — desde la indicación médica</li><li><span class="doc-plazo-chip">30 días</span> <strong>Entrega de silla de ruedas o andador</strong> — desde la indicación médica</li></ul></div><p class="doc-post">La garantía es la entrega dentro de plazo desde la indicación.</p><div class="doc-ntma"><h4>Criterios NTMA</h4><ul><li>Inclusión: ≥65 años con limitación funcional para desplazarse o para actividades de la vida diaria (dolor, claudicación, inestabilidad articular, riesgo de caída, alteración de la marcha o inmovilidad).</li><li>12 tipos: andadores (3), bastones (2), cojines y colchones antiescaras (4), sillas de ruedas (3). No se entregan necesariamente en conjunto.</li></ul><p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>
+  <p class="doc-fuente">Fuente: Ficha PS 36 · NTMA pp. 54–55</p>
+</section>
+<section class="doc-ps">
+  <h3><span class="doc-cie">G45.9 · I64</span> Ataque cerebrovascular isquémico en personas de 15 años y más</h3>
+  <p class="doc-fuente">En la ruta guiada aparece como «Ataque cerebrovascular isquémico (≥15 años)».</p>
+  <div class="doc-etapa"><h4>Sospecha</h4><ul class="doc-accs" role="list"><li><strong>El TIA también activa este GES</strong><br>G45.9 e I64 apuntan ambos al PS 37 (confirmado por Unidad GES).</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip doc-critico">24 h</span> <strong>Confirmación diagnóstica</strong> — desde la sospecha</li></ul></div><div class="doc-etapa"><h4>Confirmación — Notificar ahora</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip doc-critico">24 h</span> <strong>Inicio de tratamiento</strong> — desde la confirmación</li><li><span class="doc-plazo-chip">24 h</span> <strong>Hospitalización en prestador resolutivo</strong> — desde la indicación</li></ul></div><div class="doc-etapa"><h4>Hospitalización</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">48 h</span> <strong>Rehabilitación hospitalizada</strong> — desde la indicación</li></ul></div><div class="doc-etapa"><h4>Alta</h4><ul class="doc-accs" role="list"><li><strong>Rehabilitación ambulatoria → SIC a Unidad de Kinesiología</strong><br>HCSBA por SINA · HEC por interconsulta azul. Si requiere Fonoaudiología o Terapia Ocupacional, consígnelo en la misma SIC: la derivación sigue dirigida a Kinesiología (Memo N°05).</li></ul></div><div class="doc-etapa"><h4>Seguimiento</h4><ul class="doc-accs" role="list"><li><strong>Ayudas técnicas para menores de 65 años</strong><br>Bastón, cojín o colchón en 20 días; silla de ruedas en 30 días desde la indicación — por este mismo problema, no por el PS 36.</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">10 días</span> <strong>Control con neurología de adultos</strong> — desde el alta hospitalaria<br><em>La atención al alta debe ser por neurología de adultos (NTMA 37.2).</em></li><li><span class="doc-plazo-chip">15 días</span> <strong>Rehabilitación ambulatoria</strong> — desde la indicación médica</li></ul></div><div class="doc-ntma"><h4>Criterios NTMA</h4><ul><li>Seguimiento al alta por especialista de neurología adultos (37.2).</li><li>Estudio etiológico cardiovascular durante la hospitalización, para prevenir recurrencia.</li><li>Ayudas técnicas garantizadas hasta los 64 años por este problema; desde 65, por el PS 36.</li></ul><p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>
+  <p class="doc-fuente">Fuente: Ficha PS 37 · NTMA pp. 55–56 · Memo N°05 (02-01-2026)</p>
+</section>
+<section class="doc-ps">
+  <h3><span class="doc-cie">I60</span> Hemorragia subaracnoidea secundaria a ruptura de uno o más aneurismas cerebrales</h3>
+  <p class="doc-fuente">En la ruta guiada aparece como «Hemorragia subaracnoidea por ruptura de aneurismas cerebrales».</p>
+  <div class="doc-etapa"><h4>Sospecha</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip doc-critico">24 h</span> <strong>TAC</strong> — desde la sospecha</li></ul></div><div class="doc-etapa"><h4>Confirmación — Notificar ahora</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">48 h</span> <strong>AngioTAC multicorte o angiografía digital</strong> — desde la confirmación de HSA</li><li><span class="doc-plazo-chip doc-critico">24 h</span> <strong>Tratamiento del aneurisma roto</strong> — desde la confirmación de aneurisma roto</li></ul></div><div class="doc-etapa"><h4>Hospitalización</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">48 h</span> <strong>Rehabilitación hospitalizada</strong> — desde la indicación</li></ul></div><div class="doc-etapa"><h4>Seguimiento</h4><ul class="doc-accs" role="list"><li><strong>Ayudas técnicas para menores de 65 años</strong><br>Bastón, cojín o colchón en 20 días; silla de ruedas en 30 días desde la indicación — por este mismo problema, no por el PS 36.</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">30 días</span> <strong>Primer control con especialista</strong> — desde el alta</li><li><span class="doc-plazo-chip">15 días</span> <strong>Rehabilitación ambulatoria</strong> — desde la indicación médica</li></ul></div><div class="doc-ntma"><h4>Criterios NTMA</h4><ul><li>Ayudas técnicas garantizadas hasta los 64 años por este problema; desde 65, por el PS 36.</li></ul><p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>
+  <p class="doc-fuente">Fuente: Ficha PS 42 · NTMA p. 57</p>
+</section>
+<section class="doc-ps">
+  <h3><span class="doc-cie">M51.1</span> Tratamiento quirúrgico de hernia del núcleo pulposo lumbar</h3>
+  
+  <div class="doc-etapa"><h4>Confirmación — Notificar ahora</h4><ul class="doc-accs" role="list"><li><strong>Indicación quirúrgica según NTMA</strong><br>Ciática radicular compresiva sin respuesta a tratamiento conservador tras 6 semanas, o compromiso progresivo.</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">45 días</span> <strong>Cirugía</strong> — desde la indicación quirúrgica</li></ul></div><div class="doc-etapa"><h4>Seguimiento</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">30 días</span> <strong>Control con especialista</strong> — desde el alta hospitalaria</li></ul></div><div class="doc-ntma"><h4>Criterios NTMA</h4><ul><li>Cirugía indicada en ciática radicular compresiva refractaria a 6 semanas de tratamiento conservador o con compromiso progresivo.</li></ul><p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>
+  <p class="doc-fuente">Fuente: Ficha PS 44 · NTMA p. 58</p>
+</section>
+<section class="doc-ps">
+  <h3><span class="doc-cie">T07.X</span> Politraumatizado grave</h3>
+  
+  <div class="doc-etapa"><h4>Sospecha</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip doc-critico">24 h</span> <strong>Tratamiento en centro resolutivo</strong> — desde el rescate<br><em>El plazo corre desde el rescate, no desde el ingreso.</em></li></ul></div><div class="doc-etapa"><h4>Hospitalización</h4><ul class="doc-accs" role="list"><li><strong>Rehabilitación garantizada solo con lesión medular</strong><br>El decreto la acota explícitamente; guía «Rehabilitación en personas con lesión medular en UPC».</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">24 h</span> <strong>Rehabilitación (solo con lesión medular)</strong> — desde la indicación</li></ul></div><p class="doc-post">Sin garantía de oportunidad después del alta.</p><div class="doc-ntma"><h4>Criterios NTMA</h4><ul><li>La glosa inmunoglobulina incluye inmunoglobulina antitetánica para la protección financiera.</li></ul><p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>
+  <p class="doc-fuente">Fuente: Ficha PS 48 · NTMA p. 59</p>
+</section>
+<section class="doc-ps">
+  <h3><span class="doc-cie">S09.9</span> Traumatismo cráneo encefálico moderado o grave</h3>
+  
+  <div class="doc-etapa"><h4>Sospecha</h4><ul class="doc-accs" role="list"><li><strong>Clasifique con Glasgow</strong><br>Moderado: GCS 13–14, o GCS 15 con ≥1 factor de riesgo. Grave: GCS &lt;13. Con GCS 15 sin factores, mantenga en observación: el TEC es evolutivo (NTMA 49.1).</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip doc-critico">12 h</span> <strong>Confirmación diagnóstica</strong> — desde la sospecha</li></ul></div><div class="doc-etapa"><h4>Confirmación — Notificar ahora</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">24 h</span> <strong>Inicio de tratamiento</strong> — desde la confirmación</li></ul></div><p class="doc-post">Sin garantía de oportunidad después del alta.</p><div class="doc-ntma"><h4>Criterios NTMA</h4><ul><li>TEC moderado: GCS 13–14, o GCS 15 con al menos un factor de riesgo. TEC grave: GCS &lt;13. Observación aunque GCS 15 sin factores.</li></ul><p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>
+  <p class="doc-fuente">Fuente: Ficha PS 49 · NTMA pp. 59–60</p>
+</section>
+<section class="doc-ps">
+  <h3><span class="doc-cie">S05.1</span> Trauma ocular grave</h3>
+  
+  <div class="doc-etapa"><h4>Sospecha</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip doc-critico">12 h</span> <strong>Confirmación diagnóstica</strong> — desde la sospecha</li></ul></div><div class="doc-etapa"><h4>Confirmación — Notificar ahora</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">60 h</span> <strong>Atención por médico especialista</strong> — desde la confirmación</li></ul></div><p class="doc-post">Existe la prestación de seguimiento, pero sin plazo de oportunidad garantizado.</p><div class="doc-ntma"><h4>Criterios NTMA</h4><ul><li>Sin especificaciones adicionales a las definiciones generales de la norma.</li></ul><p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>
+  <p class="doc-fuente">Fuente: Ficha PS 50 · NTMA p. 60</p>
+</section>
+<section class="doc-ps">
+  <h3><span class="doc-cie">T29.0</span> Gran quemado</h3>
+  
+  <div class="doc-etapa"><h4>Sospecha</h4><ul class="doc-accs" role="list"><li><strong>Sin garantía de diagnóstico: las garantías parten en el tratamiento</strong><br>Clasifique con Garcés/Artigas (grave, crítico, sobrevida excepcional).</li></ul></div><div class="doc-etapa"><h4>Confirmación — Notificar ahora</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip doc-critico">8 h</span> <strong>Estabilización inicial en centro de origen (&gt;15 años)</strong> — desde la confirmación</li><li><span class="doc-plazo-chip">72 h</span> <strong>Tratamiento en prestador resolutivo</strong> — desde la confirmación</li></ul></div><div class="doc-etapa"><h4>Hospitalización</h4><ul class="doc-accs" role="list"><li><strong>Tome medidas antropométricas durante la hospitalización</strong><br>Permite entregar las ayudas técnicas antes del alta y asegurar continuidad (NTMA 55.3).</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">48 h</span> <strong>Rehabilitación hospitalizada</strong> — desde la indicación</li></ul></div><div class="doc-etapa"><h4>Seguimiento</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">15 días</span> <strong>Primer control</strong> — desde la indicación médica<br><strong class="doc-corr">Corrección al afiche:</strong> El afiche decía «desde el alta»; el decreto dice desde la indicación médica.</li><li><span class="doc-plazo-chip">15 días</span> <strong>Rehabilitación ambulatoria</strong> — desde el alta hospitalaria<br><strong class="doc-corr">Corrección al afiche:</strong> El afiche decía «desde la indicación»; el decreto dice desde el alta.</li><li><span class="doc-plazo-chip">30 días</span> <strong>Entrega de ayudas técnicas indicadas en rehabilitación ambulatoria</strong> — desde la indicación</li></ul></div><div class="doc-ntma"><h4>Criterios NTMA</h4><ul><li>Inclusión a tratamiento: índice de gravedad &gt;70; o quemadura de vía aérea, eléctrica de alto voltaje, asociada a politrauma/TEC/shock; o profundas/extensas o complejas de cara, manos, pies o periné con riesgo de secuela invalidante; o ≥65 años con quemadura AB/B ≥10% de superficie corporal.</li></ul><p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>
+  <p class="doc-fuente">Fuente: Ficha PS 55 · NTMA p. 63</p>
+</section>
+<section class="doc-ps">
+  <h3><span class="doc-cie">Y05</span> Atención integral de salud en agresión sexual aguda</h3>
+  
+  <div class="doc-etapa"><h4>Sospecha</h4><ul class="doc-accs" role="list"><li><strong>Ventana de acceso: hasta 72 horas desde el episodio</strong><br>Sin necesidad de peritaje previo (D.E. N°32/2026). La confirmación diagnóstica se realiza con la atención médica.</li><li><strong>La denuncia es obligatoria para todo el equipo clínico</strong><br>Norma General Técnica de atención a víctimas de violencia sexual (2016).</li></ul><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip doc-critico">Inmediata</span> <strong>Primera respuesta en unidad de emergencia</strong> — desde la solicitud de atención</li></ul></div><div class="doc-etapa"><h4>Confirmación — Notificar ahora</h4><ul class="doc-accs" role="list"><li><strong>Primera respuesta integral</strong><br>Atención de lesiones y toma de muestras · anticoncepción de emergencia · profilaxis VIH e ITS · evaluación hepatitis B · primera ayuda psicológica · contacto con sistema policial/judicial.</li></ul></div><div class="doc-etapa"><h4>Seguimiento</h4><ul class="doc-plazos" role="list"><li><span class="doc-plazo-chip">35 días</span> <strong>Seguimiento</strong> — desde la primera respuesta<br><strong class="doc-corr">Corrección al afiche:</strong> El afiche decía «desde el alta»; el decreto dice desde la primera respuesta.</li></ul></div><div class="doc-ntma"><h4>Criterios NTMA</h4><ul><li>Seguimiento según necesidad: pediatría, ginecología, urología, infectología, dermatología, medicina interna/familiar, inmunología; salud mental por psiquiatra y psicólogo/a clínico.</li></ul><p class="doc-warn">Transcripción de la NTMA pendiente de validación por la Unidad GES.</p></div>
+  <p class="doc-fuente">Fuente: Ficha PS 86 · NTMA pp. 86–87 (mod. D.E. 32/2026)</p>
+</section>
+</section>
+
+<section class="doc-sec">
+  <h2>Casos especiales — si… entonces…</h2>
+  <dl class="doc-casos">
+    <dt>El paciente no puede firmar</dt><dd>Firma o huella digital del propio paciente o de su representante; si firma un representante, registre su nombre, RUN y contacto.</dd><dt>La notificación no se hizo en el momento</dt><dd>Notificación diferida: la coordina el equipo GES con el equipo tratante. Avise a la unidad.</dd><dt>Beneficiario ISAPRE</dt><dd>Entregue la documentación GES + resumen clínico al representante, para activar garantías ante su Isapre y gestionar rescate o traslado.</dd><dt>Sin previsión, extranjero o NN</dt><dd>Interconsulta a Servicio Social: RUT provisorio, inscripción FONASA o identificación vía Registro Civil.</dd><dt>¿Ya notificado en otro establecimiento?</dt><dd>Consulte a la Oficina GES antes de duplicar — el historial SIGGES no siempre alcanza a revisarse.</dd><dt>Riesgo vital o secuela funcional grave</dt><dd>La Ley de Urgencia corre en paralelo: la Oficina 6 de Admisión registra y notifica en la plataforma SIS, 24/7.</dd>
+  </dl>
+</section>
+
+<section class="doc-sec">
+  <h2>Ayudas técnicas para menores de 65 años</h2>
+  <p>ACV isquémico (37) y HSA (42) garantizan ayudas técnicas a menores de 65 años, por la vía de esos problemas y no del PS 36 (que es para 65 años y más). El material actual invisibiliza este derecho.</p>
+  <ul>
+    <li><strong>Bastón, cojín o colchón:</strong> 20 días desde la indicación médica</li><li><strong>Sillas de ruedas:</strong> 30 días desde la indicación médica</li>
+  </ul>
+  <p class="doc-fuente">Fuente: Fichas auge.minsal.cl PS 37 y PS 42 (DS 29/2025), revalidadas 30-07-2026</p>
+</section>
+
+<section class="doc-sec doc-fuentes">
+  <h2>Vigencia y fuentes</h2>
+  <ul>
+    <li><strong>Decreto Supremo N° 29, de 2025, Ministerio de Salud (Subsecretaría de Salud Pública).</strong> 90 problemas garantizados.
+      Diario Oficial N° 44.311, CVE 2734505 (publicación en extracto), 28-11-2025.
+      Vigencia informada por MINSAL: 01-12-2025. <em>Fecha informada por MINSAL; el extracto del Diario Oficial no la consigna. Confirmar en el texto íntegro del decreto antes de publicarla como fecha oficial.</em></li>
+    <li><strong>Decreto Exento N° 57, de 2025, MINSAL — Normas de carácter técnico médico y administrativo para el cumplimiento de las Garantías Explícitas en Salud de la ley N° 19.966</strong>, de 26-11-2025.
+      Modificado por Decreto Exento N° 32, de 2026, MINSAL (06-03-2026): Sustituye el guarismo «29» por «72» en el numeral 86.1: confirma la ventana de 72 horas en agresión sexual aguda.</li>
+    <li><strong>Circular IF/N° 469 (20-05-2024), Superintendencia de Salud — ajustes al Formulario de Constancia y al proceso de notificación</strong>, vigente desde 03-06-2024. <em>Existen las Circulares IF/N° 516 y 517 (11-2025); está pendiente confirmar si modifican el proceso de notificación. La unidad trabaja con la 469.</em></li>
+    <li><strong>Ley N° 19.966 (2004) — Régimen General de Garantías en Salud.</strong> El Artículo 24° funda el Formulario de constancia de información al paciente GES. <a href="https://bcn.cl/2fckl">https://bcn.cl/2fckl</a></li>
+    <li>Fichas oficiales por problema de salud: <a href="https://auge.minsal.cl/">https://auge.minsal.cl/</a></li>
+  </ul>
+  <p class="doc-warn">Contenido pendiente de validación por la Unidad GES — no publicar. Plazos revalidados contra fichas auge.minsal.cl el 30-07-2026.</p>
+  <p class="doc-fuente">Última revisión normativa: 30-07-2026. DS N°29/2025 · NTMA D.E. 57/2025 mod. 32/2026 · revisado 30-07-2026.</p>
+</section>
+    </td></tr>
+  </tbody>
+</table>
+</div>
+</main>
+
+<footer class="dock" style="position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;pointer-events:none">
+  <div style="width:100%;max-width:600px;background:#0C2B5E;color:#fff;padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px;pointer-events:auto">
+    <a href="tel:225685221" style="flex:none;background:#C9F2E3;color:#0C2B5E;text-decoration:none;font-weight:900;font-size:13px;padding:9px 16px;border-radius:999px">Llamar</a>
+    <a href="mailto:ges@huap.online" style="flex:none;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;text-decoration:none;font-weight:800;font-size:13px;padding:8px 16px;border-radius:999px">ges@huap.online</a>
+    <span style="font-size:10.5px;font-weight:600;opacity:.75;line-height:1.3">Anexos 285221 · 285214 · 285200<br>L–J 07:30–17:30 · V 07:30–16:30</span>
+  </div>
+</footer>
+
+</div>
+</div>
+
+<script type="application/json" id="ges-data">{"contacto":{"correo":"ges@huap.online","anexos":"285221 · 285214 · 285200","horario":"L–J 07:30–17:30 · V 07:30–16:30"},"etapas":[{"id":"sospecha","nombre":"Sospecha","desc":"Aún sin confirmación diagnóstica"},{"id":"confirmacion","nombre":"Confirmación","desc":"Acabo de confirmar el diagnóstico","badge":"Notificar ahora"},{"id":"hospitalizacion","nombre":"Hospitalización","desc":"Hospitalizado, garantías en curso"},{"id":"alta","nombre":"Alta","desc":"Voy a dar el alta"},{"id":"seguimiento","nombre":"Seguimiento","desc":"Ya está de alta"}],"acciones_comunes":{"sospecha":[{"t":"Active el caso GES en SINA con el código CIE-10","d":"Guía rápida CIE-10 institucional. Los plazos de diagnóstico corren desde la sospecha.","_pendiente_validacion":"Procedimiento local no descrito en ninguna fuente de la carpeta. Confirmar con la Unidad GES antes de publicar (CLAUDE.md §1.1)."}],"confirmacion":[{"t":"Emita el IPD en SINA — llene los campos 12–18 y firme","d":"Admisión completa el resto. El campo 18 fija la fecha máxima de inicio del tratamiento."},{"t":"Emita el Formulario de Constancia GES y entregue la copia al paciente en el mismo acto","d":"Firma quien notifica + firma o huella del paciente o su representante (Art. 24°, Ley 19.966). Registre día y hora."},{"t":"Use la misma fecha en que determinó la intervención sanitaria","d":"Circular IF/N°469. En papel solo ante falla de SINA."},{"t":"El responsable final es el médico tratante","d":"Aunque el GES sea de urgencia y aunque participen interconsultores (Memo N°49)."},{"t":"En HUAP no se usa el DAU para notificar","d":"IPD y Constancia se generan en SINA, igual que en hospitalización.","ctx":"urgencia"}],"hospitalizacion":[{"t":"Verifique que IPD y Constancia estén emitidos","d":"Deben ingresar a SIGGES en ≤5 días hábiles desde la emisión. Las gestoras GES fotografían los documentos en su unidad."},{"t":"¿Notificación pendiente? Cúmplala en tiempo y forma","d":"La Enfermera Gestora GES puede requerirla (Memo N°49). Si se omitió, coordine la notificación diferida con la unidad."}],"alta":[{"t":"Emita la SIC a la especialidad de seguimiento","d":"Por SINA si el destino es HCSBA; interconsulta azul (formulario autocopiativo) para otros hospitales."},{"t":"Verifique comuna y al menos un teléfono efectivo","d":"Sin contacto efectivo, el caso cae en «contacto no corresponde» y la garantía se cierra sin que el paciente sea atendido (NTMA §II.8–9)."},{"t":"Envíe la interconsulta a ges@huap.online","d":"Adjunte la SIC. Con esto la unidad activa la garantía de seguimiento."}],"seguimiento":[{"t":"La Unidad GES gestiona la hora prioritaria","d":"La solicita a la red y macrored; el hospital receptor debe otorgar la consulta dentro del plazo garantizado."}]},"casos":[{"si":"El paciente no puede firmar","entonces":"Firma o huella digital del propio paciente o de su representante; si firma un representante, registre su nombre, RUN y contacto."},{"si":"La notificación no se hizo en el momento","entonces":"Notificación diferida: la coordina el equipo GES con el equipo tratante. Avise a la unidad."},{"si":"Beneficiario ISAPRE","entonces":"Entregue la documentación GES + resumen clínico al representante, para activar garantías ante su Isapre y gestionar rescate o traslado."},{"si":"Sin previsión, extranjero o NN","entonces":"Interconsulta a Servicio Social: RUT provisorio, inscripción FONASA o identificación vía Registro Civil."},{"si":"¿Ya notificado en otro establecimiento?","entonces":"Consulte a la Oficina GES antes de duplicar — el historial SIGGES no siempre alcanza a revisarse."},{"si":"Riesgo vital o secuela funcional grave","entonces":"La Ley de Urgencia corre en paralelo: la Oficina 6 de Admisión registra y notifica en la plataforma SIS, 24/7."}],"notaSinGarantiaPostAlta":"Sin garantía de oportunidad después del alta para este problema.","problemas":[{"ps":5,"cie":["I21"],"nombre":"Infarto agudo del miocardio","denominacionOficial":"Infarto agudo del miocardio","corto":"IAM","sinonimos":["IAM","infarto","SDST","supradesnivel","troponinas","coronario","trombólisis","fibrinolítico","SCA","síndrome coronario agudo"],"tiempo":true,"plazos":[{"id":"p5-ecg","etapa":"sospecha","hito":"ECG en urgencia","n":30,"u":"min","desde":"la sospecha (primera atención clínica)","critico":true},{"id":"p5-tro","etapa":"confirmacion","hito":"Trombólisis si hay SDST","n":30,"u":"min","desde":"la confirmación diagnóstica","critico":true,"nota":"Inclusión: SDST con \u003c24 h desde el inicio de síntomas (ideal \u003c12 h)."},{"id":"p5-seg","etapa":"seguimiento","hito":"Primer control de prevención secundaria","n":30,"u":"d","desde":"el alta hospitalaria","nota":"Prevención secundaria sin límite de tiempo, cualquiera sea el tratamiento recibido."}],"extras":{"sospecha":[{"t":"Tome ECG y biomarcadores ahora","d":"La confirmación incluye ECG dentro de 30 min desde la primera atención clínica y biomarcadores (NTMA 5.1)."}],"confirmacion":[{"t":"Evalúe trombólisis si hay supradesnivel ST","d":"Fibrinolítico + antiagregante + anticoagulante en conjunto. Revise las exclusiones NTMA antes de indicar."}]},"ntma":["Confirmación = ECG ≤30 min desde la primera atención clínica + biomarcadores.","Exclusiones de trombólisis: antecedente de ataque cerebral hemorrágico o de origen desconocido, ACV isquémico \u003c6 meses, malformación vascular o tumor cerebral, diátesis hemorrágica, hemorragia digestiva \u003c6 semanas, otra hemorragia activa (no menstrual), neurocirugía \u003c6 meses, cirugía o trauma mayor \u003c3 semanas, sospecha de disección aórtica."],"postNota":"Rehabilitación: sin garantía.","fuente":"Ficha PS 5 auge.minsal.cl (DS 29/2025) · NTMA pp. 34–35"},{"ps":6,"cie":["E10"],"nombre":"Diabetes mellitus tipo 1","denominacionOficial":"Diabetes mellitus tipo 1","corto":"DM1","sinonimos":["DM1","DM tipo 1","diabetes","debut","descompensación","cetoacidosis","glicemia","insulina","pie diabético","DM tipo I"],"tiempo":true,"plazos":[{"id":"p6-gli","etapa":"sospecha","hito":"Glicemia en urgencia","n":30,"u":"min","desde":"la atención de urgencia por sospecha de descompensación","critico":true},{"id":"p6-esp","etapa":"sospecha","hito":"Consulta con médico especialista","n":7,"u":"d","desde":"la sospecha por exámenes alterados"},{"id":"p6-tto","etapa":"confirmacion","hito":"Inicio de tratamiento","n":24,"u":"h","desde":"la confirmación diagnóstica"},{"id":"p6-des","etapa":"confirmacion","hito":"Glicemia en persona ya en tratamiento que se descompensa","n":30,"u":"min","desde":"la atención médica en Servicio de Urgencia","critico":true}],"extras":{"sospecha":[{"t":"Cubre debut Y descompensación","d":"El decreto no restringe al debut; el «(debut)» del afiche es convención local de SINA (confirmado por Unidad GES, 08-2026)."}]},"ntma":["Insulina: jeringas suficientes sin reutilización; mantener la misma graduación.","Pie diabético: curaciones avanzadas ante úlcera de todo el espesor de la piel; incluye bota o botín de descarga.","Monitoreo continuo de glucosa garantizado en \u003c18 años y gestantes (sensores sin interrupciones; en gestantes hasta el parto)."],"postNota":"Sin garantía de oportunidad después del alta; continuidad por su vía habitual.","fuente":"Ficha PS 6 · NTMA pp. 36–37"},{"ps":18,"cie":["B24"],"nombre":"VIH/SIDA","denominacionOficial":"Síndrome de la inmunodeficiencia adquirida VIH/SIDA","corto":"VIH","sinonimos":["VIH","SIDA","TAR","antirretroviral","ISP"],"tiempo":false,"plazos":[{"id":"p18-dx","etapa":"sospecha","hito":"Diagnóstico (confirmación ISP)","n":45,"u":"d","desde":"la sospecha o solicitud del usuario"},{"id":"p18-cm","etapa":"confirmacion","hito":"Consulta médica","n":45,"u":"d","desde":"la confirmación (resultado ISP)"},{"id":"p18-tar","etapa":"confirmacion","hito":"Inicio de TAR","n":7,"u":"d","desde":"la indicación médica"},{"id":"p18-emb","etapa":"confirmacion","hito":"Inicio de TAR en persona embarazada VIH (+) o con serología reactiva","n":7,"u":"d","desde":"la indicación","nota":"Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."},{"id":"p18-par","etapa":"confirmacion","hito":"Profilaxis antirretroviral en el parto","n":0,"u":"ya","desde":"el inicio del trabajo de parto vaginal, o 4 horas antes de la cesárea programada","critico":true,"nota":"Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."},{"id":"p18-pue","etapa":"confirmacion","hito":"Medicamentos para interrumpir la producción de leche materna en puérpera VIH (+)","n":6,"u":"h","desde":"el nacimiento","critico":true,"nota":"Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."},{"id":"p18-rnp","etapa":"confirmacion","hito":"Profilaxis antirretroviral al recién nacido de gestante VIH (+) o con serología reactiva","n":4,"u":"h","desde":"el nacimiento","critico":true,"nota":"Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."},{"id":"p18-rnf","etapa":"confirmacion","hito":"Fórmula láctea de inicio al recién nacido","n":0,"u":"ya","desde":"el nacimiento","critico":true,"nota":"Garantía obstétrica o neonatal del problema 18. HUAP no tiene maternidad: la Unidad GES debe confirmar si corresponde mantenerla en esta guía."}],"extras":{"sospecha":[{"t":"Toda muestra reactiva va al ISP","d":"Test instrumental o visual reactivo → toma de muestra en el centro y envío a confirmación al ISP."}],"confirmacion":[{"t":"TAR también con sospecha clínica fundada","d":"Infección aguda sintomática, enfermedades definitorias de SIDA o embarazo con confirmación ISP en proceso — previa indicación médica."}]},"ntma":["Pretratamiento: IGRA para TB latente con CD4 ≤350 o sin PPD; HLA-B*5701 antes de Abacavir; anti-HBs tras vacunas VHB; genotipificación de resistencia.","PAP anual en mujeres VIH+."],"postNota":"Seguimiento según esquema clínico; sin plazo post-alta adicional garantizado.","fuente":"Ficha PS 18 · NTMA pp. 44–48"},{"ps":25,"cie":["R00.1"],"nombre":"Trastornos de conducción que requieren marcapaso (≥15 años)","denominacionOficial":"Trastornos de generación del impulso y conducción en personas de 15 años y más, que requieren marcapasos","corto":"Marcapaso","sinonimos":["marcapaso","marcapasos","bradicardia","síncope","conducción","impulso","nódulo","electrofisiológico"],"tiempo":false,"plazos":[{"id":"p25-dx","etapa":"sospecha","hito":"Confirmación diagnóstica","n":30,"u":"d","desde":"la sospecha"},{"id":"p25-tto","etapa":"confirmacion","hito":"Instalación de marcapaso","n":30,"u":"d","desde":"la confirmación o la indicación de recambio"},{"id":"p25-seg","etapa":"seguimiento","hito":"Primer control","n":15,"u":"d","desde":"el alta de instalación o cambio de generador"}],"extras":{},"ntma":["El estudio electrofisiológico incluye honorarios, insumos, medicamentos y pabellón (ablación de nódulo AV y vías accesorias)."],"postNota":"","fuente":"Ficha PS 25 · NTMA p. 50"},{"ps":26,"cie":["K80.0"],"nombre":"Colecistectomía preventiva del cáncer de vesícula (35–49 años)","denominacionOficial":"Colecistectomía preventiva del cáncer de vesícula en personas de 35 a 49 años","corto":"Colecistectomía","sinonimos":["colelitiasis","cólico biliar","colecistitis","vesícula","colecistectomía","ecotomografía"],"tiempo":false,"plazos":[{"id":"p26-eco","etapa":"sospecha","hito":"Confirmación con ecotomografía","n":30,"u":"d","desde":"la sospecha"},{"id":"p26-qx","etapa":"confirmacion","hito":"Colecistectomía","n":90,"u":"d","desde":"la confirmación diagnóstica"}],"extras":{"sospecha":[{"t":"Personas de 35 a 49 años con síntomas","d":"La ecotomografía garantizada se realiza a todo paciente con síntomas. Equivalen a síntomas actuales: cólico biliar previo, colecistitis crónica no operada o eco previa con colelitiasis (NTMA 26.1)."}],"confirmacion":[{"t":"Derive a cirujano/a","d":"Todo paciente con colelitiasis en la eco, para evaluación y cirugía según condición clínica."}]},"ntma":["La eco «Confirmación Colelitiasis» se realiza a todo sintomático de 35–49 años; con colelitiasis, derivación a cirujano/a."],"postNota":"Sin garantía de oportunidad después del alta.","fuente":"Ficha PS 26 · NTMA pp. 50–51"},{"ps":36,"cie":["Z99.1"],"nombre":"Ayudas técnicas para personas de 65 años y más","denominacionOficial":"Ayudas técnicas para personas de 65 años y más","corto":"Ayudas técnicas ≥65","sinonimos":["ayudas técnicas","bastón","andador","silla de ruedas","cojín","colchón","antiescaras"],"tiempo":false,"plazos":[{"id":"p36-bas","etapa":"confirmacion","hito":"Entrega de bastón, cojín o colchón antiescaras","n":20,"u":"d","desde":"la indicación médica"},{"id":"p36-sil","etapa":"confirmacion","hito":"Entrega de silla de ruedas o andador","n":30,"u":"d","desde":"la indicación médica"}],"extras":{"sospecha":[{"t":"¿Menor de 65 años con ACV o HSA?","d":"Sus ayudas técnicas van por el PS 37 o 42, no por este problema."}]},"ntma":["Inclusión: ≥65 años con limitación funcional para desplazarse o para actividades de la vida diaria (dolor, claudicación, inestabilidad articular, riesgo de caída, alteración de la marcha o inmovilidad).","12 tipos: andadores (3), bastones (2), cojines y colchones antiescaras (4), sillas de ruedas (3). No se entregan necesariamente en conjunto."],"postNota":"La garantía es la entrega dentro de plazo desde la indicación.","fuente":"Ficha PS 36 · NTMA pp. 54–55"},{"ps":37,"cie":["G45.9","I64"],"nombre":"Ataque cerebrovascular isquémico (≥15 años)","denominacionOficial":"Ataque cerebrovascular isquémico en personas de 15 años y más","corto":"ACV isquémico","sinonimos":["ACV","AVE","TIA","ataque cerebral","cerebrovascular","isquémico","déficit focal","neurología","kinesiología","ayudas técnicas","bastón","silla de ruedas","cojín","colchón","antiescaras"],"tiempo":true,"plazos":[{"id":"p37-dx","etapa":"sospecha","hito":"Confirmación diagnóstica","n":24,"u":"h","desde":"la sospecha","critico":true},{"id":"p37-tto","etapa":"confirmacion","hito":"Inicio de tratamiento","n":24,"u":"h","desde":"la confirmación","critico":true},{"id":"p37-hos","etapa":"confirmacion","hito":"Hospitalización en prestador resolutivo","n":24,"u":"h","desde":"la indicación"},{"id":"p37-reh","etapa":"hospitalizacion","hito":"Rehabilitación hospitalizada","n":48,"u":"h","desde":"la indicación"},{"id":"p37-seg","etapa":"seguimiento","hito":"Control con neurología de adultos","n":10,"u":"d","desde":"el alta hospitalaria","nota":"La atención al alta debe ser por neurología de adultos (NTMA 37.2)."},{"id":"p37-ram","etapa":"seguimiento","hito":"Rehabilitación ambulatoria","n":15,"u":"d","desde":"la indicación médica"}],"extras":{"sospecha":[{"t":"El TIA también activa este GES","d":"G45.9 e I64 apuntan ambos al PS 37 (confirmado por Unidad GES)."}],"alta":[{"t":"Rehabilitación ambulatoria → SIC a Unidad de Kinesiología","d":"HCSBA por SINA · HEC por interconsulta azul. Si requiere Fonoaudiología o Terapia Ocupacional, consígnelo en la misma SIC: la derivación sigue dirigida a Kinesiología (Memo N°05)."}],"seguimiento":[{"t":"Ayudas técnicas para menores de 65 años","d":"Bastón, cojín o colchón en 20 días; silla de ruedas en 30 días desde la indicación — por este mismo problema, no por el PS 36."}]},"ntma":["Seguimiento al alta por especialista de neurología adultos (37.2).","Estudio etiológico cardiovascular durante la hospitalización, para prevenir recurrencia.","Ayudas técnicas garantizadas hasta los 64 años por este problema; desde 65, por el PS 36."],"postNota":"","fuente":"Ficha PS 37 · NTMA pp. 55–56 · Memo N°05 (02-01-2026)"},{"ps":42,"cie":["I60"],"nombre":"Hemorragia subaracnoidea por ruptura de aneurismas cerebrales","denominacionOficial":"Hemorragia subaracnoidea secundaria a ruptura de uno o más aneurismas cerebrales","corto":"HSA","sinonimos":["HSA","hemorragia subaracnoidea","aneurisma","cefalea","angioTAC","angiografía","ayudas técnicas","bastón","silla de ruedas","cojín","colchón","antiescaras"],"tiempo":true,"plazos":[{"id":"p42-tac","etapa":"sospecha","hito":"TAC","n":24,"u":"h","desde":"la sospecha","critico":true},{"id":"p42-ang","etapa":"confirmacion","hito":"AngioTAC multicorte o angiografía digital","n":48,"u":"h","desde":"la confirmación de HSA"},{"id":"p42-tto","etapa":"confirmacion","hito":"Tratamiento del aneurisma roto","n":24,"u":"h","desde":"la confirmación de aneurisma roto","critico":true},{"id":"p42-reh","etapa":"hospitalizacion","hito":"Rehabilitación hospitalizada","n":48,"u":"h","desde":"la indicación"},{"id":"p42-seg","etapa":"seguimiento","hito":"Primer control con especialista","n":30,"u":"d","desde":"el alta"},{"id":"p42-ram","etapa":"seguimiento","hito":"Rehabilitación ambulatoria","n":15,"u":"d","desde":"la indicación médica"}],"extras":{"seguimiento":[{"t":"Ayudas técnicas para menores de 65 años","d":"Bastón, cojín o colchón en 20 días; silla de ruedas en 30 días desde la indicación — por este mismo problema, no por el PS 36."}]},"ntma":["Ayudas técnicas garantizadas hasta los 64 años por este problema; desde 65, por el PS 36."],"postNota":"","fuente":"Ficha PS 42 · NTMA p. 57"},{"ps":44,"cie":["M51.1"],"nombre":"Tratamiento quirúrgico de hernia del núcleo pulposo lumbar","denominacionOficial":"Tratamiento quirúrgico de hernia del núcleo pulposo lumbar","corto":"HNP lumbar","sinonimos":["HNP","hernia","núcleo pulposo","lumbar","ciática","radicular"],"tiempo":false,"plazos":[{"id":"p44-qx","etapa":"confirmacion","hito":"Cirugía","n":45,"u":"d","desde":"la indicación quirúrgica"},{"id":"p44-seg","etapa":"seguimiento","hito":"Control con especialista","n":30,"u":"d","desde":"el alta hospitalaria"}],"extras":{"confirmacion":[{"t":"Indicación quirúrgica según NTMA","d":"Ciática radicular compresiva sin respuesta a tratamiento conservador tras 6 semanas, o compromiso progresivo."}]},"ntma":["Cirugía indicada en ciática radicular compresiva refractaria a 6 semanas de tratamiento conservador o con compromiso progresivo."],"postNota":"","fuente":"Ficha PS 44 · NTMA p. 58"},{"ps":48,"cie":["T07.X"],"nombre":"Politraumatizado grave","denominacionOficial":"Politraumatizado grave","corto":"Politrauma","sinonimos":["trauma","politrauma","politraumatizado","rescate","lesión medular"],"tiempo":true,"plazos":[{"id":"p48-tto","etapa":"sospecha","hito":"Tratamiento en centro resolutivo","n":24,"u":"h","desde":"el rescate","critico":true,"nota":"El plazo corre desde el rescate, no desde el ingreso."},{"id":"p48-reh","etapa":"hospitalizacion","hito":"Rehabilitación (solo con lesión medular)","n":24,"u":"h","desde":"la indicación"}],"extras":{"hospitalizacion":[{"t":"Rehabilitación garantizada solo con lesión medular","d":"El decreto la acota explícitamente; guía «Rehabilitación en personas con lesión medular en UPC»."}]},"ntma":["La glosa inmunoglobulina incluye inmunoglobulina antitetánica para la protección financiera."],"postNota":"Sin garantía de oportunidad después del alta.","fuente":"Ficha PS 48 · NTMA p. 59"},{"ps":49,"cie":["S09.9"],"nombre":"Traumatismo cráneo encefálico moderado o grave","denominacionOficial":"Traumatismo cráneo encefálico moderado o grave","corto":"TEC","sinonimos":["TEC","traumatismo","cráneo","encefálico","Glasgow"],"tiempo":true,"plazos":[{"id":"p49-dx","etapa":"sospecha","hito":"Confirmación diagnóstica","n":12,"u":"h","desde":"la sospecha","critico":true},{"id":"p49-tto","etapa":"confirmacion","hito":"Inicio de tratamiento","n":24,"u":"h","desde":"la confirmación"}],"extras":{"sospecha":[{"t":"Clasifique con Glasgow","d":"Moderado: GCS 13–14, o GCS 15 con ≥1 factor de riesgo. Grave: GCS \u003c13. Con GCS 15 sin factores, mantenga en observación: el TEC es evolutivo (NTMA 49.1)."}]},"ntma":["TEC moderado: GCS 13–14, o GCS 15 con al menos un factor de riesgo. TEC grave: GCS \u003c13. Observación aunque GCS 15 sin factores."],"postNota":"Sin garantía de oportunidad después del alta.","fuente":"Ficha PS 49 · NTMA pp. 59–60"},{"ps":50,"cie":["S05.1"],"nombre":"Trauma ocular grave","denominacionOficial":"Trauma ocular grave","corto":"Trauma ocular","sinonimos":["trauma ocular","ojo","ocular"],"tiempo":true,"plazos":[{"id":"p50-dx","etapa":"sospecha","hito":"Confirmación diagnóstica","n":12,"u":"h","desde":"la sospecha","critico":true},{"id":"p50-esp","etapa":"confirmacion","hito":"Atención por médico especialista","n":60,"u":"h","desde":"la confirmación"}],"extras":{},"ntma":["Sin especificaciones adicionales a las definiciones generales de la norma."],"postNota":"Existe la prestación de seguimiento, pero sin plazo de oportunidad garantizado.","fuente":"Ficha PS 50 · NTMA p. 60"},{"ps":55,"cie":["T29.0"],"nombre":"Gran quemado","denominacionOficial":"Gran quemado","corto":"Gran quemado","sinonimos":["quemado","quemadura","Garcés","Artigas","gran quemado","grave"],"tiempo":true,"plazos":[{"id":"p55-est","etapa":"confirmacion","hito":"Estabilización inicial en centro de origen (>15 años)","n":8,"u":"h","desde":"la confirmación","critico":true},{"id":"p55-tto","etapa":"confirmacion","hito":"Tratamiento en prestador resolutivo","n":72,"u":"h","desde":"la confirmación"},{"id":"p55-reh","etapa":"hospitalizacion","hito":"Rehabilitación hospitalizada","n":48,"u":"h","desde":"la indicación"},{"id":"p55-seg","etapa":"seguimiento","hito":"Primer control","n":15,"u":"d","desde":"la indicación médica","corregido":"El afiche decía «desde el alta»; el decreto dice desde la indicación médica."},{"id":"p55-ram","etapa":"seguimiento","hito":"Rehabilitación ambulatoria","n":15,"u":"d","desde":"el alta hospitalaria","corregido":"El afiche decía «desde la indicación»; el decreto dice desde el alta."},{"id":"p55-at","etapa":"seguimiento","hito":"Entrega de ayudas técnicas indicadas en rehabilitación ambulatoria","n":30,"u":"d","desde":"la indicación"}],"extras":{"sospecha":[{"t":"Sin garantía de diagnóstico: las garantías parten en el tratamiento","d":"Clasifique con Garcés/Artigas (grave, crítico, sobrevida excepcional)."}],"hospitalizacion":[{"t":"Tome medidas antropométricas durante la hospitalización","d":"Permite entregar las ayudas técnicas antes del alta y asegurar continuidad (NTMA 55.3)."}]},"ntma":["Inclusión a tratamiento: índice de gravedad >70; o quemadura de vía aérea, eléctrica de alto voltaje, asociada a politrauma/TEC/shock; o profundas/extensas o complejas de cara, manos, pies o periné con riesgo de secuela invalidante; o ≥65 años con quemadura AB/B ≥10% de superficie corporal."],"postNota":"","fuente":"Ficha PS 55 · NTMA p. 63"},{"ps":86,"cie":["Y05"],"nombre":"Atención integral de salud en agresión sexual aguda","denominacionOficial":"Atención integral de salud en agresión sexual aguda","corto":"Agresión sexual","sinonimos":["agresión sexual","violencia sexual","violación","abuso sexual","peritaje","profilaxis"],"tiempo":true,"plazos":[{"id":"p86-pr","etapa":"sospecha","hito":"Primera respuesta en unidad de emergencia","n":0,"u":"ya","desde":"la solicitud de atención","critico":true},{"id":"p86-seg","etapa":"seguimiento","hito":"Seguimiento","n":35,"u":"d","desde":"la primera respuesta","corregido":"El afiche decía «desde el alta»; el decreto dice desde la primera respuesta."}],"extras":{"sospecha":[{"t":"Ventana de acceso: hasta 72 horas desde el episodio","d":"Sin necesidad de peritaje previo (D.E. N°32/2026). La confirmación diagnóstica se realiza con la atención médica."},{"t":"La denuncia es obligatoria para todo el equipo clínico","d":"Norma General Técnica de atención a víctimas de violencia sexual (2016)."}],"confirmacion":[{"t":"Primera respuesta integral","d":"Atención de lesiones y toma de muestras · anticoncepción de emergencia · profilaxis VIH e ITS · evaluación hepatitis B · primera ayuda psicológica · contacto con sistema policial/judicial."}]},"ntma":["Seguimiento según necesidad: pediatría, ginecología, urología, infectología, dermatología, medicina interna/familiar, inmunología; salud mental por psiquiatra y psicólogo/a clínico."],"postNota":"","fuente":"Ficha PS 86 · NTMA pp. 86–87 (mod. D.E. 32/2026)"}]}</script>
+<script>
+/* Ruta guiada GES — HUAP.
+ *
+ * Mejora progresiva: el documento completo (#doc) ya está en el HTML y es lo
+ * que se ve sin JavaScript y lo que sale al imprimir. Este archivo agrega
+ * encima la ruta guiada de 3 pasos (#app) del diseño aprobado.
+ *
+ * El marcado que se genera aquí reproduce el del diseño: los estilos van en
+ * línea, con los mismos valores, porque la página no tiene reset global y
+ * cualquier cambio de caja altera el resultado. Al tocar este archivo,
+ * comparar contra el diseño con las herramientas de tools/ (ver tools/README.md).
+ */
+(function () {
+  'use strict';
+
+  var dataEl = document.getElementById('ges-data');
+  if (!dataEl) return;
+  var D = JSON.parse(dataEl.textContent);
+  var app = document.getElementById('app');
+  if (!app) return;
+
+  // ---------------------------------------------------------------- utilidades
+  // Los equipos de box no siempre tienen navegador actualizado: el resto del
+  // archivo es ES5 y `closest` es lo único que faltaría en los más antiguos.
+  function closest(el, sel) {
+    if (el && el.closest) return el.closest(sel);
+    var m = Element.prototype.matches || Element.prototype.msMatchesSelector;
+    while (el && el.nodeType === 1) {
+      if (m && m.call(el, sel)) return el;
+      el = el.parentNode;
+    }
+    return null;
+  }
+
+  // Un médico apurado escribe «craneo», no «cráneo»: sin esto el buscador
+  // respondía «Sin coincidencias en los 14 problemas GES», que se lee como
+  // «no es GES». Se comparan ambos lados sin diacríticos.
+  function plano(s) {
+    s = String(s == null ? '' : s).toLowerCase();
+    return s.normalize ? s.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : s;
+  }
+
+  // Separa en palabras y quita la puntuación pegada: sin esto «TEC,» o «¿ACV?»
+  // —cómo se escribe de verdad al copiar de una ficha— daban cero resultados.
+  // Se conservan el punto y el guion interiores, que forman parte de los
+  // códigos CIE-10 (G45.9, T07.X, R00.1).
+  function partir(s) {
+    var bruto = plano(s).split(/[^0-9a-z.\-]+/);
+    var out = [];
+    for (var i = 0; i < bruto.length; i++) {
+      var w = bruto[i].replace(/^[.\-]+/, '').replace(/[.\-]+$/, '');
+      if (w) out.push(w);
+    }
+    return out;
+  }
+
+  // Palabras vacías: «trauma de ojo» debe encontrar el trauma ocular.
+  var VACIAS = ['de', 'del', 'la', 'el', 'los', 'las', 'y', 'o', 'en', 'con', 'por', 'un', 'una', 'al'];
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  // Las marcas de verificación son de la sesión, no del navegador: en un equipo
+  // compartido de box, una lista que aparece pre-marcada para el paciente
+  // siguiente es exactamente el error que esta página existe para evitar.
+  var STORE_KEY = 'gesChecksA';
+  function loadChecks() {
+    try { return JSON.parse(sessionStorage.getItem(STORE_KEY) || '{}'); } catch (e) { return {}; }
+  }
+  function saveChecks(c) {
+    S.checks = c;
+    try { sessionStorage.setItem(STORE_KEY, JSON.stringify(c)); } catch (e) { /* modo privado */ }
+  }
+
+  // ---------------------------------------------------------------- estado
+  var S = {
+    view: 'problema', q: '', ps: null, etapa: null, ctx: 'urgencia',
+    checks: loadChecks(), calc: {}, showCasos: false, showNtma: false
+  };
+
+  function fmtPlazo(z) {
+    return z.u === 'ya' ? 'Inmediata'
+      : z.u === 'min' ? z.n + ' min'
+      : z.u === 'h' ? z.n + ' h'
+      : z.n + ' días';
+  }
+
+  function calcOut(z, val) {
+    if (!val) return '';
+    if (z.u === 'min' || z.u === 'h') {
+      var p = val.split(':');
+      if (p.length < 2) return '';
+      var tot = (+p[0]) * 60 + (+p[1]) + z.n * (z.u === 'h' ? 60 : 1);
+      var dd = Math.floor(tot / 1440);
+      tot %= 1440;
+      var pad = function (x) { return (x < 10 ? '0' : '') + x; };
+      return pad(Math.floor(tot / 60)) + ':' + pad(tot % 60) + (dd ? ' (+' + dd + (dd > 1 ? ' días)' : ' día)') : '');
+    }
+    var d = new Date(val + 'T12:00:00');
+    if (isNaN(d)) return '';
+    d.setDate(d.getDate() + z.n);
+    var ds = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+    var ms = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    return ds[d.getDay()] + ' ' + d.getDate() + ' ' + ms[d.getMonth()];
+  }
+
+  function problema() { return S.ps == null ? null : D.problemas.filter(function (p) { return p.ps === S.ps; })[0]; }
+  function etapaIdx() { var i = -1; D.etapas.forEach(function (e, k) { if (e.id === S.etapa) i = k; }); return i; }
+
+  function accionesDe(sel) {
+    var comunes = (D.acciones_comunes[S.etapa] || []).filter(function (a) { return !a.ctx || a.ctx === S.ctx; });
+    var extras = (sel.extras && sel.extras[S.etapa]) || [];
+    return extras.concat(comunes).map(function (a) {
+      var k = sel.ps + '.' + S.etapa + '.' + a.t;
+      return { k: k, t: a.t, d: a.d, done: !!S.checks[k] };
+    });
+  }
+
+  // ---------------------------------------------------------------- estilos
+  var ST = {
+    step: 'display:flex;align-items:center;gap:8px;padding:14px 20px 4px;font-size:12px;font-weight:800;color:#5A6B8C',
+    stepPill: 'background:#0C2B5E;color:#fff;border-radius:999px;padding:2px 10px',
+    pad: 'padding:10px 16px 0',
+    h2: 'font-size:19px;font-weight:900;margin:6px 4px 10px',
+    input: 'width:100%;box-sizing:border-box;padding:14px 18px;border-radius:999px;border:2px solid #C6D6EC;background:#fff;font-size:15px;font-weight:600;color:#0C2B5E;outline-color:#0D5BD8',
+    list: 'display:flex;flex-direction:column;gap:8px;margin-top:12px',
+    psBtn: 'display:flex;align-items:center;gap:12px;text-align:left;background:#fff;border:1.5px solid #D9E5F3;border-radius:16px;padding:12px 14px;cursor:pointer;font-family:inherit;min-height:56px',
+    cie: 'flex:none;background:#C9F2E3;color:#0C2B5E;font-weight:900;font-size:13px;padding:6px 10px;border-radius:999px;letter-spacing:.02em',
+    psName: 'flex:1;font-size:14.5px;font-weight:700;color:#0C2B5E;line-height:1.25',
+    tiempo: 'flex:none;font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#B31D52;background:#FCE3EA;padding:3px 8px;border-radius:999px',
+    caret: 'flex:none;color:#8FA6C6;font-weight:900',
+    vacio: 'margin-top:10px;background:#fff;border:1.5px dashed #C6D6EC;border-radius:16px;padding:16px;font-size:14px;font-weight:600;color:#5A6B8C',
+    aviso: 'margin-top:16px;background:#0C2B5E;color:#fff;border-radius:18px;padding:16px 18px',
+    avisoT: 'font-size:15px;font-weight:900;margin-bottom:4px',
+    avisoD: 'font-size:13px;font-weight:600;line-height:1.5;opacity:.92',
+    selBar: 'display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #D9E5F3;border-radius:16px;padding:12px 14px',
+    selCie: 'background:#C9F2E3;color:#0C2B5E;font-weight:900;font-size:12px;padding:5px 10px;border-radius:999px',
+    selName: 'flex:1;font-size:14px;font-weight:800',
+    cambiar: 'background:none;border:none;color:#0D5BD8;font-weight:800;font-size:12.5px;cursor:pointer;font-family:inherit;padding:4px',
+    label: 'margin:16px 4px 8px;font-size:13px;font-weight:800;color:#5A6B8C',
+    row: 'display:flex;gap:8px',
+    h2b: 'margin:18px 4px 8px;font-size:19px;font-weight:900',
+    col: 'display:flex;flex-direction:column;gap:8px',
+    etBtn: 'display:flex;align-items:center;gap:12px;text-align:left;background:#fff;border:1.5px solid #D9E5F3;border-radius:16px;padding:14px;cursor:pointer;font-family:inherit;min-height:60px',
+    etNum: 'flex:none;width:30px;height:30px;border-radius:999px;background:#EDF2F9;color:#0C2B5E;font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center',
+    etName: 'display:flex;align-items:center;gap:8px;font-size:15px;font-weight:900;color:#0C2B5E',
+    etBadge: 'font-size:10px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;background:#D02E63;color:#fff;padding:3px 8px;border-radius:999px;animation:pulseA 2s infinite',
+    etDesc: 'display:block;font-size:12.5px;font-weight:600;color:#5A6B8C;margin-top:2px',
+    crumbs: 'display:flex;align-items:center;gap:8px;flex-wrap:wrap',
+    back: 'background:#fff;border:1.5px solid #D9E5F3;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:800;color:#0D5BD8;cursor:pointer;font-family:inherit',
+    chipEt: 'background:#C9F2E3;color:#0C2B5E;font-weight:900;font-size:12px;padding:6px 12px;border-radius:999px',
+    chipCtx: 'background:#EDF2F9;border:1.5px solid #D9E5F3;color:#5A6B8C;font-weight:800;font-size:12px;padding:6px 12px;border-radius:999px',
+    accHead: 'margin:16px 4px 8px;display:flex;align-items:baseline;justify-content:space-between',
+    accTitle: 'font-size:19px;font-weight:900',
+    accCount: 'font-size:12px;font-weight:800;color:#5A6B8C',
+    accT: 'display:block;font-size:14.5px;font-weight:800;line-height:1.3;color:#0C2B5E',
+    accD: 'display:block;font-size:12.5px;font-weight:600;color:#5A6B8C;line-height:1.45;margin-top:3px',
+    plazosT: 'margin:20px 4px 8px;font-size:16px;font-weight:900',
+    plazoCard: 'background:#fff;border:1.5px solid #D9E5F3;border-radius:16px;padding:14px',
+    plazoRow: 'display:flex;align-items:center;gap:12px',
+    plazoHito: 'display:block;font-size:14px;font-weight:800;line-height:1.3',
+    plazoDesde: 'display:block;font-size:12px;font-weight:600;color:#5A6B8C;margin-top:2px',
+    plazoNota: 'margin-top:8px;font-size:12px;font-weight:600;color:#5A6B8C;background:#EDF2F9;border-radius:10px;padding:8px 10px',
+    plazoCorr: 'margin-top:8px;font-size:12px;font-weight:700;color:#8A1E44;background:#FCE3EA;border-radius:10px;padding:8px 10px',
+    calcBox: 'margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px dashed #D9E5F3;padding-top:10px',
+    calcLabel: 'font-size:12px;font-weight:700;color:#5A6B8C',
+    calcInput: 'border:1.5px solid #C6D6EC;border-radius:10px;padding:6px 10px;font-size:13px;font-weight:700;color:#0C2B5E',
+    calcOut: 'font-size:13px;font-weight:900;color:#fff;background:#0C2B5E;padding:5px 12px;border-radius:999px',
+    nota: 'margin:8px 4px 0;font-size:11px;font-weight:600;color:#8FA6C6',
+    postNota: 'margin-top:10px;background:#EDF2F9;border:1.5px solid #D9E5F3;border-radius:14px;padding:12px 14px;font-size:13px;font-weight:700;color:#5A6B8C',
+    panel: 'margin-top:18px;background:#fff;border:1.5px solid #D9E5F3;border-radius:16px;overflow:hidden',
+    panel2: 'margin-top:10px;background:#fff;border:1.5px solid #D9E5F3;border-radius:16px;overflow:hidden',
+    panelBtn: 'width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:none;padding:14px 16px;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:900;color:#0C2B5E',
+    panelBody: 'padding:0 16px 14px;display:flex;flex-direction:column;gap:8px',
+    caso: 'border-left:3px solid #C9F2E3;padding:2px 0 2px 12px',
+    casoSi: 'font-size:13px;font-weight:800',
+    casoEnt: 'font-size:12.5px;font-weight:600;color:#5A6B8C;line-height:1.45;margin-top:2px',
+    ntmaTxt: 'font-size:12.5px;font-weight:600;color:#3D5378;line-height:1.5;border-left:3px solid #D9E5F3;padding-left:12px',
+    ntmaWarn: 'font-size:11px;font-weight:700;color:#8A1E44;background:#FCE3EA;border-radius:10px;padding:8px 10px',
+    fuente: 'margin:14px 4px 0;font-size:11px;font-weight:600;color:#8FA6C6',
+    nav: 'display:flex;gap:8px;margin-top:16px',
+    navBack: 'flex:1;background:#fff;border:1.5px solid #C6D6EC;border-radius:999px;padding:14px;font-size:14px;font-weight:800;color:#0D5BD8;cursor:pointer;font-family:inherit',
+    navNext: 'flex:2;background:#0D5BD8;border:none;border-radius:999px;padding:14px;font-size:14px;font-weight:900;color:#fff;cursor:pointer;font-family:inherit'
+  };
+
+  function ctxBtn(on) {
+    return 'flex:1;padding:11px;border-radius:999px;font-family:inherit;font-size:13.5px;font-weight:900;cursor:pointer;' +
+      (on ? 'background:#0C2B5E;color:#fff;border:1.5px solid #0C2B5E'
+          : 'background:#fff;color:#5A6B8C;border:1.5px solid #C6D6EC');
+  }
+  function accRow(done) {
+    return 'display:flex;align-items:flex-start;gap:12px;text-align:left;width:100%;border-radius:16px;padding:13px 14px;cursor:pointer;font-family:inherit;' +
+      (done ? 'background:#F2FBF7;border:1.5px solid #9FE8CC;opacity:.75' : 'background:#fff;border:1.5px solid #D9E5F3');
+  }
+  function accBox(done) {
+    return 'flex:none;width:26px;height:26px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-top:1px;' +
+      (done ? 'background:#9FE8CC;border:2px solid #9FE8CC' : 'background:#fff;border:2px solid #C6D6EC');
+  }
+  function chipPlazo(critico) {
+    return 'flex:none;font-size:15px;font-weight:900;padding:9px 14px;border-radius:12px;white-space:nowrap;' +
+      (critico ? 'background:#D02E63;color:#fff' : 'background:#0C2B5E;color:#fff');
+  }
+
+  var TICK = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#0C2B5E" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"></path></svg>';
+
+  // ---------------------------------------------------------------- vistas
+  function viewProblema() {
+    var q = plano(S.q.trim());
+    // Se busca en la etiqueta, en la denominación del decreto —«generación del
+    // impulso» debe encontrar el PS 25—, en los códigos y en los sinónimos.
+    var lista;
+    if (!q) {
+      lista = D.problemas;
+    } else {
+      var idx = D.problemas.map(function (p) {
+        var txt = plano([p.nombre, p.corto, p.denominacionOficial || '']
+          .concat(p.cie).concat(p.sinonimos || []).join(' · '));
+        return { p: p, txt: txt, palabras: partir(txt) };
+      });
+      // La consulta se parte en palabras y deben estar TODAS. Sin esto,
+      // «tec grave», «diabetes tipo 1» o «hernia lumbar» no encontraban nada:
+      // el índice es una sola cadena y se exigía coincidencia contigua.
+      var crudos = partir(q);
+      var toks = [];
+      var i;
+      for (i = 0; i < crudos.length; i++) {
+        if (VACIAS.indexOf(crudos[i]) < 0) toks.push(crudos[i]);
+      }
+      if (!toks.length) toks = crudos;
+
+      // Una palabra del índice coincide con lo escrito si empieza por ello
+      // —«cere» encuentra «cerebrovascular»— o si lo escrito empieza por ella,
+      // que es lo que rescata los plurales: «quemaduras» contra «quemadura».
+      // Calidad de la coincidencia de una palabra del índice con lo escrito:
+      // 3 palabra idéntica · 2 la palabra empieza por lo escrito · 1 lo escrito
+      // empieza por la palabra (plurales) · 0 no coincide. Se usa para ordenar,
+      // nunca para descartar: buscar «tec» debe poner el TEC primero, no
+      // esconder las ayudas técnicas.
+      var calidad = function (w, t) {
+        if (w === t) return 3;
+        if (w.indexOf(t) === 0) return 2;
+        if (w.length >= 4 && t.indexOf(w) === 0) return 1;
+        return 0;
+      };
+      var mejor = function (x, t) {
+        var top = 0, largo = 0;
+        for (var k = 0; k < x.palabras.length; k++) {
+          var c = calidad(x.palabras[k], t);
+          if (c > top || (c === top && c > 0 && x.palabras[k].length > largo)) {
+            if (c >= top) { top = c; largo = x.palabras[k].length; }
+          }
+        }
+        return top ? top * 100 + Math.min(largo, 99) : 0;
+      };
+      var empieza = function (x, t) { return mejor(x, t) > 0; };
+      var todos = function (x, fn) {
+        for (var k = 0; k < toks.length; k++) { if (!fn(x, toks[k])) return false; }
+        return true;
+      };
+
+      var alInicio = idx.filter(function (x) { return todos(x, empieza); });
+
+      // El respaldo de coincidencia libre solo aplica a palabras de 4 letras o
+      // más. «SIC», «ITU», «IRA» y «SCA» coincidían dentro de ve-sic-ula,
+      // melli-tu-s, antirretrov-ira-l y re-sca-te, y devolvían el problema
+      // equivocado: con «SCA» ni siquiera aparecía el infarto, que es el que
+      // corresponde. Vale más «Sin coincidencias» —que va acompañado del aviso
+      // «¿No está en la lista?» con el teléfono de la unidad— que una tarjeta
+      // que no corresponde y que abre los plazos de otro problema.
+      var hayCortos = false;
+      for (i = 0; i < toks.length; i++) { if (toks[i].length < 4) hayCortos = true; }
+      var enCualquiera = hayCortos ? [] : idx.filter(function (x) {
+        return todos(x, function (y, t) { return y.txt.indexOf(t) >= 0; });
+      });
+
+      var elegidos = alInicio.length ? alInicio : enCualquiera;
+      if (alInicio.length && toks.length) {
+        // Orden estable: mejor coincidencia primero, y a igual puntaje se
+        // conserva el orden del decreto.
+        var conPuntaje = elegidos.map(function (x, n) {
+          var pts = 0;
+          for (var k = 0; k < toks.length; k++) { pts += mejor(x, toks[k]); }
+          return { x: x, pts: pts, n: n };
+        });
+        conPuntaje.sort(function (a, b) { return b.pts - a.pts || a.n - b.n; });
+        elegidos = conPuntaje.map(function (c) { return c.x; });
+      }
+      lista = elegidos.map(function (x) { return x.p; });
+    }
+    var items = lista.map(function (p) {
+      return '<button type="button" class="card-int" data-k="ps-' + p.ps + '" data-a="pick-ps" data-v="' + p.ps + '" style="' + ST.psBtn + '">' +
+        '<span style="' + ST.cie + '">' + esc(p.cie.join(' · ')) + '</span>' +
+        '<span class="flex-min" style="' + ST.psName + '">' + esc(p.nombre) + '</span>' +
+        (p.tiempo ? '<span style="' + ST.tiempo + '">min / horas</span>' : '') +
+        '<span style="' + ST.caret + '" aria-hidden="true">›</span>' +
+        '</button>';
+    }).join('');
+
+    return '<div style="' + ST.pad + '">' +
+      '<h2 style="' + ST.h2 + '" id="paso-titulo" tabindex="-1">¿Sospecha una de estas patologías?</h2>' +
+      '<label class="sr-only" for="buscador">Buscar problema de salud por nombre o código CIE-10</label>' +
+      '<input id="buscador" data-k="q" data-a="q" autocomplete="off" value="' + esc(S.q) + '" placeholder="Buscar por nombre o código CIE-10…" style="' + ST.input + '">' +
+      '<div style="' + ST.list + '">' + items + '</div>' +
+      (lista.length === 0
+        ? '<div style="' + ST.vacio + '">Sin coincidencias en los 14 problemas GES del HUAP.</div>' : '') +
+      '<div style="' + ST.aviso + '">' +
+        '<div style="' + ST.avisoT + '">¿No está en la lista?</div>' +
+        '<div style="' + ST.avisoD + '">HUAP confirma y trata estos 14 problemas GES. Ante cualquier duda, llame a la Unidad GES: anexos ' +
+          esc(D.contacto.anexos) + ' · <a href="mailto:' + esc(D.contacto.correo) + '" style="color:#9FE8CC;font-weight:800">' + esc(D.contacto.correo) + '</a></div>' +
+      '</div>' +
+      '</div>';
+  }
+
+  function viewEtapa() {
+    var sel = problema();
+    var items = D.etapas.map(function (e, i) {
+      return '<button type="button" class="card-int" data-k="et-' + e.id + '" data-a="pick-etapa" data-v="' + e.id + '" style="' + ST.etBtn + '">' +
+        '<span style="' + ST.etNum + '" aria-hidden="true">' + (i + 1) + '</span>' +
+        '<span class="flex-min" style="flex:1">' +
+          '<span style="' + ST.etName + '">' + esc(e.nombre) +
+            (e.badge ? '<span style="' + ST.etBadge + '">' + esc(e.badge) + '</span>' : '') +
+          '</span>' +
+          '<span style="' + ST.etDesc + '">' + esc(e.desc) + '</span>' +
+        '</span>' +
+        '<span style="' + ST.caret + '" aria-hidden="true">›</span>' +
+        '</button>';
+    }).join('');
+
+    return '<div style="' + ST.pad + '">' +
+      '<div style="' + ST.selBar + '">' +
+        '<span style="' + ST.selCie + '">' + esc(sel.cie.join(' · ')) + '</span>' +
+        '<span class="flex-min" style="' + ST.selName + '">' + esc(sel.nombre) + '</span>' +
+        '<button type="button" data-k="cambiar" data-a="volver-problema" style="' + ST.cambiar + '">Cambiar</button>' +
+      '</div>' +
+      '<div style="' + ST.label + '" id="ctx-label">¿Dónde atiende al paciente?</div>' +
+      '<div style="' + ST.row + '" role="group" aria-labelledby="ctx-label">' +
+        '<button type="button" data-k="ctx-u" data-a="ctx" data-v="urgencia" aria-pressed="' + (S.ctx === 'urgencia') + '" style="' + ctxBtn(S.ctx === 'urgencia') + '">Urgencia</button>' +
+        '<button type="button" data-k="ctx-p" data-a="ctx" data-v="piso" aria-pressed="' + (S.ctx === 'piso') + '" style="' + ctxBtn(S.ctx === 'piso') + '">Piso / hospitalizado</button>' +
+      '</div>' +
+      '<h2 style="' + ST.h2b + '" id="paso-titulo" tabindex="-1">¿En qué punto está el paciente?</h2>' +
+      '<div style="' + ST.col + '">' + items + '</div>' +
+      '</div>';
+  }
+
+  function viewAcciones() {
+    var sel = problema();
+    var idx = etapaIdx();
+    var next = idx >= 0 && idx < D.etapas.length - 1 ? D.etapas[idx + 1] : null;
+
+    var accs = accionesDe(sel);
+    var accHtml = accs.map(function (a) {
+      return '<button type="button" data-k="acc-' + esc(a.k) + '" data-a="toggle" data-v="' + esc(a.k) + '" aria-pressed="' + a.done + '" style="' + accRow(a.done) + '">' +
+        '<span style="' + accBox(a.done) + '" aria-hidden="true">' + (a.done ? TICK : '') + '</span>' +
+        '<span class="flex-min" style="flex:1">' +
+          '<span style="' + ST.accT + '">' + esc(a.t) + '</span>' +
+          '<span style="' + ST.accD + '">' + esc(a.d) + '</span>' +
+        '</span>' +
+        '</button>';
+    }).join('');
+
+    var plazos = sel.plazos.filter(function (z) { return z.etapa === S.etapa; });
+    var plazosHtml = plazos.map(function (z) {
+      var val = S.calc[z.id] || '';
+      var type = z.u === 'ya' ? false : (z.u === 'd' ? 'date' : 'time');
+      var desdeCorto = z.desde.replace(/\s*\(.*\)/, '');
+      var out = calcOut(z, val);
+      return '<div style="' + ST.plazoCard + '">' +
+        '<div style="' + ST.plazoRow + '">' +
+          '<span style="' + chipPlazo(z.critico) + '">' + esc(fmtPlazo(z)) + '</span>' +
+          '<span class="flex-min" style="flex:1">' +
+            '<span style="' + ST.plazoHito + '">' + esc(z.hito) + '</span>' +
+            '<span style="' + ST.plazoDesde + '">desde ' + esc(z.desde) + '</span>' +
+          '</span>' +
+        '</div>' +
+        (z.nota ? '<div style="' + ST.plazoNota + '">' + esc(z.nota) + '</div>' : '') +
+        (z.corregido ? '<div style="' + ST.plazoCorr + '">Corrección al afiche: ' + esc(z.corregido) + '</div>' : '') +
+        (type
+          ? '<div style="' + ST.calcBox + '">' +
+              '<label style="' + ST.calcLabel + '" for="calc-' + esc(z.id) + '">' +
+                (type === 'time' ? '¿Cuándo fue ' + esc(desdeCorto) + '?' : '¿Qué día fue ' + esc(desdeCorto) + '?') + '</label>' +
+              '<input id="calc-' + esc(z.id) + '" data-k="calc-' + esc(z.id) + '" data-a="calc" data-v="' + esc(z.id) + '" type="' + type + '" value="' + esc(val) + '" style="' + ST.calcInput + '">' +
+              (out ? '<span style="' + ST.calcOut + '" role="status">límite: ' + esc(out) + '</span>' : '') +
+            '</div>'
+          : '') +
+        '</div>';
+    }).join('');
+
+    var postNota = '';
+    if (S.etapa === 'seguimiento') {
+      if (sel.postNota) postNota = sel.postNota;
+      else if (plazos.length === 0) postNota = D.notaSinGarantiaPostAlta || '';
+    }
+
+    var casosHtml = D.casos.map(function (c) {
+      return '<div style="' + ST.caso + '">' +
+        '<div style="' + ST.casoSi + '">' + esc(c.si) + '</div>' +
+        '<div style="' + ST.casoEnt + '">' + esc(c.entonces) + '</div>' +
+        '</div>';
+    }).join('');
+
+    var ntmaHtml = (sel.ntma || []).map(function (t) {
+      return '<div style="' + ST.ntmaTxt + '">' + esc(t) + '</div>';
+    }).join('');
+
+    return '<div style="' + ST.pad + '">' +
+      '<div style="' + ST.crumbs + '">' +
+        '<button type="button" data-k="back-et" data-a="volver-etapa" style="' + ST.back + '">‹ ' + esc(sel.corto) + '</button>' +
+        '<span style="' + ST.chipEt + '">' + esc(idx >= 0 ? D.etapas[idx].nombre : '') + '</span>' +
+        '<span style="' + ST.chipCtx + '">' + (S.ctx === 'urgencia' ? 'Urgencia' : 'Piso') + '</span>' +
+      '</div>' +
+
+      '<div style="' + ST.accHead + '">' +
+        '<h2 style="' + ST.accTitle + '" id="paso-titulo" tabindex="-1">Haga esto ahora</h2>' +
+        '<div style="' + ST.accCount + '">' + accs.filter(function (a) { return a.done; }).length + ' de ' + accs.length + ' listas</div>' +
+      '</div>' +
+      '<div style="' + ST.col + '">' + accHtml + '</div>' +
+
+      (plazos.length
+        ? '<h2 style="' + ST.plazosT + '">Plazos que corren</h2>' +
+          '<div style="' + ST.col + '">' + plazosHtml + '</div>' +
+          '<div style="' + ST.nota + '">Cálculo referencial — no se guarda ningún dato del paciente.</div>'
+        : '') +
+      (postNota ? '<div style="' + ST.postNota + '">' + esc(postNota) + '</div>' : '') +
+
+      '<div style="' + ST.panel + '">' +
+        // `aria-controls` solo cuando el panel existe: plegado se quita del DOM.
+        '<button type="button" data-k="t-casos" data-a="toggle-casos" aria-expanded="' + S.showCasos + '"' + (S.showCasos ? ' aria-controls="panel-casos"' : '') + ' style="' + ST.panelBtn + '">Casos especiales — si… entonces… <span style="color:#0D5BD8" aria-hidden="true">' + (S.showCasos ? '−' : '+') + '</span></button>' +
+        (S.showCasos ? '<div id="panel-casos" style="' + ST.panelBody + '">' + casosHtml + '</div>' : '') +
+      '</div>' +
+
+      '<div style="' + ST.panel2 + '">' +
+        '<button type="button" data-k="t-ntma" data-a="toggle-ntma" aria-expanded="' + S.showNtma + '"' + (S.showNtma ? ' aria-controls="panel-ntma"' : '') + ' style="' + ST.panelBtn + '">Criterios NTMA de este problema <span style="color:#0D5BD8" aria-hidden="true">' + (S.showNtma ? '−' : '+') + '</span></button>' +
+        (S.showNtma
+          ? '<div id="panel-ntma" style="' + ST.panelBody + '">' + ntmaHtml +
+            '<div style="' + ST.ntmaWarn + '">Transcripción de la NTMA pendiente de validación por la Unidad GES.</div></div>'
+          : '') +
+      '</div>' +
+
+      '<div style="' + ST.fuente + '">Fuente: ' + esc(sel.fuente) + '</div>' +
+
+      '<div style="' + ST.nav + '">' +
+        '<button type="button" data-k="nav-back" data-a="volver-etapa" style="' + ST.navBack + '">‹ Momento</button>' +
+        (next ? '<button type="button" class="btn-primary" data-k="nav-next" data-a="siguiente" style="' + ST.navNext + '">' + esc(next.nombre) + ' ›</button>' : '') +
+      '</div>' +
+      '</div>';
+  }
+
+  // ---------------------------------------------------------------- render
+  function render() {
+    var num = S.view === 'problema' ? '1' : S.view === 'etapa' ? '2' : '3';
+    var titulo = S.view === 'problema' ? 'Problema de salud' : S.view === 'etapa' ? 'Momento del paciente' : 'Sus acciones';
+
+    // Se conserva el foco del teclado: sin esto, cada pulsación en el buscador
+    // o cada marca de la lista devolvería el foco al inicio de la página.
+    var act = document.activeElement;
+    var fk = act && act.getAttribute ? act.getAttribute('data-k') : null;
+    var selStart = null, selEnd = null;
+    if (fk && act.tagName === 'INPUT' && act.type === 'text') {
+      try { selStart = act.selectionStart; selEnd = act.selectionEnd; } catch (e) { /* time/date no lo permiten */ }
+    }
+
+    app.innerHTML =
+      '<div style="' + ST.step + '">' +
+        '<span style="' + ST.stepPill + '">Paso ' + num + ' de 3</span>' +
+        '<span>' + esc(titulo) + '</span>' +
+      '</div>' +
+      (S.view === 'problema' ? viewProblema() : S.view === 'etapa' ? viewEtapa() : viewAcciones());
+
+    if (fk) {
+      var back = app.querySelector('[data-k="' + (window.CSS && CSS.escape ? CSS.escape(fk) : fk.replace(/"/g, '\\"')) + '"]');
+      if (back) {
+        back.focus({ preventScroll: true });
+        if (selStart != null) { try { back.setSelectionRange(selStart, selEnd); } catch (e) { /* ignorar */ } }
+      }
+    }
+  }
+
+  // Anuncia un cambio de estado a los lectores de pantalla. La región vive
+  // fuera de #app para que sobreviva al re-dibujado.
+  var anuncioEl = document.getElementById('anuncio');
+  function anunciar(msg) {
+    if (anuncioEl) anuncioEl.textContent = msg;
+  }
+
+  // Al cambiar de paso, el foco va al título: quien navega con teclado o lector
+  // de pantalla queda en el contenido nuevo, no al inicio de la página.
+  function goto(view) {
+    S.view = view;
+    render();
+    var h = document.getElementById('paso-titulo');
+    if (h) h.focus({ preventScroll: true });
+    try { window.scrollTo({ top: 0, behavior: 'auto' }); } catch (e) { window.scrollTo(0, 0); }
+  }
+
+  // ---------------------------------------------------------------- eventos
+  app.addEventListener('click', function (ev) {
+    var el = closest(ev.target, "[data-a]");
+    if (!el) return;
+    var a = el.getAttribute('data-a');
+    var v = el.getAttribute('data-v');
+
+    if (a === 'pick-ps') {
+      var ps = +v;
+      // Otro problema es, en la práctica, otro paciente: la lista parte limpia.
+      // En la primera selección no hay paciente anterior, así que se conserva
+      // lo que sobreviva en sessionStorage a una recarga.
+      if (S.ps !== null && S.ps !== ps) { saveChecks({}); S.calc = {}; }
+      S.ps = ps;
+      goto('etapa');
+    } else if (a === 'volver-problema') {
+      S.etapa = null;
+      goto('problema');
+    } else if (a === 'volver-etapa') {
+      goto('etapa');
+    } else if (a === 'ctx') {
+      S.ctx = v;
+      render();
+    } else if (a === 'pick-etapa') {
+      S.etapa = v;
+      S.showCasos = v === 'confirmacion';
+      S.showNtma = false;
+      goto('acciones');
+    } else if (a === 'siguiente') {
+      var i = etapaIdx();
+      var next = i >= 0 && i < D.etapas.length - 1 ? D.etapas[i + 1] : null;
+      if (next) {
+        S.etapa = next.id;
+        S.showCasos = next.id === 'confirmacion';
+        goto('acciones');
+      }
+    } else if (a === 'toggle') {
+      var c = {};
+      Object.keys(S.checks).forEach(function (k) { c[k] = S.checks[k]; });
+      c[v] = !c[v];
+      saveChecks(c);
+      render();
+      var sel = problema();
+      if (sel) {
+        var accs = accionesDe(sel);
+        anunciar(accs.filter(function (x) { return x.done; }).length + ' de ' + accs.length + ' listas');
+      }
+    } else if (a === 'toggle-casos') {
+      S.showCasos = !S.showCasos;
+      render();
+    } else if (a === 'toggle-ntma') {
+      S.showNtma = !S.showNtma;
+      render();
+    }
+  });
+
+  app.addEventListener('input', function (ev) {
+    var el = ev.target;
+    if (el.getAttribute('data-a') === 'q') {
+      S.q = el.value;
+      render();
+      var n = app.querySelectorAll('[data-a="pick-ps"]').length;
+      anunciar(n === 0
+        ? 'Sin coincidencias en los 14 problemas GES del HUAP.'
+        : n + (n === 1 ? ' problema encontrado' : ' problemas encontrados'));
+    }
+  });
+
+  app.addEventListener('change', function (ev) {
+    var el = ev.target;
+    if (el.getAttribute('data-a') === 'calc') {
+      var id = el.getAttribute('data-v');
+      S.calc[id] = el.value;
+      render();
+      var chip = app.querySelector('#calc-' + id.replace(/[^\w-]/g, ''));
+      var out = chip && chip.parentNode ? chip.parentNode.textContent : '';
+      var lim = out.indexOf('límite:');
+      if (lim >= 0) anunciar(out.slice(lim).trim());
+    }
+  });
+
+  render();
+})();
+</script>
+<script>
+// Si la ruta guiada no llegó a dibujarse — error de JavaScript, datos corruptos,
+// navegador que no la soporta — se muestra el documento completo en vez de
+// dejar la página en blanco.
+(function () {
+  var a = document.getElementById('app');
+  if (!a || !a.firstChild) {
+    var r = document.documentElement;
+    r.className = r.className.replace(/(^|\s)js(\s|$)/g, ' ');
+  }
+})();
+</script>
+</body>
+</html>
