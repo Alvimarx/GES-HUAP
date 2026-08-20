@@ -44,8 +44,10 @@ h1, h2, h3, h4 { margin: 0; font-size: inherit; font-weight: inherit; }
 
 /* Foco visible y consistente para navegación por teclado (WCAG 2.4.7).
    Solo en controles: `#paso-titulo` recibe el foco por programa al cambiar de
-   paso, para reubicar al lector de pantalla, y no debe dibujar anillo. */
-a:focus-visible, button:focus-visible, input:focus-visible, [href]:focus-visible {
+   paso, para reubicar al lector de pantalla, y no debe dibujar anillo.
+   El buscador también queda fuera: el diseño ya declara su propio
+   `outline-color`, y sobrescribirlo cambiaría su aspecto al recibir el foco. */
+a:focus-visible, button:focus-visible, input:not(#buscador):focus-visible, [href]:focus-visible {
   outline: 3px solid #0D5BD8; outline-offset: 2px; border-radius: 4px;
 }
 #paso-titulo:focus { outline: none; }

@@ -263,9 +263,19 @@ notificación son responsabilidad del médico tratante (Memo N°49).</p>
 </section>`;
 
 // ------------------------------------------------------------------ salida
+// Un comentario CSS mal cerrado se traga la regla siguiente sin avisar: el
+// navegador la descarta en silencio y el fallo solo se ve comparando píxeles.
+const css = read(path.join(SRC, 'styles.css'));
+const abre = (css.match(/\/\*/g) || []).length;
+const cierra = (css.match(/\*\//g) || []).length;
+if (abre !== cierra) {
+  console.error(`src/styles.css: comentarios sin cerrar (${abre} «/*» y ${cierra} «*/»).`);
+  process.exit(1);
+}
+
 const SUSTITUCIONES = {
   TITLE: esc('¿Qué hago con mi paciente GES? · Unidad GES HUAP'),
-  STYLES: read(path.join(SRC, 'styles.css')).trim(),
+  STYLES: css.trim(),
   BADGE: esc(vigencia.etiqueta_estado),
   VIGENCIA: esc(vigencia.linea_cabecera),
   TEL: esc(contactos.unidad_ges.telHref.replace(/^tel:/, '')),
