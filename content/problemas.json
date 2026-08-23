@@ -1,7 +1,7 @@
 {
   "_meta": {
     "descripcion": "Los 14 problemas de salud GES en que HUAP es prestador (confirmación diagnóstica y tratamiento). 15 códigos CIE-10 mapean a 14 problemas: G45.9 e I64 apuntan ambos al problema 37.",
-    "campos": "`corto` es la etiqueta breve para chips y navegación · `tiempo` marca los problemas cuyo plazo se juega en minutos u horas · `extras` son acciones propias del problema, por momento · `ntma` son los criterios resumidos de la Norma Técnica. · `denominacion_oficial` es la redacción del decreto: se usa en el documento impreso y en el buscador; `nombre` es la etiqueta abreviada de la interfaz. · `sinonimos` es el índice del buscador: alias con los que un médico puede escribir el problema (siglas, nombre corriente, palabras clave). NO es contenido normativo y la unidad puede ampliarlo libremente.",
+    "campos": "`corto` es la etiqueta breve para chips y navegación · `tiempo` marca los problemas cuyo plazo se juega en minutos u horas · `extras` son acciones propias del problema, por momento · `ntma` son los criterios resumidos de la Norma Técnica. · `denominacion_oficial` es la redacción del decreto: se usa en el documento impreso y en el buscador; `nombre` es la etiqueta abreviada de la interfaz. · `sinonimos` es el índice del buscador: alias con los que un médico puede escribir el problema (siglas, nombre corriente, palabras clave). NO es contenido normativo y la unidad puede ampliarlo libremente. · `confirma` es la pista que aparece bajo la pregunta «¿Ya está confirmado el diagnóstico?»: con qué se confirma según la NTMA. Opcional: solo se llena donde hay fuente documentada.",
     "estado_validacion": "Mapeo y plazos revalidados contra las fichas de auge.minsal.cl (DS 29/2025) el 30-07-2026; transcripción NTMA del 09-08-2026. Pendiente de validación por la Unidad GES — no publicar.",
     "advertencia_exhaustividad": "El afiche de origen (CODIGOS SINA.jpg) no tiene fecha ni versión. Está pendiente confirmar con la unidad si estos 14 problemas son todos los que corresponden a HUAP.",
     "fecha": "2026-08-20"
@@ -28,6 +28,7 @@
         "síndrome coronario agudo"
       ],
       "tiempo": true,
+      "confirma": "Se confirma con ECG (≤30 min desde la primera atención clínica) y biomarcadores — troponinas (NTMA 5.1).",
       "extras": {
         "sospecha": [
           {

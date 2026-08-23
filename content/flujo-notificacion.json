@@ -1,35 +1,46 @@
 {
   "_meta": {
-    "descripcion": "Momentos del paciente (etapas de la ruta guiada), acciones que corresponden a cada momento y casos especiales «si… entonces…».",
-    "campo_ctx": "En `acciones_comunes`, el campo `ctx` restringe una acción al contexto de atención: 'urgencia' | 'piso'. Sin `ctx`, la acción aplica en ambos.",
-    "fecha": "2026-08-20"
+    "descripcion": "Pregunta de confirmación (gate), momentos del paciente, acciones que corresponden a cada momento y casos especiales «si… entonces…». La ruta guiada pregunta solo si el diagnóstico está confirmado: con «sí» compone la lista de verificación con los momentos confirmación + hospitalización + alta; con «todavía no» muestra el momento sospecha.",
+    "fecha": "2026-08-23"
+  },
+  "gate": {
+    "pregunta": "¿Ya está confirmado el diagnóstico?",
+    "si": "Sí, confirmado",
+    "si_desc": "Acabo de confirmarlo o ya estaba confirmado",
+    "no": "Todavía no",
+    "no_desc": "Sospecha en estudio"
   },
   "etapas": [
     {
       "id": "sospecha",
       "nombre": "Sospecha",
-      "desc": "Aún sin confirmación diagnóstica"
+      "desc": "Aún sin confirmación diagnóstica",
+      "titulo_checklist": "Mientras confirma"
     },
     {
       "id": "confirmacion",
       "nombre": "Confirmación",
       "desc": "Acabo de confirmar el diagnóstico",
-      "badge": "Notificar ahora"
+      "badge": "Notificar ahora",
+      "titulo_checklist": "Notifique ahora"
     },
     {
       "id": "hospitalizacion",
       "nombre": "Hospitalización",
-      "desc": "Hospitalizado, garantías en curso"
+      "desc": "Hospitalizado, garantías en curso",
+      "titulo_checklist": "Durante la hospitalización"
     },
     {
       "id": "alta",
       "nombre": "Alta",
-      "desc": "Voy a dar el alta"
+      "desc": "Voy a dar el alta",
+      "titulo_checklist": "Al alta"
     },
     {
       "id": "seguimiento",
       "nombre": "Seguimiento",
-      "desc": "Ya está de alta"
+      "desc": "Ya está de alta",
+      "titulo_checklist": "Después del alta"
     }
   ],
   "acciones_comunes": {
@@ -59,8 +70,7 @@
       },
       {
         "t": "En HUAP no se usa el DAU para notificar",
-        "d": "IPD y Constancia se generan en SINA, igual que en hospitalización.",
-        "ctx": "urgencia"
+        "d": "IPD y Constancia se generan en SINA, igual que en hospitalización."
       }
     ],
     "hospitalizacion": [
@@ -121,5 +131,5 @@
     }
   ],
   "fuentes": "Circular IF/N°469 (20-05-2024) · Memo N°49 (21-07-2025) · Memo N°05 (02-01-2026) · NTMA D.E. 57/2025 §II.8–II.9 · formulario-paciente-ges.pdf · IPD. (1).pdf · confirmado por Unidad GES 08-2026",
-  "fecha": "2026-08-01"
+  "fecha": "2026-08-23"
 }

@@ -59,6 +59,7 @@ const problemas = problemasSrc.problemas.map((p) => {
     corto: p.corto,
     sinonimos: p.sinonimos || [],
     tiempo: p.tiempo,
+    confirma: p.confirma || '',
     plazos: [...((i && i.plazos) || []), ...((a && a.plazos) || [])],
     extras: p.extras || {},
     ntma: p.ntma || [],
@@ -112,6 +113,11 @@ for (const etapa of Object.keys(flujo.acciones_comunes)) {
     errores.push(`flujo-notificacion.json: la etapa «${etapa}» de acciones_comunes no existe`);
   }
 }
+for (const campo of ['pregunta', 'si', 'si_desc', 'no', 'no_desc']) {
+  if (!flujo.gate || !flujo.gate[campo]) {
+    errores.push(`flujo-notificacion.json: falta gate.${campo} — la pregunta de confirmación quedaría vacía`);
+  }
+}
 const sinPlazos = problemas.filter((p) => !p.plazos.length);
 if (sinPlazos.length) errores.push('Problemas sin ningún plazo: ' + sinPlazos.map((p) => p.ps).join(', '));
 
@@ -129,6 +135,7 @@ const runtime = {
     anexos: contactos.unidad_ges.anexos,
     horario: contactos.unidad_ges.horario
   },
+  gate: flujo.gate,
   etapas: flujo.etapas,
   acciones_comunes: flujo.acciones_comunes,
   casos: flujo.casos,
@@ -146,7 +153,7 @@ const accsHtml = (accs) =>
   `<ul class="doc-accs" role="list">${accs
     .map(
       (a) =>
-        `<li><strong>${esc(a.t)}</strong>${a.ctx ? ` <em class="doc-ctx">(solo ${esc(a.ctx)})</em>` : ''}<br>${esc(a.d)}</li>`
+        `<li><strong>${esc(a.t)}</strong><br>${esc(a.d)}</li>`
     )
     .join('')}</ul>`;
 
@@ -186,6 +193,7 @@ function docProblema(p) {
   // abreviada de la interfaz.
   return `<section class="doc-ps">
   <h3><span class="doc-cie">${esc(p.cie.join(' · '))}</span> ${esc(p.denominacionOficial || p.nombre)}</h3>
+  ${p.confirma ? `<p class="doc-confirma">${esc(p.confirma)}</p>` : ''}
   ${p.denominacionOficial && p.denominacionOficial !== p.nombre ? `<p class="doc-fuente">En la ruta guiada aparece como «${esc(p.nombre)}».</p>` : ''}
   ${etapas}${post}${ntma}
   <p class="doc-fuente">Fuente: ${esc(p.fuente)}</p>

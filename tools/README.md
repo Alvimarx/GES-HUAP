@@ -1,8 +1,13 @@
 # Herramientas de verificación visual
 
-Comprueban que la implementación (`dist/`) siga siendo **idéntica** al diseño aprobado
-(`design/2026-08-20-ruta-guiada-claude-design.html`). Correrlas después de cualquier cambio en
-`src/styles.css`, `src/app.js` o `src/shell.html`.
+Comprueban la implementación (`dist/`). Correrlas después de cualquier cambio en
+`src/styles.css`, `src/app.js`, `src/shell.html` o `content/`.
+
+**Desde el rediseño del 2026-08-23** (pregunta única de confirmación + animaciones, pedido por el
+usuario) las pantallas 2 y 3 **divergen a propósito** del diseño de Claude Design
+(`design/2026-08-20-ruta-guiada-claude-design.html`): `diff.js` y `measure.js` solo siguen siendo
+comparables en la pantalla 1 (lista de problemas). La red de seguridad del contenido pasó a ser
+`behavior.js`, que ya no compara contra el diseño.
 
 No son parte del sitio ni del build. Requieren Node y Playwright con Chromium:
 
@@ -27,7 +32,7 @@ En `tools/*.js`, `PW` apunta a la instalación de Playwright; ajustarla si hace 
 | `shot.js <url> <dir>` | Captura 6 estados de la ruta guiada en móvil (390 px) y escritorio (1280 px), a 2×. |
 | `diff.js <dirA> <dirB> <dirSalida>` | Compara las capturas píxel a píxel y escribe las diferencias en rojo. |
 | `measure.js <urlA> <urlB>` | Compara posición y tamaño de todas las cajas con estilo del diseño, caja por caja. |
-| `behavior.js <urlA> <urlB>` | Recorre los 14 problemas × 5 momentos × 2 contextos y compara el texto renderizado, más la calculadora de plazos. Tarda unos 3 minutos. |
+| `behavior.js <url>` | Cobertura de contenido: recorre los 14 problemas × 2 respuestas de la pregunta de confirmación y comprueba que cada acción y cada plazo declarados en `content/` aparezcan en su rama, y que la pista `confirma` se vea en la pregunta. |
 | `search-check.js [url]` | Ejercita el buscador en el navegador con 48 consultas y comprueba el resultado de cada una. Correrlo tras tocar el buscador o el campo `sinonimos`. |
 | `print-check.js <url>` | Genera el PDF en **A4 y en carta** y comprueba que la fecha de vigencia salga al pie de **todas** las páginas y que ninguna línea del cuerpo quede debajo. Necesita además `pdfjs-dist` (`npm install --no-save pdfjs-dist`; ruta configurable con `PDFJS_PATH`). |
 
@@ -40,10 +45,9 @@ revisar el bloque `@media print` de `src/styles.css` antes que nada.
 
 ## Cómo leer los resultados
 
-- **`measure.js` es el que manda.** Si la geometría es idéntica, el diseño está intacto.
-- **`diff.js` siempre deja un residuo** de 0,004 % a 0,05 % de píxeles. No es un error: el visor de
-  Claude Design envuelve cada texto interpolado en un `<span>` propio, el navegador aplica kerning
-  distinto y algunos glifos se corren una fracción de píxel. A 3× de aumento no se distingue.
-  Ver `docs/2026-08-20-implementacion-ruta-guiada.md` §2.
-- **`behavior.js` normaliza los espacios en blanco**, porque el marcado del diseño tiene saltos de
-  línea entre elementos y el generado no. No afecta el layout: lo confirma `measure.js`.
+- **`behavior.js` es el que manda para el contenido:** si reporta cobertura completa, ninguna
+  garantía se perdió al componer las vistas.
+- **`diff.js` y `measure.js`** solo aplican a la pantalla 1; en ella el residuo de píxeles de
+  0,004 %–0,05 % es kerning, no un error (ver `docs/2026-08-20-implementacion-ruta-guiada.md` §2).
+- Las animaciones no afectan a las capturas: `shot.js` las anula antes de capturar, y `behavior.js`
+  espera a que cada pantalla exista en el DOM.

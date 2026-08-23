@@ -31,6 +31,21 @@ a:hover { color: #0A46A8; }
 input { font-family: 'Nunito', system-ui, sans-serif; }
 @keyframes pulseA { 0%, 100% { opacity: 1 } 50% { opacity: .5 } }
 
+/* --- Movimiento (rediseño 2026-08-23) --------------------------------------
+   Tres piezas: la entrada en cascada de listas y preguntas (`.anim-in`, con
+   `animation-delay` en línea), el viaje FLIP de la tarjeta elegida hasta la
+   barra del problema (transform que fija app.js), y el desvanecimiento del
+   resto de la lista (`.saliendo`). El bloque `prefers-reduced-motion` del
+   final anula todas las duraciones. */
+@keyframes apareceA { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: none } }
+@keyframes popA { 0% { transform: scale(.3); opacity: 0 } 70% { transform: scale(1.18) } 100% { transform: scale(1); opacity: 1 } }
+.anim-in { animation: apareceA .38s cubic-bezier(.2, .7, .3, 1) both; }
+.tick-pop { animation: popA .28s cubic-bezier(.2, .7, .3, 1) both; }
+.card-ps { transition: opacity .17s ease, transform .17s ease, border-color .15s ease; }
+.saliendo { opacity: 0 !important; transform: translateY(8px) scale(.985); pointer-events: none; }
+#selbar { will-change: transform; }
+.acc-row, .btn-ayuda { transition: background-color .15s ease, border-color .15s ease, opacity .15s ease; }
+
 /* Los títulos usan estilos en línea, igual que en el diseño; se anulan los
    márgenes y tamaños que el navegador aplica por defecto a h1–h4. */
 h1, h2, h3, h4 { margin: 0; font-size: inherit; font-weight: inherit; }
@@ -95,7 +110,7 @@ html:not(.js) #app { display: none; }
 .doc-plazos > li { border-left-color: #C9F2E3; }
 .doc-plazo-chip { display: inline-block; background: #0C2B5E; color: #fff; font-weight: 900; font-size: 12px; padding: 2px 9px; border-radius: 999px; }
 .doc-plazo-chip.doc-critico { background: #D02E63; }
-.doc-ctx { color: #B31D52; font-style: normal; font-weight: 800; }
+.doc-confirma { border-left: 3px solid #C9F2E3; padding-left: 10px; font-size: 12.5px; }
 .doc-corr, .doc-warn { color: #8A1E44; }
 .doc-warn { background: #FCE3EA; border-radius: 10px; padding: 8px 10px; font-size: 12px; font-weight: 700; }
 .doc-post { background: #EDF2F9; border: 1.5px solid #D9E5F3; border-radius: 12px; padding: 10px 12px; font-size: 12.5px; }
@@ -153,7 +168,7 @@ html:not(.js) #app { display: none; }
 
   .doc-plazo-chip { border: 1pt solid #000 !important; background: none !important; color: #000 !important; }
   /* En papel todo va en negro: se imprime en blanco y negro con frecuencia. */
-  #doc, .doc-fuente, .doc-warn, .doc-corr, .doc-ctx, #doc h2, #doc h3, #doc h4 { color: #000 !important; }
+  #doc, .doc-fuente, .doc-warn, .doc-corr, #doc h2, #doc h3, #doc h4 { color: #000 !important; }
   .doc-warn { background: none !important; border: .5pt solid #000; }
   .doc-critico { font-weight: 900; text-decoration: underline; }
 

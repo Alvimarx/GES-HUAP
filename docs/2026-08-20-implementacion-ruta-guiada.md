@@ -344,3 +344,68 @@ después. Desde ahí, cada push reconstruye y actualiza solo.
   «Borrador — pendiente validación Unidad GES» en la cabecera y el pie de cada
   página impresa. Los gates del §11 siguen abiertos.
 
+
+---
+
+## 13. Rediseño de interacción — 2026-08-23
+
+Pedido por el usuario: movimiento en la interfaz, y un flujo más corto que ya no
+pregunte ni el momento del paciente ni si está en urgencia o piso.
+
+### El flujo nuevo
+
+1. **Problema** — la misma lista con buscador. Al tocar una tarjeta, el resto se
+   desvanece y la elegida **sube animada** (FLIP) hasta convertirse en la barra
+   del problema.
+2. **Una sola pregunta** — «¿Ya está confirmado el diagnóstico?» (texto editable
+   en `flujo-notificacion.json`, campo `gate`). Bajo la pregunta puede aparecer
+   una pista por problema (campo `confirma` de `problemas.json`, solo donde hay
+   fuente): en IAM, «ECG ≤30 min + biomarcadores — troponinas (NTMA 5.1)».
+3. **Resultado**
+   - **Sí, confirmado** → lista de verificación en cascada con todo lo que el
+     paciente debe quedar teniendo, agrupada en «Notifique ahora» (con punto
+     rojo pulsante) · «Durante la hospitalización» · «Al alta»; después los
+     plazos que corren (confirmación + hospitalización) con sus calculadoras, y
+     la sección informativa «Después del alta» (seguimiento).
+   - **Todavía no** → «Mientras confirma»: acciones y plazos de la sospecha
+     (ECG 30 min, TAC 24 h…), y el botón «Ya está confirmado ›» como paso
+     natural.
+   - Ambas ramas cierran con el botón **«¿Problemas? ¿Algo no se pudo?»**, que
+     despliega los casos especiales (notificación diferida, paciente que no
+     puede firmar, ISAPRE, sin previsión…) y el contacto de la unidad.
+
+### Decisiones y supuestos declarados
+
+- **La rama «todavía no» no se vació**: los plazos de sospecha son garantías que
+  el HUAP puede incumplir por sí mismo y siguen a un toque de distancia.
+- **El contexto urgencia/piso se eliminó** (campo `ctx` retirado de
+  `content/`); la única acción que dependía de él —el DAU— aplica siempre.
+- La composición de la rama confirmada (confirmación + hospitalización + alta +
+  seguimiento informativo) reutiliza `acciones_comunes` por momento: la unidad
+  sigue editando el contenido con la misma estructura y el documento impreso
+  sigue organizado por momentos.
+- **Movimiento**: cascada de entrada (`.anim-in` con retardo escalonado, tope
+  500 ms), FLIP de la tarjeta elegida, rebote del tic al marcar. Todo se anula
+  con `prefers-reduced-motion` (CSS anula duraciones; el FLIP se salta en JS).
+- Las animaciones corren **una vez por pantalla**: marcar una casilla o abrir un
+  panel no repite la cascada.
+
+### Verificación
+
+- `tools/behavior.js` se reescribió como **cobertura de contenido**: 239
+  acciones/plazos de `content/` presentes en las 28 vistas (14 × 2 respuestas),
+  más la pista `confirma` en la pregunta. Ya no compara contra el diseño de
+  Claude Design: las pantallas 2 y 3 divergen a propósito desde este rediseño.
+- Buscador: 48 consultas correctas. Impresión: A4 14 páginas, carta 15, pie en
+  todas, sin solapamientos. Sin errores de consola en 390/1280/320 px ni con
+  movimiento reducido; sin desplazamiento horizontal.
+- El documento lineal (sin JavaScript e impresión) no cambió de estructura: la
+  ficha de cada problema ahora incluye además la pista `confirma`.
+
+### Preguntas que este rediseño deja abiertas
+
+- La redacción de la pregunta y de la pista de IAM debe validarla la Unidad GES
+  junto con el resto del contenido (§10).
+- El campo `confirma` de los otros 13 problemas queda vacío a propósito: se
+  llena solo con fuente (NTMA por problema, ya transcrita en
+  `docs/2026-08-09-ntma-especificaciones-14-problemas-huap.md`).
