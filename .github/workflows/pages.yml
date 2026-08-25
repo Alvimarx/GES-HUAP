@@ -1,0 +1,65 @@
+# Mantiene la rama `gh-pages` con el sitio construido, para GitHub Pages.
+#
+# El sitio se construye desde content/ + src/ en cada push a las ramas de
+# abajo; dist/ no se versiona en la rama de trabajo. La rama `gh-pages` es
+# generada: no editarla a mano, se sobrescribe.
+#
+# ⚠ REQUIERE UN PASO MANUAL, UNA SOLA VEZ:
+#    Settings → Pages → Source: «Deploy from a branch» → gh-pages / (root)
+#    El token de Actions no puede crear el sitio de Pages por sí solo.
+#
+# ⚠ El sitio publicado en Pages es de acceso PÚBLICO aunque el repositorio sea
+#   privado. Mientras el contenido normativo siga marcado como pendiente de
+#   validación por la Unidad GES, el build emite `noindex, nofollow`.
+name: Publicar en GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - claude/ges-huap-specs-design-alignment-tdgd61
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gh-pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Construir el sitio
+        run: node src/build.js
+
+      - name: Comprobar que no se publiquen marcadores pendientes
+        run: |
+          if grep -q '{{FALTA' dist/index.html; then
+            echo "Hay marcadores {{FALTA: …}} en la salida; no se publica."
+            exit 1
+          fi
+
+      - name: Actualizar la rama gh-pages
+        run: |
+          set -e
+          cd dist
+          git init -q -b gh-pages
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Sitio construido desde ${GITHUB_SHA}
+
+          Generado por src/build.js. No editar aquí: se regenera en cada push.
+          Borrador — pendiente de validación por la Unidad GES."
+          git push -q --force \
+            "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

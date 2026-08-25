@@ -334,13 +334,13 @@ Contrastadas el 30-07-2026 contra las fichas oficiales del MINSAL
 | Problema | Garantía de oportunidad intrahospitalaria |
 |----------|-------------------------------------------|
 | IAM | ECG en urgencia **30 min** desde la sospecha · trombólisis **30 min** desde la confirmación de SDST |
-| DM tipo 1 | Glicemia **30 min** desde la atención en urgencia por sospecha de descompensación · tratamiento 24 h desde la confirmación |
+| DM tipo 1 | Consulta con especialista **7 días** desde la sospecha por exámenes alterados · glicemia **30 min** desde la atención en urgencia por sospecha de descompensación · tratamiento 24 h desde la confirmación · en quien **ya está en tratamiento** y se descompensa, glicemia **30 min** desde la atención médica en Servicio de Urgencia |
 | ACV isquémico | Confirmación **24 h** desde la sospecha · tratamiento **24 h** desde la confirmación · hospitalización en prestador resolutivo **24 h** desde la indicación · rehabilitación hospitalizada **48 h** desde la indicación |
 | HSA por aneurisma | TAC **24 h** desde la sospecha · angioTAC o angiografía digital **48 h** desde la confirmación de HSA · tratamiento **24 h** desde la confirmación de aneurisma roto · rehabilitación hospitalizada **48 h** |
 | Politraumatizado grave | Tratamiento en centro resolutivo **antes de 24 h desde el rescate** · rehabilitación (solo con lesión medular) **24 h** desde la indicación |
 | TEC moderado o grave | Diagnóstico **12 h** desde la sospecha · tratamiento **24 h** desde la confirmación |
 | Trauma ocular grave | Diagnóstico **12 h** desde la sospecha · atención por especialista **60 h** desde la confirmación |
-| Gran quemado | Tratamiento **72 h** desde la confirmación en prestador resolutivo · estabilización inicial en centro de origen **8 h** (>15 años) · rehabilitación hospitalizada **48 h** |
+| Gran quemado | Tratamiento **72 h** desde la confirmación en prestador resolutivo · estabilización inicial en centro de origen **8 h** (>15 años) · rehabilitación hospitalizada **48 h** · entrega de ayudas técnicas de rehabilitación ambulatoria **30 días** desde la indicación |
 | Agresión sexual aguda | Primera respuesta **inmediata** desde la solicitud de atención en unidad de emergencia |
 | VIH/SIDA | Diagnóstico **45 días** desde la sospecha o solicitud · consulta médica **45 días** desde la confirmación · tratamiento **7 días** desde la indicación |
 | Marcapaso | Diagnóstico **30 días** desde la sospecha · tratamiento **30 días** desde la confirmación o indicación de recambio |
@@ -667,6 +667,11 @@ No usar ninguno de estos datos hasta confirmarlos. Al confirmarse, moverlos a §
 - [ ] Si las Circulares IF/N° 516 y 517 (11-2025) modifican el proceso de notificación de la IF/N° 469, cuyo
       contenido operativo está en §5.4. La unidad trabaja con la 469.
 - [ ] Estado de la publicación íntegra del decreto ordenada por Contraloría.
+- [ ] **Con qué se confirma el diagnóstico en los PS 6 (DM1), 25 (marcapaso), 37 (ACV isquémico), 48
+      (politraumatizado) y 50 (trauma ocular).** La NTMA no trae especificaciones de diagnóstico para ellos y
+      la ficha del decreto solo dice «confirmación diagnóstica» sin decir con qué; en el PS 50 la NTMA declara
+      expresamente que no requiere definiciones adicionales. Los otros nueve sí están documentados y publicados
+      con su fuente en `content/problemas.json` (campo `confirma`).
 
 **Proceso HUAP** — el bloque completo fue respondido por la Unidad GES en 08-2026; todo movido a §5.12
 (momento de la notificación, cartera de 14 problemas como prestador, SINA como soporte, notificación diferida,

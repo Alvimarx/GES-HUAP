@@ -1,8 +1,14 @@
 # Revalidación de plazos GES contra el Decreto Supremo N° 29/2025
 
-**Fecha:** 30-07-2026
+**Fecha:** 30-07-2026 · **Corregido:** 20-08-2026
 **Elaborado por:** Claude, a solicitud de la Unidad GES
 **Estado:** ⚠️ **BORRADOR — requiere validación de la Unidad GES antes de cualquier publicación**
+
+> **Correcciones del 20-08-2026.** Al construir la landing se contrastó de nuevo cada plazo contra las fichas
+> oficiales y aparecieron tres errores de este informe, ya corregidos más abajo: faltaban dos garantías del
+> **PS 6** (consulta con especialista en 7 días; glicemia en 30 minutos para quien ya está en tratamiento) y una
+> del **PS 55** (entrega de ayudas técnicas en 30 días), y el Hallazgo 3 afirmaba sin fundamento que Gran
+> quemado era el único problema sin garantía de diagnóstico.
 
 ---
 
@@ -79,13 +85,13 @@ en horas o minutos. Son los que un médico de urgencia necesita conocer y hoy no
 | Problema | Garantías de oportunidad dentro del hospital |
 |----------|---------------------------------------------|
 | **Infarto agudo al miocardio** | ECG en urgencia dentro de **30 minutos desde la sospecha**. Trombólisis dentro de **30 minutos desde la confirmación** de supradesnivel ST |
-| **Diabetes mellitus tipo 1** | Glicemia dentro de **30 minutos desde la atención en urgencia** por sospecha de descompensación. Tratamiento dentro de 24 h desde la confirmación |
+| **Diabetes mellitus tipo 1** | Consulta con médico especialista dentro de **7 días desde la sospecha por exámenes alterados**. Glicemia dentro de **30 minutos desde la atención en urgencia** por sospecha de descompensación. Tratamiento dentro de 24 h desde la confirmación. En personas **ya en tratamiento** que se descompensan, glicemia dentro de **30 minutos desde la atención médica en Servicio de Urgencia** |
 | **ACV isquémico** | Confirmación diagnóstica **24 h** desde la sospecha · tratamiento **24 h** desde la confirmación · hospitalización en prestador con capacidad resolutiva **24 h** desde la indicación · rehabilitación hospitalizada **48 h** desde la indicación |
 | **HSA por aneurisma roto** | TAC **24 h** desde la sospecha · angioTAC multicorte o angiografía digital **48 h** desde la confirmación de HSA · tratamiento **24 h** desde la confirmación de aneurisma roto · rehabilitación hospitalizada **48 h** desde la indicación |
 | **Politraumatizado grave** | Tratamiento en centro con capacidad resolutiva **antes de 24 horas desde el rescate** · rehabilitación (solo con lesión medular) **24 h** desde la indicación |
 | **TEC moderado o grave** | Diagnóstico **12 h** desde la sospecha · tratamiento **24 h** desde la confirmación |
 | **Trauma ocular grave** | Diagnóstico **12 h** desde la sospecha · atención por médico especialista **60 h** desde la confirmación |
-| **Gran quemado** | Tratamiento **72 h** desde la confirmación, en prestador con capacidad resolutiva · en mayores de 15 años, estabilización inicial en el centro de origen **8 h** desde la confirmación · rehabilitación hospitalizada **48 h** desde la indicación |
+| **Gran quemado** | Tratamiento **72 h** desde la confirmación, en prestador con capacidad resolutiva · en mayores de 15 años, estabilización inicial en el centro de origen **8 h** desde la confirmación · rehabilitación hospitalizada **48 h** desde la indicación · entrega de ayudas técnicas indicadas en rehabilitación ambulatoria **30 días** desde la indicación |
 | **Agresión sexual aguda** | Primera respuesta **inmediata** desde la solicitud de atención en unidad de emergencia hospitalaria |
 | **VIH/SIDA** | Diagnóstico **45 días** desde la sospecha o solicitud · consulta médica **45 días** desde la confirmación · inicio de tratamiento **7 días** desde la indicación médica |
 | **Marcapaso** | Diagnóstico **30 días** desde la sospecha · tratamiento **30 días** desde la confirmación o desde la indicación de recambio |
@@ -105,8 +111,12 @@ en horas o minutos. Son los que un médico de urgencia necesita conocer y hoy no
 2. **Politraumatizado grave: la rehabilitación solo está garantizada con lesión medular.** El decreto lo acota
    explícitamente.
 
-3. **Gran quemado no tiene garantía de diagnóstico.** Sus garantías parten en tratamiento. Es el único de los 14
-   con esa estructura.
+3. **Gran quemado no tiene garantía de diagnóstico.** Sus garantías parten en tratamiento.
+   ⚠️ **Corregido el 20-08-2026:** este informe afirmaba que era «el único de los 14 con esa estructura», y es
+   falso. Las fichas oficiales muestran que tampoco tienen sección de diagnóstico el **PS 36** (solo
+   rehabilitación), el **PS 44** (tratamiento y seguimiento), el **PS 48** (tratamiento y rehabilitación) ni el
+   **PS 86** (acceso con primera respuesta inmediata, y seguimiento). El error alcanzó a propagarse al contenido
+   de la landing y se corrigió allí también.
 
 4. **Agresión sexual aguda: la ventana es de 72 horas o menos** desde el episodio. Es un criterio de inclusión
    estricto y es lo primero que un médico de urgencia necesita saber para decidir si activa el GES.

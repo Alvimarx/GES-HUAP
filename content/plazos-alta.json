@@ -1,0 +1,245 @@
+{
+  "_meta": {
+    "descripcion": "Garantías de oportunidad posteriores al alta (seguimiento y rehabilitación ambulatoria), con los puntos de partida corregidos respecto del afiche institucional. Los siete números del afiche son correctos; en Gran quemado los hitos están intercambiados y en agresión sexual aguda el seguimiento se cuenta desde la primera respuesta.",
+    "campos": "`corregido` deja constancia visible de la diferencia con el afiche. `post_nota` es el texto que se muestra cuando el problema no tiene garantía post-alta o requiere una aclaración.",
+    "estado_validacion": "Revalidado contra las fichas oficiales de auge.minsal.cl (DS 29/2025) el 30-07-2026. Pendiente de validación por la Unidad GES — no publicar.",
+    "fuente_general": "Fichas auge.minsal.cl por problema de salud (DS 29/2025); docs/2026-07-30-revalidacion-plazos-DS29-2025.md",
+    "fecha": "2026-08-20"
+  },
+  "plazos": [
+    {
+      "ps": 5,
+      "problema": "Infarto agudo del miocardio",
+      "plazos": [
+        {
+          "id": "p5-seg",
+          "etapa": "seguimiento",
+          "hito": "Primer control de prevención secundaria",
+          "n": 30,
+          "u": "d",
+          "desde": "el alta hospitalaria",
+          "nota": "Prevención secundaria sin límite de tiempo, cualquiera sea el tratamiento recibido."
+        }
+      ],
+      "post_nota": "Rehabilitación: sin garantía.",
+      "fuente": "Ficha PS 5 auge.minsal.cl (DS 29/2025) · NTMA pp. 34–35",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 6,
+      "problema": "Diabetes mellitus tipo 1",
+      "plazos": [],
+      "post_nota": "Sin garantía de oportunidad después del alta; continuidad por su vía habitual.",
+      "fuente": "Ficha PS 6 · NTMA pp. 36–37",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 18,
+      "problema": "VIH/SIDA",
+      "plazos": [],
+      "post_nota": "Seguimiento según esquema clínico; sin plazo post-alta adicional garantizado.",
+      "fuente": "Ficha PS 18 · NTMA pp. 44–48",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 25,
+      "problema": "Trastornos de conducción que requieren marcapaso (≥15 años)",
+      "plazos": [
+        {
+          "id": "p25-seg",
+          "etapa": "seguimiento",
+          "hito": "Primer control",
+          "n": 15,
+          "u": "d",
+          "desde": "el alta de instalación o cambio de generador"
+        }
+      ],
+      "post_nota": null,
+      "fuente": "Ficha PS 25 · NTMA p. 50",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 26,
+      "problema": "Colecistectomía preventiva del cáncer de vesícula (35–49 años)",
+      "plazos": [],
+      "post_nota": "Sin garantía de oportunidad después del alta.",
+      "fuente": "Ficha PS 26 · NTMA pp. 50–51",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 36,
+      "problema": "Ayudas técnicas para personas de 65 años y más",
+      "plazos": [],
+      "post_nota": "La garantía es la entrega dentro de plazo desde la indicación.",
+      "fuente": "Ficha PS 36 · NTMA pp. 54–55",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 37,
+      "problema": "Ataque cerebrovascular isquémico (≥15 años)",
+      "plazos": [
+        {
+          "id": "p37-seg",
+          "etapa": "seguimiento",
+          "hito": "Control con neurología de adultos",
+          "n": 10,
+          "u": "d",
+          "desde": "el alta hospitalaria",
+          "nota": "La atención al alta debe ser por neurología de adultos (NTMA 37.2)."
+        },
+        {
+          "id": "p37-ram",
+          "etapa": "seguimiento",
+          "hito": "Rehabilitación ambulatoria",
+          "n": 15,
+          "u": "d",
+          "desde": "la indicación médica"
+        }
+      ],
+      "post_nota": null,
+      "fuente": "Ficha PS 37 · NTMA pp. 55–56 · Memo N°05 (02-01-2026)",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 42,
+      "problema": "Hemorragia subaracnoidea por ruptura de aneurismas cerebrales",
+      "plazos": [
+        {
+          "id": "p42-seg",
+          "etapa": "seguimiento",
+          "hito": "Primer control con especialista",
+          "n": 30,
+          "u": "d",
+          "desde": "el alta"
+        },
+        {
+          "id": "p42-ram",
+          "etapa": "seguimiento",
+          "hito": "Rehabilitación ambulatoria",
+          "n": 15,
+          "u": "d",
+          "desde": "la indicación médica"
+        }
+      ],
+      "post_nota": null,
+      "fuente": "Ficha PS 42 · NTMA p. 57",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 44,
+      "problema": "Tratamiento quirúrgico de hernia del núcleo pulposo lumbar",
+      "plazos": [
+        {
+          "id": "p44-seg",
+          "etapa": "seguimiento",
+          "hito": "Control con especialista",
+          "n": 30,
+          "u": "d",
+          "desde": "el alta hospitalaria"
+        }
+      ],
+      "post_nota": null,
+      "fuente": "Ficha PS 44 · NTMA p. 58",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 48,
+      "problema": "Politraumatizado grave",
+      "plazos": [],
+      "post_nota": "Sin garantía de oportunidad después del alta.",
+      "fuente": "Ficha PS 48 · NTMA p. 59",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 49,
+      "problema": "Traumatismo cráneo encefálico moderado o grave",
+      "plazos": [],
+      "post_nota": "Sin garantía de oportunidad después del alta.",
+      "fuente": "Ficha PS 49 · NTMA pp. 59–60",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 50,
+      "problema": "Trauma ocular grave",
+      "plazos": [],
+      "post_nota": "Existe la prestación de seguimiento, pero sin plazo de oportunidad garantizado.",
+      "fuente": "Ficha PS 50 · NTMA p. 60",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 55,
+      "problema": "Gran quemado",
+      "plazos": [
+        {
+          "id": "p55-seg",
+          "etapa": "seguimiento",
+          "hito": "Primer control",
+          "n": 15,
+          "u": "d",
+          "desde": "la indicación médica",
+          "corregido": "El afiche decía «desde el alta»; el decreto dice desde la indicación médica."
+        },
+        {
+          "id": "p55-ram",
+          "etapa": "seguimiento",
+          "hito": "Rehabilitación ambulatoria",
+          "n": 15,
+          "u": "d",
+          "desde": "el alta hospitalaria",
+          "corregido": "El afiche decía «desde la indicación»; el decreto dice desde el alta."
+        },
+        {
+          "id": "p55-at",
+          "etapa": "seguimiento",
+          "hito": "Entrega de ayudas técnicas indicadas en rehabilitación ambulatoria",
+          "n": 30,
+          "u": "d",
+          "desde": "la indicación"
+        }
+      ],
+      "post_nota": null,
+      "fuente": "Ficha PS 55 · NTMA p. 63",
+      "fecha": "2026-07-30"
+    },
+    {
+      "ps": 86,
+      "problema": "Atención integral de salud en agresión sexual aguda",
+      "plazos": [
+        {
+          "id": "p86-seg",
+          "etapa": "seguimiento",
+          "hito": "Seguimiento",
+          "n": 35,
+          "u": "d",
+          "desde": "la primera respuesta",
+          "corregido": "El afiche decía «desde el alta»; el decreto dice desde la primera respuesta."
+        }
+      ],
+      "post_nota": null,
+      "fuente": "Ficha PS 86 · NTMA pp. 86–87 (mod. D.E. 32/2026)",
+      "fecha": "2026-07-30"
+    }
+  ],
+  "ayudas_tecnicas_menores_65": {
+    "descripcion": "ACV isquémico (37) y HSA (42) garantizan ayudas técnicas a menores de 65 años, por la vía de esos problemas y no del PS 36 (que es para 65 años y más). El material actual invisibiliza este derecho.",
+    "aplica_a": [
+      37,
+      42
+    ],
+    "garantias": [
+      {
+        "hito": "Bastón, cojín o colchón",
+        "plazo": "20 días",
+        "desde": "la indicación médica"
+      },
+      {
+        "hito": "Sillas de ruedas",
+        "plazo": "30 días",
+        "desde": "la indicación médica"
+      }
+    ],
+    "fuente": "Fichas auge.minsal.cl PS 37 y PS 42 (DS 29/2025), revalidadas 30-07-2026",
+    "fecha": "2026-07-30"
+  },
+  "nota_sin_garantia_post_alta": "Sin garantía de oportunidad después del alta para este problema."
+}

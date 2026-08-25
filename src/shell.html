@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<meta name="description" content="Guía de procedimiento GES para clínicos del Hospital de Urgencia Asistencia Pública. Qué hacer ante la sospecha o confirmación de una patología GES, plazos que corren y cómo notificar.">
+<meta name="robots" content="{{ROBOTS}}">
+<meta name="color-scheme" content="light">
+<script>document.documentElement.className += ' js';</script>
+<style>
+{{STYLES}}
+</style>
+</head>
+<body>
+
+<div class="p-wrap" style="min-height:100vh;display:flex;justify-content:center">
+<div class="p-col" style="width:100%;max-width:600px;padding:0 0 96px;position:relative">
+
+<header class="doc-head" style="background:linear-gradient(135deg,#2E86F5,#0D5BD8);border-radius:0 0 26px 26px;padding:22px 20px 18px;color:#fff">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+    <div style="font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);padding:4px 12px;border-radius:999px">Unidad GES · HUAP</div>
+    <div style="font-size:11px;font-weight:700;background:#FCE3EA;color:#8A1E44;padding:4px 10px;border-radius:999px">{{BADGE}}</div>
+  </div>
+  <h1 style="margin:14px 0 6px;font-size:26px;line-height:1.15;font-weight:900;letter-spacing:-.01em">¿Qué hago con mi paciente GES?</h1>
+  <p style="margin:0;font-size:13px;font-weight:600;opacity:.92">Guía de procedimiento para clínicos del HUAP. No sustituye el juicio médico ni las Guías Clínicas MINSAL.</p>
+  <div style="margin-top:10px;font-size:11.5px;font-weight:700;opacity:.85">{{VIGENCIA}}</div>
+</header>
+
+<main>
+<!-- Región de anuncios para lectores de pantalla (WCAG 4.1.3). Es persistente
+     a propósito: la vista se vuelve a dibujar entera en cada cambio y una
+     región viva recién insertada no se anuncia de forma fiable. -->
+<div id="anuncio" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<div id="app"></div>
+
+<div id="doc">
+<table class="doc-table" role="presentation">
+  <tfoot>
+    <tr><td>
+      <div class="print-footer">{{VIGENCIA}} · Unidad GES HUAP · {{CORREO}} · {{BADGE}}</div>
+    </td></tr>
+  </tfoot>
+  <tbody>
+    <tr><td>
+{{DOC}}
+    </td></tr>
+  </tbody>
+</table>
+</div>
+</main>
+
+<footer class="dock" style="position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;pointer-events:none">
+  <div style="width:100%;max-width:600px;background:#0C2B5E;color:#fff;padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px;pointer-events:auto">
+    <a href="tel:{{TEL}}" style="flex:none;background:#C9F2E3;color:#0C2B5E;text-decoration:none;font-weight:900;font-size:13px;padding:9px 16px;border-radius:999px">Llamar</a>
+    <a href="mailto:{{CORREO}}" style="flex:none;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;text-decoration:none;font-weight:800;font-size:13px;padding:8px 16px;border-radius:999px">{{CORREO}}</a>
+    <span style="font-size:10.5px;font-weight:600;opacity:.75;line-height:1.3">Anexos {{ANEXOS}}<br>{{HORARIO}}</span>
+  </div>
+</footer>
+
+</div>
+</div>
+
+<script type="application/json" id="ges-data">{{DATA}}</script>
+<script>
+{{APP}}
+</script>
+<script>
+// Si la ruta guiada no llegó a dibujarse — error de JavaScript, datos corruptos,
+// navegador que no la soporta — se muestra el documento completo en vez de
+// dejar la página en blanco.
+(function () {
+  var a = document.getElementById('app');
+  if (!a || !a.firstChild) {
+    var r = document.documentElement;
+    r.className = r.className.replace(/(^|\s)js(\s|$)/g, ' ');
+  }
+})();
+</script>
+</body>
+</html>
