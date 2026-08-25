@@ -59,7 +59,6 @@ const problemas = problemasSrc.problemas.map((p) => {
     corto: p.corto,
     sinonimos: p.sinonimos || [],
     tiempo: p.tiempo,
-    confirma: p.confirma || '',
     plazos: [...((i && i.plazos) || []), ...((a && a.plazos) || [])],
     extras: p.extras || {},
     ntma: p.ntma || [],
@@ -193,7 +192,6 @@ function docProblema(p) {
   // abreviada de la interfaz.
   return `<section class="doc-ps">
   <h3><span class="doc-cie">${esc(p.cie.join(' · '))}</span> ${esc(p.denominacionOficial || p.nombre)}</h3>
-  ${p.confirma ? `<p class="doc-confirma">${esc(p.confirma)}</p>` : ''}
   ${p.denominacionOficial && p.denominacionOficial !== p.nombre ? `<p class="doc-fuente">En la ruta guiada aparece como «${esc(p.nombre)}».</p>` : ''}
   ${etapas}${post}${ntma}
   <p class="doc-fuente">Fuente: ${esc(p.fuente)}</p>

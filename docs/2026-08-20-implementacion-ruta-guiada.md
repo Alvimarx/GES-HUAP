@@ -409,3 +409,60 @@ pregunte ni el momento del paciente ni si está en urgencia o piso.
 - El campo `confirma` de los otros 13 problemas queda vacío a propósito: se
   llena solo con fuente (NTMA por problema, ya transcrita en
   `docs/2026-08-09-ntma-especificaciones-14-problemas-huap.md`).
+
+---
+
+## 14. Segunda pasada del rediseño — 2026-08-25
+
+Tres correcciones del usuario sobre la versión del 23-08.
+
+### 1. Fuera la pista de «cómo confirmar»
+
+«Debería yo saber cómo confirmo la patología». El campo `confirma` que se había
+agregado a `problemas.json` (en IAM: ECG + troponinas) **se retiró**: la página
+es apoyo administrativo, no recuerda medicina a quien la ejerce. La pregunta
+«¿Ya está confirmado el diagnóstico?» se mantiene tal cual.
+
+### 2. La lista era demasiado larga
+
+Pasó de **11 elementos en tres grupos** a **3 pasos numerados**, y la página de
+5.774 px a 1.611 px de alto — un 72 % menos.
+
+Cómo se logró sin perder ninguna garantía:
+
+- **Redacción breve.** `content/` gana los campos `breve` y `d_breve`. La ruta
+  guiada usa esos; **`t` y `d` siguen intactos y son los que salen impresos**.
+  `tools/behavior.js` comprueba las dos cosas por separado: que la ruta guiada
+  muestre lo breve y que el documento lineal conserve el texto completo.
+- **La pantalla responde un solo momento:** qué debe tener el paciente *antes de
+  pasar a hospitalización*. Hospitalización, alta y seguimiento pasaron a la
+  sección plegada «Y después», con sus plazos.
+- **Las advertencias salieron de la lista.** «El responsable final es el médico
+  tratante» y «En HUAP no se usa el DAU» no son pasos a ejecutar: se marcan con
+  `nota: true` en `content/` y se muestran al pie, en texto menor.
+- **Primero los documentos, después lo del problema.** El orden se invirtió: la
+  pantalla contesta «qué debe quedar teniendo», y eso son IPD y Constancia.
+
+### 3. Fuera las casillas
+
+Se eliminaron por completo, con ellas el `sessionStorage`, el contador «n de m
+listas» y el borrado al cambiar de problema. La lista se lee, no se administra.
+Efecto lateral bueno: desaparece el estado compartido en un equipo de box.
+
+### Más movimiento
+
+- **Tallo que se dibuja**: la línea que une los pasos crece de arriba abajo
+  (`scaleY`, 0,75 s) y cada número aparece con rebote cuando el trazo lo alcanza.
+- **Pasos que entran desde la izquierda**, escalonados cada 130 ms.
+- **El «+» de cada panel gira 135° hasta la «×»** al abrirse, y el contenido
+  desplegado entra con su propia animación.
+- Se conservan el FLIP de la tarjeta elegida y el desvanecimiento de la lista.
+- Todo se anula con `prefers-reduced-motion`; se verificó que ningún paso quede
+  invisible cuando las animaciones no corren.
+
+### Verificación
+
+302 comprobaciones correctas (ruta guiada + documento lineal), buscador 48/48,
+impresión A4 14 páginas y carta 15 con el pie en todas, y sin errores de consola
+ni desplazamiento horizontal en 320, 390 y 1280 px, con y sin movimiento
+reducido.
