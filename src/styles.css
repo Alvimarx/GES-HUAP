@@ -74,8 +74,32 @@ input { font-family: 'Nunito', system-ui, sans-serif; }
 .paso-d { display: block; font-size: 12.5px; font-weight: 600; color: #5A6B8C; line-height: 1.45; margin-top: 3px; }
 .pasos-anim .paso { animation: entraIzq .4s cubic-bezier(.2, .7, .3, 1) both; }
 
+/* --- Banda «Debe tener» ----------------------------------------------------
+   Lo primero que ve el médico al abrir un problema: con qué se confirma esa
+   patología. Solo se dibuja cuando `confirma` tiene fuente primaria; para los
+   cinco problemas en que ninguna fuente lo dice, la banda no existe. Lleva la
+   fuente a la vista porque es criterio clínico de la canasta (CLAUDE.md §1.4). */
+.confirma {
+  margin: 10px 4px 4px; background: #0C2B5E; color: #fff;
+  border-radius: 16px; padding: 14px 16px;
+}
+.confirma-t {
+  display: block; font-size: 11px; font-weight: 900; letter-spacing: .12em;
+  text-transform: uppercase; color: #9FE8CC; margin-bottom: 4px;
+}
+.confirma-d { display: block; font-size: 15px; font-weight: 800; line-height: 1.35; }
+.confirma-f { display: block; font-size: 11px; font-weight: 700; opacity: .7; margin-top: 6px; }
+
+/* Lo propio de cada patología: no es un trámite más, va sin numerar. */
+.propias { margin: 4px 4px 0; background: #fff; border: 1.5px solid #D9E5F3; border-radius: 16px; padding: 12px 14px; }
+.propias-t { font-size: 11px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #5A6B8C; margin-bottom: 8px; }
+.propias-i { border-left: 3px solid #C9F2E3; padding-left: 10px; }
+.propias-i + .propias-i { margin-top: 8px; }
+.propias-i strong { display: block; font-size: 14px; font-weight: 800; color: #0C2B5E; line-height: 1.3; }
+.propias-i span { display: block; font-size: 12.5px; font-weight: 600; color: #5A6B8C; line-height: 1.45; margin-top: 2px; }
+
 /* Advertencias de responsabilidad: no son pasos a ejecutar. */
-.notas { margin: 2px 4px 0; display: flex; flex-direction: column; gap: 6px; }
+.notas { margin: 10px 4px 0; display: flex; flex-direction: column; gap: 6px; }
 .nota-i { font-size: 12px; font-weight: 600; color: #5A6B8C; line-height: 1.45; }
 .nota-i strong { color: #0C2B5E; font-weight: 800; }
 
@@ -154,6 +178,7 @@ html:not(.js) #app { display: none; }
 .doc-warn { background: #FCE3EA; border-radius: 10px; padding: 8px 10px; font-size: 12px; font-weight: 700; }
 .doc-post { background: #EDF2F9; border: 1.5px solid #D9E5F3; border-radius: 12px; padding: 10px 12px; font-size: 12.5px; }
 .doc-fuente { font-size: 11px; font-weight: 600; color: #5A6B8C; }
+.doc-confirma { background: #EDF2F9; border-left: 3px solid #C9F2E3; padding: 8px 10px; border-radius: 0 10px 10px 0; font-size: 12.5px; }
 .doc-casos dt { font-weight: 800; color: #0C2B5E; margin-top: 8px; }
 .doc-casos dd { margin: 2px 0 0; font-size: 12.5px; }
 

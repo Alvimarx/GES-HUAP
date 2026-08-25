@@ -466,3 +466,69 @@ Efecto lateral bueno: desaparece el estado compartido en un equipo de box.
 impresión A4 14 páginas y carta 15 con el pie en todas, y sin errores de consola
 ni desplazamiento horizontal en 320, 390 y 1280 px, con y sin movimiento
 reducido.
+
+---
+
+## 15. Tercera pasada — 2026-08-25 · fuera la pregunta, entra «Debe tener»
+
+### La pregunta desapareció
+
+El flujo quedó en **dos pasos**: problema → resultado. La pregunta «¿Ya está
+confirmado el diagnóstico?» se eliminó junto con el objeto `gate` de
+`content/`. La pantalla de resultado ya no tiene ramas: muestra siempre lo que
+el paciente debe tener antes de pasar a hospitalización, y los plazos de
+sospecha y confirmación juntos, que es lo que corre en ese momento.
+
+### La banda «Debe tener»
+
+Ocupa el lugar que antes tenía el subtítulo, en azul oscuro sobre el que
+resalta la etiqueta menta. Dice **con qué se confirma esa patología** y **cita
+su fuente a la vista**, porque es criterio clínico de la canasta GES.
+
+| PS | Debe tener | Fuente |
+|----|-----------|--------|
+| 5 IAM | ECG dentro de 30 min desde la primera atención clínica, y biomarcadores | NTMA 5.1 |
+| 18 VIH | Test instrumental, o visual reactivo: muestra en el centro y envío al ISP | NTMA 18.1 |
+| 26 Colecistectomía | Ecotomografía abdominal a todo sintomático de 35–49 años (+ equivalencias de «síntomas actuales») | NTMA 26.1 |
+| 36 Ayudas técnicas | Indicación médica por limitación funcional | NTMA 36.1 |
+| 42 HSA | TAC dentro de 24 h desde la sospecha | Ficha PS 42 (DS 29/2025) |
+| 44 HNP | Ciática radicular compresiva sin respuesta a 6 semanas de tratamiento conservador, o compromiso progresivo | NTMA 44.1 |
+| 49 TEC | Glasgow: moderado 13–14 o 15 con factor de riesgo; grave <13 | NTMA 49.1 |
+| 55 Gran quemado | Clasificación de Garcés/Artigas | NTMA 55.1 |
+| 86 Agresión sexual | Con la atención médica, dentro de 72 h y sin peritaje previo | NTMA 86.1, mod. D.E. 32/2026 |
+
+**Cinco problemas quedaron sin banda: 6, 25, 37, 48 y 50.** Ninguna fuente de la
+carpeta dice con qué se confirman —la NTMA no trae especificaciones de
+diagnóstico para ellos y la ficha del decreto solo dice «confirmación
+diagnóstica» sin método; en el PS 50 la NTMA declara expresamente que no
+requiere definiciones adicionales—. **No se inventó nada** (CLAUDE.md §1.1): la
+banda simplemente no se dibuja, el motivo por problema queda escrito en el
+`_meta` de `problemas.json`, y el build lo recuerda en cada ejecución.
+
+### Estructura del resultado
+
+Los **cuatro pasos numerados son ahora los mismos en los 14 problemas** —activar
+el caso y los tres documentos—, así la pantalla no cambia de largo según la
+patología. Lo propio de cada una bajó a un bloque «Propio de X», sin numerar.
+
+**Cinco acciones se fusionaron en la banda** (PS 5, 18, 26, 49 y 86): decían
+exactamente lo que la banda dice. Antes de retirarlas, el detalle que traían y
+la banda no —las equivalencias de «síntomas actuales» del PS 26, la observación
+del Glasgow 15 del PS 49, la toma de muestra del PS 18— se incorporó al texto de
+la banda. Nada se perdió, y `tools/behavior.js` lo comprueba: la banda con su
+fuente debe aparecer tanto en la ruta guiada como en el documento impreso.
+
+### Verificación
+
+323 comprobaciones correctas, buscador 48/48, impresión A4 14 páginas y carta 15,
+sin errores de consola ni desplazamiento horizontal en 320/390/1280 px, con y sin
+movimiento reducido. Alto de la pantalla de IAM: 2.009 px (antes de esta pasada,
+1.611 px sin los plazos de sospecha; antes del rediseño, 5.774 px).
+
+### Lo que queda abierto
+
+- **Con qué se confirman los PS 6, 25, 37, 48 y 50** — es la pregunta directa
+  que hay que hacerle a la Unidad GES.
+- La NTMA dice «biomarcadores» y no «troponinas». La banda usa la palabra de la
+  norma: acotarla a troponinas dejaría fuera otros biomarcadores válidos. Si la
+  unidad prefiere nombrar la troponina, es cambio de una línea en `content/`.

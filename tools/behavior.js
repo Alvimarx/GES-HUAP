@@ -1,7 +1,7 @@
 // Cobertura de contenido. Comprueba dos cosas distintas:
 //
-//   1. La RUTA GUIADA muestra, en la rama que corresponde, cada acción y cada
-//      plazo que `content/` declara — con su redacción breve (`breve`) cuando
+//   1. La RUTA GUIADA muestra cada acción, cada plazo y cada banda «Debe
+//      tener» que `content/` declara — con su redacción breve (`breve`) cuando
 //      la tiene. Nada puede quedar sin camino: lo del momento actual va en la
 //      lista numerada, lo posterior en la sección plegada «Y después».
 //   2. El DOCUMENTO LINEAL (#doc, lo que se imprime y lo que se ve sin
@@ -29,24 +29,19 @@ const porPs = (arr) => Object.fromEntries(arr.map((x) => [x.ps, x]));
 const intraMap = porPs(intra);
 const altaMap = porPs(alta);
 
-// Espejo de la composición de src/app.js. Si allá cambia qué etapa va en qué
-// rama, aquí también — es lo que hace que esta herramienta sirva de red.
-const ETAPAS = {
-  si: ['confirmacion', 'hospitalizacion', 'alta', 'seguimiento'],
-  no: ['sospecha']
-};
+// Espejo de la composición de src/app.js. Desde el 2026-08-25 la ruta guiada
+// tiene una sola pantalla de resultado y muestra las cinco etapas: las dos del
+// momento actual arriba y las tres siguientes en la sección plegada.
+const ETAPAS = ['sospecha', 'confirmacion', 'hospitalizacion', 'alta', 'seguimiento'];
 
-function esperado(p, resp) {
+function esperado(p) {
   const plazos = [...((intraMap[p.ps] || {}).plazos || []), ...((altaMap[p.ps] || {}).plazos || [])];
   const acciones = [];
-  for (const e of ETAPAS[resp]) {
+  for (const e of ETAPAS) {
     for (const a of flujo.acciones_comunes[e] || []) acciones.push(a.breve || a.t);
     for (const a of (p.extras || {})[e] || []) acciones.push(a.breve || a.t);
   }
-  return {
-    acciones,
-    plazos: plazos.filter((z) => ETAPAS[resp].includes(z.etapa)).map((z) => z.hito)
-  };
+  return { acciones, plazos: plazos.map((z) => z.hito) };
 }
 
 // Todo el texto largo que el documento lineal debe seguir diciendo.
@@ -74,36 +69,34 @@ function textoCompleto() {
 
   // ---- 1. ruta guiada
   for (const p of problemas) {
-    for (const resp of ['si', 'no']) {
-      // La animación de salida usa un temporizador: se espera al selector.
-      await page.click('[data-k="ps-' + p.ps + '"]');
-      await page.waitForSelector('[data-k="resp-' + resp + '"]', { timeout: 5000 });
-      await page.click('[data-k="resp-' + resp + '"]');
-      await page.waitForSelector('[data-k="back-gate"]', { timeout: 5000 });
-
-      // La sección «Y después» solo existe en la rama confirmada.
-      if (resp === 'si' && (await page.$('[data-k="t-luego"]'))) {
-        await page.click('[data-k="t-luego"]');
-        await page.waitForSelector('#panel-luego', { timeout: 5000 });
-      }
-      const texto = await page.evaluate(() =>
-        (document.getElementById('app').textContent || '').split(/[ \t\n\r]+/).join(' '));
-
-      const exp = esperado(p, resp);
-      for (const t of exp.acciones) {
-        checked++;
-        if (!texto.includes(t)) faltantes.push(`guiada · ps ${p.ps} · ${resp} · acción «${t}»`);
-      }
-      for (const h of exp.plazos) {
-        checked++;
-        if (!texto.includes(h)) faltantes.push(`guiada · ps ${p.ps} · ${resp} · plazo «${h}»`);
-      }
-
-      await page.click('[data-k="back-gate"]');
-      await page.waitForSelector('[data-k="cambiar"]', { timeout: 5000 });
-      await page.click('[data-k="cambiar"]');
-      await page.waitForSelector('#buscador', { timeout: 5000 });
+    // La animación de salida usa un temporizador: se espera al selector.
+    await page.click('[data-k="ps-' + p.ps + '"]');
+    await page.waitForSelector('[data-k="back-lista"]', { timeout: 5000 });
+    if (await page.$('[data-k="t-luego"]')) {
+      await page.click('[data-k="t-luego"]');
+      await page.waitForSelector('#panel-luego', { timeout: 5000 });
     }
+    const texto = await page.evaluate(() =>
+      (document.getElementById('app').textContent || '').split(/[ \t\n\r]+/).join(' '));
+
+    const exp = esperado(p);
+    for (const t of exp.acciones) {
+      checked++;
+      if (!texto.includes(t)) faltantes.push(`guiada · ps ${p.ps} · acción «${t}»`);
+    }
+    for (const h of exp.plazos) {
+      checked++;
+      if (!texto.includes(h)) faltantes.push(`guiada · ps ${p.ps} · plazo «${h}»`);
+    }
+    // La banda «Debe tener», donde exista, con su fuente a la vista.
+    if (p.confirma) {
+      checked += 2;
+      if (!texto.includes(p.confirma.texto)) faltantes.push(`guiada · ps ${p.ps} · falta la banda «Debe tener»`);
+      if (!texto.includes(p.confirma.fuente)) faltantes.push(`guiada · ps ${p.ps} · la banda no cita su fuente`);
+    }
+
+    await page.click('[data-k="back-lista"]');
+    await page.waitForSelector('#buscador', { timeout: 5000 });
   }
 
   // ---- 2. documento lineal: el texto largo sigue entero
@@ -113,6 +106,12 @@ function textoCompleto() {
     checked++;
     if (!doc.includes(t)) faltantes.push(`documento lineal · falta el texto completo «${t.slice(0, 60)}…»`);
   }
+  // La confirmación también tiene que estar en el papel, con su fuente.
+  for (const p of problemas.filter((x) => x.confirma)) {
+    checked += 2;
+    if (!doc.includes(p.confirma.texto)) faltantes.push(`documento lineal · ps ${p.ps} · falta «Debe tener»`);
+    if (!doc.includes(p.confirma.fuente)) faltantes.push(`documento lineal · ps ${p.ps} · «Debe tener» sin fuente`);
+  }
 
   await browser.close();
   if (faltantes.length) {
@@ -120,6 +119,6 @@ function textoCompleto() {
     for (const f of faltantes) console.error('   · ' + f);
     process.exit(1);
   }
-  console.log(`✓ ${checked} comprobaciones correctas: la ruta guiada muestra todo lo de content/ en las 28 vistas`);
-  console.log('  (14 problemas × 2 respuestas) y el documento lineal conserva el texto completo.');
+  console.log(`✓ ${checked} comprobaciones correctas: la ruta guiada muestra todo lo de content/ en las 14 vistas`);
+  console.log('  (una por problema, con «Y después» desplegado) y el documento lineal conserva el texto completo.');
 })();

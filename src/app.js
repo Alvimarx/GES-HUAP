@@ -4,13 +4,10 @@
  * que se ve sin JavaScript y lo que sale al imprimir. Este archivo agrega
  * encima la ruta guiada (#app).
  *
- * Flujo: problema → «¿Diagnóstico confirmado?» → resultado.
- *
- * El resultado responde una sola pregunta y la responde corta: qué debe tener
- * el paciente ANTES de pasar a hospitalización. Tres pasos numerados, sin
- * casillas que marcar —se quitaron el 2026-08-25: la página se lee de pie, en
- * un pasillo, y marcar era trabajo que no aportaba—, con lo demás (durante la
- * hospitalización, al alta, después del alta) plegado más abajo.
+ * Flujo: problema → resultado. Dos pasos. La pregunta «¿está confirmado?»
+ * se eliminó el 2026-08-25: el médico sabe si confirmó o no, y lo que sí
+ * necesita —con qué se confirma esta patología— pasó a ser lo primero que ve
+ * en el resultado (campo `confirma`, con fuente NTMA o del decreto).
  *
  * El movimiento es parte del diseño: la tarjeta elegida sube (FLIP), el tallo
  * de la lista se dibuja solo, los números aparecen con rebote y las tarjetas
@@ -76,7 +73,7 @@
 
   // ---------------------------------------------------------------- estado
   var S = {
-    view: 'problema', q: '', ps: null, resp: null,
+    view: 'problema', q: '', ps: null,
     calc: {}, showAyuda: false, showNtma: false, showLuego: false,
     // `anim` vale true solo en el primer dibujado tras cambiar de pantalla:
     // la cascada no debe repetirse al abrir un panel.
@@ -121,19 +118,50 @@
   // Primero lo común, después lo propio del problema: la pantalla responde
   // «qué debe quedar teniendo el paciente», y eso son los documentos. Lo
   // específico del problema va detrás, no delante.
+  function fmtAccion(a) {
+    return { t: a.breve || a.t, d: a.d_breve || a.d, nota: !!a.nota };
+  }
+
   function accionesDe(sel, etapaId) {
     var comunes = D.acciones_comunes[etapaId] || [];
     var extras = (sel.extras && sel.extras[etapaId]) || [];
-    return comunes.concat(extras).map(function (a) {
-      return { t: a.breve || a.t, d: a.d_breve || a.d, nota: !!a.nota };
-    });
+    return comunes.concat(extras).map(fmtAccion);
   }
 
-  function pasosDe(sel, etapaId) {
-    return accionesDe(sel, etapaId).filter(function (a) { return !a.nota; });
+  // Los pasos numerados son SIEMPRE los mismos cuatro trámites —activar el
+  // caso y los tres documentos—, para que la pantalla tenga el mismo largo en
+  // los 14 problemas. Lo propio de cada patología va aparte, sin numerar.
+  var MOMENTO = ['sospecha', 'confirmacion'];
+
+  function pasosDe(sel) {
+    var out = [];
+    for (var i = 0; i < MOMENTO.length; i++) {
+      var accs = D.acciones_comunes[MOMENTO[i]] || [];
+      for (var j = 0; j < accs.length; j++) {
+        if (!accs[j].nota) out.push(fmtAccion(accs[j]));
+      }
+    }
+    return out;
   }
-  function notasDe(sel, etapaId) {
-    return accionesDe(sel, etapaId).filter(function (a) { return a.nota; });
+
+  function propiasDe(sel) {
+    var out = [];
+    for (var i = 0; i < MOMENTO.length; i++) {
+      var ex = (sel.extras && sel.extras[MOMENTO[i]]) || [];
+      for (var j = 0; j < ex.length; j++) out.push(fmtAccion(ex[j]));
+    }
+    return out;
+  }
+
+  function notasDe(sel) {
+    var out = [];
+    for (var i = 0; i < MOMENTO.length; i++) {
+      var accs = D.acciones_comunes[MOMENTO[i]] || [];
+      for (var j = 0; j < accs.length; j++) {
+        if (accs[j].nota) out.push(fmtAccion(accs[j]));
+      }
+    }
+    return out;
   }
 
   // Lo que viene después del momento que la pantalla responde. Va plegado: es
@@ -150,11 +178,11 @@
     return out;
   }
 
-  // Los plazos que corren en el momento que la pantalla responde. Los de
-  // hospitalización, alta y seguimiento van en la sección plegada.
-  function plazosDe(sel, resp) {
-    var et = resp === 'si' ? 'confirmacion' : 'sospecha';
-    return sel.plazos.filter(function (z) { return z.etapa === et; });
+  // Los plazos que corren en el momento que la pantalla responde.
+  function plazosDe(sel) {
+    return sel.plazos.filter(function (z) {
+      return z.etapa === 'sospecha' || z.etapa === 'confirmacion';
+    });
   }
 
   // ---------------------------------------------------------------- estilos
@@ -174,21 +202,10 @@
     aviso: 'margin-top:16px;background:#0C2B5E;color:#fff;border-radius:18px;padding:16px 18px',
     avisoT: 'font-size:15px;font-weight:900;margin-bottom:4px',
     avisoD: 'font-size:13px;font-weight:600;line-height:1.5;opacity:.92',
-    selBar: 'display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #D9E5F3;border-radius:16px;padding:12px 14px',
-    selCie: 'background:#C9F2E3;color:#0C2B5E;font-weight:900;font-size:12px;padding:5px 10px;border-radius:999px',
-    selName: 'flex:1;font-size:14px;font-weight:800',
-    cambiar: 'background:none;border:none;color:#0D5BD8;font-weight:800;font-size:12.5px;cursor:pointer;font-family:inherit;padding:4px',
-    h2b: 'margin:18px 4px 8px;font-size:19px;font-weight:900',
     col: 'display:flex;flex-direction:column;gap:8px',
-    confirma: 'margin:0 4px 10px;font-size:12.5px;font-weight:700;color:#3D5378;background:#fff;border:1.5px solid #D9E5F3;border-left:3px solid #C9F2E3;border-radius:12px;padding:10px 12px',
-    respBtn: 'display:flex;align-items:center;gap:12px;text-align:left;background:#fff;border:1.5px solid #D9E5F3;border-radius:16px;padding:16px 14px;cursor:pointer;font-family:inherit;min-height:64px',
-    respMark: 'flex:none;width:34px;height:34px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;',
-    respName: 'display:block;font-size:15.5px;font-weight:900;color:#0C2B5E',
-    respDesc: 'display:block;font-size:12.5px;font-weight:600;color:#5A6B8C;margin-top:2px',
     crumbs: 'display:flex;align-items:center;gap:8px;flex-wrap:wrap',
     back: 'background:#fff;border:1.5px solid #D9E5F3;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:800;color:#0D5BD8;cursor:pointer;font-family:inherit',
     chipSi: 'background:#C9F2E3;color:#0C2B5E;font-weight:900;font-size:12px;padding:6px 12px;border-radius:999px',
-    chipNo: 'background:#EDF2F9;border:1.5px solid #D9E5F3;color:#5A6B8C;font-weight:800;font-size:12px;padding:6px 12px;border-radius:999px',
     accTitle: 'font-size:19px;font-weight:900',
     subT: 'margin:0 4px 4px;font-size:12.5px;font-weight:700;color:#5A6B8C',
     plazosT: 'margin:20px 4px 8px;font-size:16px;font-weight:900',
@@ -229,7 +246,6 @@
       (critico ? 'background:#D02E63;color:#fff' : 'background:#0C2B5E;color:#fff');
   }
 
-  var TICK = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#0C2B5E" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"></path></svg>';
 
   // Entrada en cascada: cada tarjeta se retrasa un poco más que la anterior.
   // Solo en el primer dibujado de la pantalla (S.anim); el tope evita que las
@@ -352,60 +368,34 @@
       '</div>';
   }
 
-  function selBarHtml(sel) {
-    return '<div id="selbar" style="' + ST.selBar + '">' +
-      '<span style="' + ST.selCie + '">' + esc(sel.cie.join(' · ')) + '</span>' +
-      '<span class="flex-min" style="' + ST.selName + '">' + esc(sel.nombre) + '</span>' +
-      '<button type="button" data-k="cambiar" data-a="volver-problema" style="' + ST.cambiar + '">Cambiar</button>' +
-      '</div>';
-  }
-
-  // Pantalla 2 — la única pregunta: ¿diagnóstico confirmado?
-  function viewGate() {
-    var sel = problema();
-    var g = D.gate;
-    return '<div style="' + ST.pad + '">' +
-      selBarHtml(sel) +
-      '<h2 class="' + (S.anim ? 'anim-in' : '') + '" style="' + ST.h2b + ';animation-delay:120ms" id="paso-titulo" tabindex="-1">' + esc(g.pregunta) + '</h2>' +
-      (sel.confirma ? '<div class="' + (S.anim ? 'anim-in' : '') + '" style="' + ST.confirma + ';animation-delay:180ms">' + esc(sel.confirma) + '</div>' : '') +
-      '<div style="' + ST.col + '">' +
-        '<button type="button" class="card-int' + (S.anim ? ' anim-in' : '') + '" data-k="resp-si" data-a="resp" data-v="si" style="' + ST.respBtn + ';animation-delay:240ms">' +
-          '<span style="' + ST.respMark + 'background:#C9F2E3;color:#0C2B5E" aria-hidden="true">' + TICK + '</span>' +
-          '<span class="flex-min" style="flex:1">' +
-            '<span style="' + ST.respName + '">' + esc(g.si) + '</span>' +
-            '<span style="' + ST.respDesc + '">' + esc(g.si_desc) + '</span>' +
-          '</span>' +
-          '<span style="' + ST.caret + '" aria-hidden="true">›</span>' +
-        '</button>' +
-        '<button type="button" class="card-int' + (S.anim ? ' anim-in' : '') + '" data-k="resp-no" data-a="resp" data-v="no" style="' + ST.respBtn + ';animation-delay:320ms">' +
-          '<span style="' + ST.respMark + 'background:#EDF2F9;color:#5A6B8C" aria-hidden="true">?</span>' +
-          '<span class="flex-min" style="flex:1">' +
-            '<span style="' + ST.respName + '">' + esc(g.no) + '</span>' +
-            '<span style="' + ST.respDesc + '">' + esc(g.no_desc) + '</span>' +
-          '</span>' +
-          '<span style="' + ST.caret + '" aria-hidden="true">›</span>' +
-        '</button>' +
-      '</div>' +
-      '</div>';
-  }
-
   // Pantalla 3 — el resultado. Responde una pregunta y la responde corta:
   // qué debe tener el paciente ANTES de pasar a hospitalización (rama
   // confirmada) o qué hacer mientras se confirma (rama sospecha). Lo que
   // ocurre después va plegado.
   function viewResultado() {
     var sel = problema();
-    var confirmado = S.resp === 'si';
-    var etapaAhora = confirmado ? 'confirmacion' : 'sospecha';
-    var pasos = pasosDe(sel, etapaAhora);
-    var notas = notasDe(sel, etapaAhora);
+    var pasos = pasosDe(sel);
+    var propias = propiasDe(sel);
+    var notas = notasDe(sel);
+
+    // Lo primero que ve el médico: con qué se confirma esta patología. Solo
+    // aparece cuando hay fuente primaria; para cinco de los 14 problemas
+    // ninguna fuente lo dice y la banda se omite antes que inventarla
+    // (CLAUDE.md §1.1; el vacío queda anotado en problemas.json).
+    var confirmaHtml = sel.confirma && sel.confirma.texto
+      ? '<div class="confirma' + animCls() + '" style="' + animDelay() + '">' +
+          '<span class="confirma-t">Debe tener</span>' +
+          '<span class="confirma-d">' + esc(sel.confirma.texto) + '</span>' +
+          '<span class="confirma-f">' + esc(sel.confirma.fuente) + '</span>' +
+        '</div>'
+      : '';
 
     // Lista numerada con tallo: el tallo se dibuja de arriba abajo y cada
     // número aparece con rebote justo cuando el trazo lo alcanza.
     var pasosHtml = pasos.length
-      ? '<ol class="pasos' + (S.anim ? ' pasos-anim' : '') + '" style="--n:' + pasos.length + '">' +
+      ? '<ol class="pasos' + (S.anim ? ' pasos-anim' : '') + '">' +
         pasos.map(function (a, i) {
-          var d = 220 + i * 130;
+          var d = 260 + i * 130;
           return '<li class="paso' + animCls() + '" style="' + (S.anim ? 'animation-delay:' + d + 'ms;' : '') + '">' +
             '<span class="paso-n" style="' + (S.anim ? 'animation-delay:' + (d + 60) + 'ms' : '') + '" aria-hidden="true">' + (i + 1) + '</span>' +
             '<span class="paso-txt">' +
@@ -416,8 +406,22 @@
         }).join('') + '</ol>'
       : '';
 
+    var retraso = 260 + pasos.length * 130;
+
+    // Lo propio de la patología, sin numerar: no es un trámite más, es lo que
+    // cambia de un problema a otro.
+    var propiasHtml = propias.length
+      ? '<div class="propias' + animCls() + '" style="' + (S.anim ? 'animation-delay:' + retraso + 'ms' : '') + '">' +
+          '<div class="propias-t">Propio de ' + esc(sel.corto) + '</div>' +
+          propias.map(function (a) {
+            return '<div class="propias-i"><strong>' + esc(a.t) + '</strong>' +
+              (a.d ? '<span>' + esc(a.d) + '</span>' : '') + '</div>';
+          }).join('') +
+        '</div>'
+      : '';
+
     var notasHtml = notas.length
-      ? '<div class="notas' + animCls() + '" style="' + (S.anim ? 'animation-delay:' + (220 + pasos.length * 130) + 'ms' : '') + '">' +
+      ? '<div class="notas' + animCls() + '" style="' + (S.anim ? 'animation-delay:' + (retraso + 80) + 'ms' : '') + '">' +
         notas.map(function (a) {
           return '<div class="nota-i"><strong>' + esc(a.t) + '</strong> ' + esc(a.d) + '</div>';
         }).join('') + '</div>'
@@ -449,7 +453,7 @@
         '</div>';
     };
 
-    var plazos = plazosDe(sel, S.resp);
+    var plazos = plazosDe(sel);
     var plazosHtml = plazos.length
       ? '<h2 class="' + animCls() + '" style="' + animDelay() + ST.plazosT + '">Plazos que corren</h2>' +
         '<div style="' + ST.col + '">' + plazos.map(function (z) { return plazoCard(z, false); }).join('') + '</div>' +
@@ -460,7 +464,7 @@
     // compite con lo que hay que hacer ahora.
     var luego = gruposLuego(sel);
     var luegoHtml = '';
-    if (confirmado && luego.length) {
+    if (luego.length) {
       var cuerpo = luego.map(function (gr) {
         var pn = gr.etapa.id === 'seguimiento'
           ? (sel.postNota || (gr.plazos.length ? '' : (D.notaSinGarantiaPostAlta || ''))) : '';
@@ -478,11 +482,6 @@
         (S.showLuego ? '<div id="panel-luego" class="despliega" style="' + ST.panelBody + '">' + cuerpo + '</div>' : '') +
         '</div>';
     }
-
-    // Puente entre ramas: desde sospecha, el paso natural es confirmar.
-    var puente = !confirmado
-      ? '<div class="' + animCls() + '" style="' + animDelay() + ST.postNota + ';margin-top:16px">En cuanto confirme el diagnóstico, la notificación GES se hace en el mismo acto y con la misma fecha.</div>'
-      : '';
 
     var casosHtml = D.casos.map(function (c) {
       return '<div style="' + ST.caso + '">' +
@@ -515,20 +514,18 @@
 
     return '<div style="' + ST.pad + '">' +
       '<div class="' + animCls() + '" style="' + animDelay() + ST.crumbs + '">' +
-        '<button type="button" data-k="back-gate" data-a="volver-gate" style="' + ST.back + '">‹ ' + esc(sel.corto) + '</button>' +
-        (confirmado
-          ? '<span style="' + ST.chipSi + '">Diagnóstico confirmado</span>'
-          : '<span style="' + ST.chipNo + '">Sospecha — sin confirmar</span>') +
+        '<button type="button" data-k="back-lista" data-a="volver-problema" style="' + ST.back + '">‹ Cambiar problema</button>' +
+        '<span style="' + ST.chipSi + '">' + esc(sel.cie.join(' · ')) + '</span>' +
       '</div>' +
 
       '<h2 class="' + animCls() + '" style="' + animDelay() + ST.accTitle + ';margin:16px 4px 2px" id="paso-titulo" tabindex="-1">' +
-        (confirmado ? 'El paciente debe quedar con:' : 'Mientras confirma:') + '</h2>' +
-      '<div class="' + animCls() + '" style="' + animDelay() + ST.subT + '">' +
-        (confirmado ? 'Antes de que pase a hospitalización.' : 'Los plazos de diagnóstico ya corren.') + '</div>' +
+        esc(sel.nombre) + '</h2>' +
+      '<div class="' + animCls() + '" style="' + animDelay() + ST.subT + '">Antes de que el paciente pase a hospitalización.</div>' +
+      confirmaHtml +
       pasosHtml +
+      propiasHtml +
       notasHtml +
       plazosHtml +
-      puente +
       ayudaHtml +
       luegoHtml +
 
@@ -544,18 +541,15 @@
       '<div style="' + ST.fuente + '">Fuente: ' + esc(sel.fuente) + '</div>' +
 
       '<div style="' + ST.nav + '">' +
-        '<button type="button" data-k="nav-back" data-a="volver-gate" style="' + ST.navBack + '">‹ Pregunta</button>' +
-        (!confirmado
-          ? '<button type="button" class="btn-primary" data-k="nav-next" data-a="resp" data-v="si" style="' + ST.navNext + '">Ya está confirmado ›</button>'
-          : '') +
+        '<button type="button" data-k="nav-back" data-a="volver-problema" style="' + ST.navBack + '">‹ Elegir otro problema</button>' +
       '</div>' +
       '</div>';
   }
 
   // ---------------------------------------------------------------- render
   function render() {
-    var num = S.view === 'problema' ? '1' : S.view === 'gate' ? '2' : '3';
-    var titulo = S.view === 'problema' ? 'Problema de salud' : S.view === 'gate' ? 'Confirmación' : 'Sus acciones';
+    var num = S.view === 'problema' ? '1' : '2';
+    var titulo = S.view === 'problema' ? 'Problema de salud' : 'Sus acciones';
     animN = 0;
 
     // Se conserva el foco del teclado: sin esto, cada pulsación en el buscador
@@ -569,10 +563,10 @@
 
     app.innerHTML =
       '<div style="' + ST.step + '">' +
-        '<span style="' + ST.stepPill + '">Paso ' + num + ' de 3</span>' +
+        '<span style="' + ST.stepPill + '">Paso ' + num + ' de 2</span>' +
         '<span>' + esc(titulo) + '</span>' +
       '</div>' +
-      (S.view === 'problema' ? viewProblema() : S.view === 'gate' ? viewGate() : viewResultado());
+      (S.view === 'problema' ? viewProblema() : viewResultado());
 
     // Las animaciones de entrada corren una vez por pantalla.
     S.anim = false;
@@ -593,6 +587,15 @@
     if (anuncioEl) anuncioEl.textContent = msg;
   }
 
+  function anunciarResultado() {
+    var sel = problema();
+    if (!sel) return;
+    var n = pasosDe(sel).length;
+    anunciar(esc(sel.nombre) + '. ' +
+      (sel.confirma && sel.confirma.texto ? 'Debe tener: ' + sel.confirma.texto + ' ' : '') +
+      n + (n === 1 ? ' paso' : ' pasos') + ' antes de que el paciente pase a hospitalización.');
+  }
+
   // Al cambiar de paso, el foco va al título: quien navega con teclado o lector
   // de pantalla queda en el contenido nuevo, no al inicio de la página.
   function goto(view) {
@@ -608,7 +611,7 @@
   // (técnica FLIP): se mide dónde estaba, se dibuja la pantalla nueva, y la
   // barra parte desde la posición vieja y viaja a la suya.
   function subirTarjeta(desde) {
-    var barra = document.getElementById('selbar');
+    var barra = document.getElementById('paso-titulo');
     if (!barra || !desde) return;
     var hasta = barra.getBoundingClientRect();
     var dx = desde.left - hasta.left;
@@ -631,9 +634,12 @@
     // del anterior no deben sobrevivir.
     if (S.ps !== null && S.ps !== ps) { S.calc = {}; }
     S.ps = ps;
-    S.resp = null;
+    S.showAyuda = false;
+    S.showNtma = false;
+    S.showLuego = false;
     if (reducirMovimiento() || !btn) {
-      goto('gate');
+      goto('resultado');
+      anunciarResultado();
       return;
     }
     if (saliendo) return;
@@ -647,8 +653,9 @@
     btn.style.borderColor = '#0D5BD8';
     setTimeout(function () {
       saliendo = false;
-      goto('gate');
+      goto('resultado');
       subirTarjeta(desde);
+      anunciarResultado();
     }, 170);
   }
 
@@ -662,22 +669,7 @@
     if (a === 'pick-ps') {
       elegirProblema(+v, el);
     } else if (a === 'volver-problema') {
-      S.resp = null;
       goto('problema');
-    } else if (a === 'volver-gate') {
-      goto('gate');
-    } else if (a === 'resp') {
-      S.resp = v;
-      S.showAyuda = false;
-      S.showNtma = false;
-      S.showLuego = false;
-      goto('resultado');
-      var sel = problema();
-      if (sel) {
-        var n = pasosDe(sel, v === 'si' ? 'confirmacion' : 'sospecha').length;
-        anunciar((v === 'si' ? 'Diagnóstico confirmado. ' : 'Sospecha. ') +
-          n + (n === 1 ? ' paso' : ' pasos') + ' antes de que el paciente pase a hospitalización');
-      }
     } else if (a === 'toggle-luego') {
       S.showLuego = !S.showLuego;
       render();

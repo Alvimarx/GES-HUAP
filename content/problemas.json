@@ -4,7 +4,9 @@
     "campos": "`corto` es la etiqueta breve para chips y navegación · `tiempo` marca los problemas cuyo plazo se juega en minutos u horas · `extras` son acciones propias del problema, por momento · `ntma` son los criterios resumidos de la Norma Técnica. · `denominacion_oficial` es la redacción del decreto: se usa en el documento impreso y en el buscador; `nombre` es la etiqueta abreviada de la interfaz. · `sinonimos` es el índice del buscador: alias con los que un médico puede escribir el problema (siglas, nombre corriente, palabras clave). NO es contenido normativo y la unidad puede ampliarlo libremente. · `extras[etapa][].breve` y `.d_breve` son la redacción corta para la ruta guiada; `t` y `d` siguen siendo el texto completo del documento impreso.",
     "estado_validacion": "Mapeo y plazos revalidados contra las fichas de auge.minsal.cl (DS 29/2025) el 30-07-2026; transcripción NTMA del 09-08-2026. Pendiente de validación por la Unidad GES — no publicar.",
     "advertencia_exhaustividad": "El afiche de origen (CODIGOS SINA.jpg) no tiene fecha ni versión. Está pendiente confirmar con la unidad si estos 14 problemas son todos los que corresponden a HUAP.",
-    "fecha": "2026-08-20"
+    "fecha": "2026-08-20",
+    "campo_confirma": "`confirma` responde «¿con qué se confirma esta patología?» y es lo primero que ve el médico en la ruta guiada. Es criterio clínico de la canasta GES: SOLO se llena con fuente primaria (NTMA o ficha del decreto) y se cita en `confirma.fuente`. NUNCA completar por analogía ni por conocimiento general (CLAUDE.md §1.1): un criterio inventado o acotado de más deja fuera a un paciente que sí es GES. La banda absorbió el texto de cinco acciones de `extras.sospecha` que decían exactamente lo mismo (PS 5, 18, 26, 49 y 86): se retiraron de `extras` y su contenido está íntegro en `confirma.texto`, que se muestra tanto en la ruta guiada como en el documento impreso.",
+    "confirma_sin_fuente": "Cinco problemas quedan SIN `confirma` porque ninguna fuente de la carpeta dice con qué se confirman: PS 6: La NTMA no trae especificaciones de diagnóstico para el PS 6; la ficha del decreto solo dice «confirmación diagnóstica» y «exámenes alterados», sin decir cuáles. · PS 25: La NTMA 25.1 solo especifica el tratamiento; la ficha del decreto dice «confirmación diagnóstica» sin método. · PS 37: Ni la NTMA 37 ni la ficha del decreto dicen con qué se confirma el ACV isquémico: la ficha solo fija el plazo de 24 h. · PS 48: No hay especificación de diagnóstico: la garantía parte en el tratamiento, 24 h desde el rescate. · PS 50: La NTMA declara expresamente que este problema «no requiere especificaciones técnicas y/o definiciones adicionales». — Pendiente de resolver con la Unidad GES; hasta entonces la ruta guiada no muestra la banda para ellos."
   },
   "problemas": [
     {
@@ -28,15 +30,11 @@
         "síndrome coronario agudo"
       ],
       "tiempo": true,
+      "confirma": {
+        "texto": "ECG dentro de 30 minutos desde la primera atención clínica, y biomarcadores.",
+        "fuente": "NTMA 5.1"
+      },
       "extras": {
-        "sospecha": [
-          {
-            "t": "Tome ECG y biomarcadores ahora",
-            "d": "La confirmación incluye ECG dentro de 30 min desde la primera atención clínica y biomarcadores (NTMA 5.1).",
-            "breve": "ECG y biomarcadores ahora",
-            "d_breve": "ECG dentro de 30 min desde la primera atención clínica (NTMA 5.1)."
-          }
-        ],
         "confirmacion": [
           {
             "t": "Evalúe trombólisis si hay supradesnivel ST",
@@ -106,13 +104,11 @@
         "ISP"
       ],
       "tiempo": false,
+      "confirma": {
+        "texto": "Test instrumental, o test visual reactivo: se toma la muestra en el centro de salud y se envía a confirmación al ISP.",
+        "fuente": "NTMA 18.1"
+      },
       "extras": {
-        "sospecha": [
-          {
-            "t": "Toda muestra reactiva va al ISP",
-            "d": "Test instrumental o visual reactivo → toma de muestra en el centro y envío a confirmación al ISP."
-          }
-        ],
         "confirmacion": [
           {
             "t": "TAR también con sospecha clínica fundada",
@@ -170,13 +166,11 @@
         "ecotomografía"
       ],
       "tiempo": false,
+      "confirma": {
+        "texto": "Ecotomografía abdominal, a todo paciente con síntomas de 35 a 49 años. Equivalen a síntomas actuales: cólico biliar previo, colecistitis crónica no operada, o ecotomografía previa compatible con colelitiasis.",
+        "fuente": "NTMA 26.1"
+      },
       "extras": {
-        "sospecha": [
-          {
-            "t": "Personas de 35 a 49 años con síntomas",
-            "d": "La ecotomografía garantizada se realiza a todo paciente con síntomas. Equivalen a síntomas actuales: cólico biliar previo, colecistitis crónica no operada o eco previa con colelitiasis (NTMA 26.1)."
-          }
-        ],
         "confirmacion": [
           {
             "t": "Derive a cirujano/a",
@@ -208,6 +202,10 @@
         "antiescaras"
       ],
       "tiempo": false,
+      "confirma": {
+        "texto": "Indicación médica por limitación funcional para desplazarse o dificultad para realizar actividades de la vida diaria.",
+        "fuente": "NTMA 36.1"
+      },
       "extras": {
         "sospecha": [
           {
@@ -301,6 +299,10 @@
         "antiescaras"
       ],
       "tiempo": true,
+      "confirma": {
+        "texto": "TAC dentro de 24 horas desde la sospecha.",
+        "fuente": "Ficha PS 42 auge.minsal.cl (DS 29/2025)"
+      },
       "extras": {
         "seguimiento": [
           {
@@ -332,6 +334,10 @@
         "radicular"
       ],
       "tiempo": false,
+      "confirma": {
+        "texto": "Ciática radicular compresiva que no responde a tratamiento conservador después de 6 semanas, o con compromiso progresivo.",
+        "fuente": "NTMA 44.1"
+      },
       "extras": {
         "confirmacion": [
           {
@@ -392,14 +398,11 @@
         "Glasgow"
       ],
       "tiempo": true,
-      "extras": {
-        "sospecha": [
-          {
-            "t": "Clasifique con Glasgow",
-            "d": "Moderado: GCS 13–14, o GCS 15 con ≥1 factor de riesgo. Grave: GCS <13. Con GCS 15 sin factores, mantenga en observación: el TEC es evolutivo (NTMA 49.1)."
-          }
-        ]
+      "confirma": {
+        "texto": "Escala de Glasgow: moderado, 13–14 o bien 15 con al menos un factor de riesgo; grave, menor a 13. Con Glasgow 15 sin factores de riesgo, mantenga en observación: el TEC es evolutivo.",
+        "fuente": "NTMA 49.1"
       },
+      "extras": {},
       "ntma": [
         "TEC moderado: GCS 13–14, o GCS 15 con al menos un factor de riesgo. TEC grave: GCS <13. Observación aunque GCS 15 sin factores."
       ],
@@ -444,11 +447,17 @@
         "grave"
       ],
       "tiempo": true,
+      "confirma": {
+        "texto": "Clasificación de Garcés/Artigas: grave, crítico o sobrevida excepcional.",
+        "fuente": "NTMA 55.1"
+      },
       "extras": {
         "sospecha": [
           {
             "t": "Sin garantía de diagnóstico: las garantías parten en el tratamiento",
-            "d": "Clasifique con Garcés/Artigas (grave, crítico, sobrevida excepcional)."
+            "d": "Clasifique con Garcés/Artigas (grave, crítico, sobrevida excepcional).",
+            "breve": "Sin garantía de diagnóstico",
+            "d_breve": "Las garantías de este problema parten en el tratamiento."
           }
         ],
         "hospitalizacion": [
@@ -481,12 +490,12 @@
         "profilaxis"
       ],
       "tiempo": true,
+      "confirma": {
+        "texto": "Con la atención médica, dentro de 72 horas desde el episodio y sin peritaje previo.",
+        "fuente": "NTMA 86.1, mod. D.E. N°32/2026"
+      },
       "extras": {
         "sospecha": [
-          {
-            "t": "Ventana de acceso: hasta 72 horas desde el episodio",
-            "d": "Sin necesidad de peritaje previo (D.E. N°32/2026). La confirmación diagnóstica se realiza con la atención médica."
-          },
           {
             "t": "La denuncia es obligatoria para todo el equipo clínico",
             "d": "Norma General Técnica de atención a víctimas de violencia sexual (2016)."

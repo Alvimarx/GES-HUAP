@@ -59,6 +59,7 @@ const problemas = problemasSrc.problemas.map((p) => {
     corto: p.corto,
     sinonimos: p.sinonimos || [],
     tiempo: p.tiempo,
+    confirma: p.confirma || null,
     plazos: [...((i && i.plazos) || []), ...((a && a.plazos) || [])],
     extras: p.extras || {},
     ntma: p.ntma || [],
@@ -112,10 +113,14 @@ for (const etapa of Object.keys(flujo.acciones_comunes)) {
     errores.push(`flujo-notificacion.json: la etapa «${etapa}» de acciones_comunes no existe`);
   }
 }
-for (const campo of ['pregunta', 'si', 'si_desc', 'no', 'no_desc']) {
-  if (!flujo.gate || !flujo.gate[campo]) {
-    errores.push(`flujo-notificacion.json: falta gate.${campo} — la pregunta de confirmación quedaría vacía`);
-  }
+// `confirma` es criterio clínico de la canasta GES: si se publica, se publica
+// con fuente. Es opcional —cinco problemas no la tienen documentada— pero a
+// medias no puede quedar (CLAUDE.md §1.1 y §1.4).
+for (const p of problemasSrc.problemas) {
+  const c = p.confirma;
+  if (!c) continue;
+  if (!c.texto) errores.push(`problemas.json · ps ${p.ps}: confirma sin texto`);
+  if (!c.fuente) errores.push(`problemas.json · ps ${p.ps}: confirma «${c.texto}» sin fuente citada`);
 }
 const sinPlazos = problemas.filter((p) => !p.plazos.length);
 if (sinPlazos.length) errores.push('Problemas sin ningún plazo: ' + sinPlazos.map((p) => p.ps).join(', '));
@@ -134,7 +139,6 @@ const runtime = {
     anexos: contactos.unidad_ges.anexos,
     horario: contactos.unidad_ges.horario
   },
-  gate: flujo.gate,
   etapas: flujo.etapas,
   acciones_comunes: flujo.acciones_comunes,
   casos: flujo.casos,
@@ -190,8 +194,12 @@ function docProblema(p) {
     : '';
   // El documento de consulta lleva la redacción del decreto, no la etiqueta
   // abreviada de la interfaz.
+  const conf = p.confirma
+    ? `<p class="doc-confirma"><strong>Debe tener:</strong> ${esc(p.confirma.texto)} <em>(${esc(p.confirma.fuente)})</em></p>`
+    : '';
   return `<section class="doc-ps">
   <h3><span class="doc-cie">${esc(p.cie.join(' · '))}</span> ${esc(p.denominacionOficial || p.nombre)}</h3>
+  ${conf}
   ${p.denominacionOficial && p.denominacionOficial !== p.nombre ? `<p class="doc-fuente">En la ruta guiada aparece como «${esc(p.nombre)}».</p>` : ''}
   ${etapas}${post}${ntma}
   <p class="doc-fuente">Fuente: ${esc(p.fuente)}</p>
@@ -361,6 +369,11 @@ if (enContent.length) {
 if (sinRespaldo.length) {
   console.log(`\ncontenido publicado SIN respaldo documental — confirmar o retirar antes de publicar:`);
   for (const x of sinRespaldo) console.log(`  · ${x}`);
+}
+const sinConfirma = problemasSrc.problemas.filter((p) => !p.confirma).map((p) => p.ps);
+if (sinConfirma.length) {
+  console.log(`\nproblemas SIN «con qué se confirma» documentado (la banda no se dibuja): ${sinConfirma.join(', ')}`);
+  console.log('  Ninguna fuente de la carpeta lo dice. Resolver con la Unidad GES; ver _meta de problemas.json.');
 }
 if (noValidados.length) {
   console.log(`\ncontenido marcado como pendiente de validación por la Unidad GES: ${noValidados.join(', ')}`);

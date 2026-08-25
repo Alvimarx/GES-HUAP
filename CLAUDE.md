@@ -667,6 +667,11 @@ No usar ninguno de estos datos hasta confirmarlos. Al confirmarse, moverlos a §
 - [ ] Si las Circulares IF/N° 516 y 517 (11-2025) modifican el proceso de notificación de la IF/N° 469, cuyo
       contenido operativo está en §5.4. La unidad trabaja con la 469.
 - [ ] Estado de la publicación íntegra del decreto ordenada por Contraloría.
+- [ ] **Con qué se confirma el diagnóstico en los PS 6 (DM1), 25 (marcapaso), 37 (ACV isquémico), 48
+      (politraumatizado) y 50 (trauma ocular).** La NTMA no trae especificaciones de diagnóstico para ellos y
+      la ficha del decreto solo dice «confirmación diagnóstica» sin decir con qué; en el PS 50 la NTMA declara
+      expresamente que no requiere definiciones adicionales. Los otros nueve sí están documentados y publicados
+      con su fuente en `content/problemas.json` (campo `confirma`).
 
 **Proceso HUAP** — el bloque completo fue respondido por la Unidad GES en 08-2026; todo movido a §5.12
 (momento de la notificación, cartera de 14 problemas como prestador, SINA como soporte, notificación diferida,

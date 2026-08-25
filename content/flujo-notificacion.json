@@ -1,16 +1,9 @@
 {
   "_meta": {
-    "descripcion": "Pregunta de confirmación (gate), momentos del paciente y acciones de cada momento. La ruta guiada pregunta solo si el diagnóstico está confirmado: con «sí» muestra, breve y numerado, lo que el paciente debe tener ANTES de pasar a hospitalización; el resto (durante la hospitalización, al alta, después del alta) queda en una sección plegada.",
+    "descripcion": "Momentos del paciente y acciones de cada momento. La ruta guiada ya no pregunta nada tras elegir el problema: muestra con qué se confirma esa patología (campo `confirma` de problemas.json) y, numerado, lo que el paciente debe tener antes de pasar a hospitalización. Hospitalización, alta y seguimiento quedan en la sección plegada «Y después».",
     "fecha": "2026-08-25",
     "campo_breve": "`breve` es la redacción corta que ve el médico en la ruta guiada; `t` y `d` son el texto completo y se siguen usando en el documento impreso y sin JavaScript. Si falta `breve`, se usa `t`. `d_breve` acorta la explicación de la misma forma. Acortar NUNCA puede cambiar lo que la fuente dice: si no cabe sin perder contenido normativo, se deja el texto largo.",
     "campo_nota": "`nota: true` marca lo que no es una acción a ejecutar sino una advertencia de responsabilidad o de procedimiento. La ruta guiada las muestra al pie, fuera de la lista numerada."
-  },
-  "gate": {
-    "pregunta": "¿Ya está confirmado el diagnóstico?",
-    "si": "Sí, confirmado",
-    "si_desc": "Acabo de confirmarlo o ya estaba confirmado",
-    "no": "Todavía no",
-    "no_desc": "Sospecha en estudio"
   },
   "etapas": [
     {
